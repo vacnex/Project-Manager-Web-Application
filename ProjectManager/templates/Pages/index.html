@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'font/css/all.css' %}" type="text/css">
+    <title>Lac Hong University Project Manager</title>
+</head>
+
+<body>
+    <div class="container-fluid p-0">
+        <div class="top-Menu shadow-sm" style="border-bottom: 1px solid #ececec;">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <div class="container-fluid" style="max-width: 1400px; margin: 0 auto">
+                    <button class="navbar-toggler ms-auto" data-bs-toggle="collapse" data-bs-target="#collapseNavbar" style="border:none; font-size: 35px">
+                        <i class="far fa-user-circle"></i>
+                    </button>
+                    <div class="navbar-collapse collapse" id="collapseNavbar">
+                        <ul class="navbar-nav">
+                            <li class="nav-item p-3">
+                                <button class="btn btn-outline-secondary w-100 shadow-sm btn-effect" style="padding: 12px 20px">
+                                    <i style="font-size:20px" class="fas fa-globe-americas"></i>
+                                </button>
+                            </li>
+                            <li class="nav-item p-3 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-phone me-1"></i><strong>Trợ giúp ? </strong> +84 251 3951 344
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item dropdown p-3">
+                                <button class="btn-effect shadow-sm nav-link dropdown-toggle btn btn-outline-secondary w-100" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> English(en) </button>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarScrollingDropdown">
+                                    <li><a class="dropdown-item" href="#">English(en)</a></li>
+                                    <li><a class="dropdown-item" href="#">Vietnamese(vi)</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item p-3  d-flex align-items-center justify-content-center">
+                                <a class="nav-link" href="/login">Login</a>
+                                <i class="ml-2 icon fas fa-sign-in-alt"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="top-logo">
+            <div class="row g-0">
+                <div class="logo col-auto"><img src="https://learn.lhu.edu.vn/pluginfile.php/1/core_admin/logo/0x300/1596891663/truong_dai_hoc_lac_hong_logo.png" alt="Lac Hong University E-Learning System"></div>
+            </div>
+        </div>
+        <div id="heroImg" class="c-hero-container c-hero-with-logo">
+            <div class="c-hero l-container row no-gutters justify-content-center align-items-center " style="background-image: url(//learn.lhu.edu.vn/pluginfile.php/1/theme_space/heroimg/1596891663/Anh_PTS.jpg);">
+                <div class="col-sm-11 col-lg-7 text-center">
+                    <h1 class="h1 text-white">Lac Hong University Project Manager</h1>
+                    <h3 class="h3 text-white">
+                        <div class="row mt-5 justify-content-center">
+                            <a href="/register" class="my-2 me-2 ms-2 btn btn-primary col-auto">Đăng ký</a>
+                            <a href="/login" class="my-2 me-2 ms-2 btn btn-secondary col-auto">Đăng nhập</a>
+                        </div>
+                    </h3>
+                    <div class="row mt-5 justify-content-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+</body>
+
+</html>

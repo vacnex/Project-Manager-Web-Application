@@ -17,14 +17,7 @@
     <script src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
     <script>
         $(document).ready(function () {
-            next = $("input[name=next]").val();
-            if ($('.toast-body').html().length == 0) {
-                $('.toast').toast('hide')
-            }else{
-                $('.toast').toast('show')
-                
-
-            }
+            $('.toast').toast('show')
         });
     </script>
     <div class="row g-0">
@@ -50,7 +43,7 @@
                                                 <label for="form.password">Mật Khẩu</label>
                                             </div>
                                             <input type="hidden" name="next" value="{{ request.GET.next }}" />
-                                            <button type="submit" class="btn btn-primary w-100 mt-3 btn-lg " >Đăng nhập</button>
+                                            <button id='submitLogin' type="submit" class="btn btn-primary w-100 mt-3 btn-lg " >Đăng nhập</button>
                                         </form>
                                     </div>
                                     <div class="col-12 mt-3">
@@ -65,11 +58,24 @@
                 </div>
             </section>
         </div>
-        <div data-bs-delay="7000" class="toast-container position-absolute p-3 top-0 end-0">
-            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-body">{{ login_error|escape }}</div>
-            </div>
-        </div>
+        <div data-bs-delay="7000" class="toast-container position-absolute p-3 top-0 end-0">{% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-body">
+                            {{ error|escape }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-body">
+                            {{ error|escape }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}</div>
     </div>
 </body>
 

@@ -55,7 +55,6 @@
                                                 <label for="form.password2">Nhập lại mật Khẩu</label>
                                             </div>
                                             <button type="submit" class="btn btn-primary w-100 mt-3 btn-lg ">Đăng ký</button>
-
                                         </form>
                                     </div>
                                 </div>
@@ -64,8 +63,7 @@
                     </div>
                 </div>
             </section>
-        <div data-bs-delay="7000" class="toast-container position-absolute p-3 top-0 end-0">
-            {% if form.errors %}
+        <div data-bs-delay="7000" class="toast-container position-absolute p-3 top-0 end-0">{% if form.errors %}
                 {% for field in form %}
                     {% for error in field.errors %}
                     <script>
@@ -86,8 +84,7 @@
                             </div>
                         </div>
                     {% endfor %}
-            {% endif %}
-        </div>
+            {% endif %}</div>
     </div>
 </body>
 

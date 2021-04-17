@@ -1,9 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import User
 from django.core.exceptions import ValidationError
 import re
-
 
 class RegistionForm(UserCreationForm):
     username = forms.CharField(max_length=12, widget=forms.TextInput(
@@ -29,10 +28,12 @@ class RegistionForm(UserCreationForm):
         raise ValidationError("Tài khoản đã tồn tại")
 
 
-
-
-class LoginForm(forms.Form):
+class LoginForm(AuthenticationForm):
     username = forms.CharField(max_length=12, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Tài khoản'}))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'placeholder': 'Mật khẩu'}))
+    error_messages = {
+        'invalid_login': ("Hãy nhập đúng %(username)s và mật khẩu."),
+        'inactive': ("Tài khoản này không hoạt động."),
+    }

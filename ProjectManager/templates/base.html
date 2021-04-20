@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE htms>
+<htms lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,77 +11,101 @@
     <link rel="stylesheet" href="{% static 'font/css/all.css' %}" type="text/css">
 </head>
 <body>
-    <div class="d-flex" id="wrapper">
-        <!-- Sidebar -->
-        <div class="p-3" id="sidebar-wrapper" style="background-color: #f8f8f8;">
-            <div class="c-logo mb-5" style='text-align:center'>
-                <a href="." class="navbar-brand" rel="nofollow noopener noreferrer">
-                    <h1 class="logo d-none d-sm-inline">
-                        <img src="https://learn.lhu.edu.vn/pluginfile.php/1/theme_space/customlogosidebar/1596891663/android-icon-72x72.png" alt="LHES" class="img-fluid">
-                    </h1>
-                </a>
-            </div>      
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item mb-1">
-                    <a href="#" class="btn nav-link link-secondary align-items-center" rel="nofollow noopener noreferrer">
-                        <i class=" fas fa-columns me-2 " aria-hidden="true" aria-label=""></i>
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item mb-1 rounded-3 border" style="background-color: #ffffff;">
-                    <a class="btn btn-toggle align-items-center collapsed nav-link" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false" style="color: #575967;font-weight:700">
-                        <i class="fas fa-book me-2"></i>
-                        Môn học
-                    </a>
-                    <div class="collapse" id="orders-collapse" >
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li class="mt-1">
-                                <a href="#" class="nav-link link-secondary align-items-center" rel="nofollow noopener noreferrer">
-                                    <i class=" fas fa-graduation-cap me-2" aria-hidden="true" aria-label=""></i>
-                                    Môn học 1
-                                </a>
-                            </li>
-                            <li class="mt-1">
-                                <a href="#" class="nav-link link-secondary align-items-center" rel="nofollow noopener noreferrer">
-                                    <i class=" fas fa-graduation-cap me-2 " aria-hidden="true" aria-label=""></i>
-                                    Môn học 2
-                                </a>
-                            </li>
-                            <li class="mt-1">
-                                <a href="#" class="nav-link link-secondary align-items-center" rel="nofollow noopener noreferrer">
-                                    <i class=" fas fa-graduation-cap me-2 " aria-hidden="true" aria-label=""></i>
-                                    Môn học 3
-                                </a>
-                            </li>
-                            <li class="mt-1">
-                                <a href="#" class="nav-link link-secondary align-items-center" rel="nofollow noopener noreferrer">
-                                    <i class=" fas fa-graduation-cap me-2 " aria-hidden="true" aria-label=""></i>
-                                    Môn học 4
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light border-bottom" style="padding: 5px 30px 5px 40px; background-color: #f8f8f8;">
-                <button class="btn btn-primary " id="menu-toggle">
-                    <i class="fas fa-equals"></i>
+    <div id="page-wraper" class="l-with-sidebar">
+        <div id="topBar6" class="s-top s-top--sidebar justify-content-center">
+            <div data-region="drawer-toggle" class="d-sm-inline d-md-none">
+                <button type="button" class="sidebar-btn" data-side="left">
+                    <i class="fas fa-list-ul" id="sidebarBtn"></i>
                 </button>
-            
-            </nav>
-            <div class="container-fluid">
-                {% block content %}
-                
-                {% endblock %}
+            </div>
+            <div class="d-sm-inline d-md-none" >
+                <button type="button" class="mobile-topbar-btn">
+                    <i class="far fa-user-circle" id="mobileTopBarBtn"></i>
+                </button>
+            </div>
+            <div class="s-top-container">
+                <div id="navbar" class="c-container row g-0 justify-content-start align-items-center">
+                    <div data-region="drawer-toggle" class="d-sm-none d-md-inline ms-md-0 me-md-3 w-auto">
+                        <button type="button" class="sidebar-btn btn" data-side="left">
+                            <i class="fas fa-equals" id="sidebarBtn"></i>
+                        </button>
+                    </div>
+                    <div class="c-top-text"><i class="fas fa-phone"></i><strong>Trợ giúp ?</strong> +84 251 3951 344</div>
+                    <div class="nav ms-sm-center ms-md-auto align-items-center justify-content-center w-auto">
+                        <div class="c-lang-menu c-menu-sep ms-md-2 me-md-3 w-auto"><span class="dropdown">
+                                <a class="dropdown-toggle" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    English ‎(en)‎
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                    <a class="dropdown-item" href="" title="English ‎(en)‎" rel="nofollow noopener noreferrer">English ‎(en)‎</a>
+                                    <a class="dropdown-item" href="" title="Vietnamese ‎(vi)‎" rel="nofollow noopener noreferrer">Vietnamese ‎(vi)‎</a>
+                                </div>
+                            </span></div>
+                    
+                        <!-- navbar_plugin_output -->
+                        <div class="top-icons-nav c-menu-sep me-3 w-auto">
+                            <li class="popover-region collapsed popover-region-notifications" id="nav-notification-popover-container">
+                                <div class="popover-region-toggle nav-link">
+                                    <i class="icon far fa-bell fa-fw"></i>
+                                </div>
+                            </li>
+                            <div class="pull-right popover-region collapsed">
+                                <a class="nav-link d-inline-block popover-region-toggle position-relative" href="#" role="button" rel="nofollow noopener noreferrer">
+                                    <i class="icon far fa-comment-dots fa-fw "></i>
+                                </a>
+                            </div>
+                        </div>
+                    
+                        <!-- user_menu -->
+                        <div class="c-user-menu">
+                            <span>user name</span>
+                        </div>
+                    
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- /#page-content-wrapper -->
+        <div id="page" class="container-fluid">
+            {% block content %}
+            
+            {% endblock %}
+        </div>
+        <div id="nav-drawer" class="l-with-sidebar"></div>
     </div>
+    <footer id="page-footer" class="s-footer">
+        <div class="c-container l-with-sidebar">
+            <div class="row g-0">
+                <div class="col-12 contact p-0">
+                    <ul class="list-inline">
+                        <li class="d-sm-block d-lg-inline mb-sm-3 mb-lg-0 me-sm-0 me-lg-4"><i class="me-2 fas fa-globe-africa"></i><a href="https://learn.lhu.edu.vn" rel="nofollow noopener noreferrer">Lac Hong University Project Manager System</a></li>
+                        <li class="d-sm-block d-lg-inline mb-sm-3 mb-lg-0 me-sm-0 me-lg-4"><i class="me-2 fas fa-mobile-alt"></i>+84 251 3951 344</li>
+                        <li class="d-sm-block d-lg-inline"><i class="me-2 far fa-envelope-open"></i>project@lhu.edu.vn</li>
+                    </ul>
+                </div>
+    
+                <div class="s-footer--social col-12 mt-2 mb-1 social p-0">
+                    <ul class="list-social list-inline m-b-1 mx-0">
+                        <li class="list-inline-item">
+                            <a href="https://www.facebook.com/lhuniversity" target="_blank" class="facebook" rel="nofollow noopener noreferrer">
+                                <i class="me-2 fab fa-facebook"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://www.youtube.com/user/lachongtelevision" target="_blank" class="youtube" rel="nofollow noopener noreferrer">
+                                <i class="me-2 fab fa-youtube"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 mt-4 mb-5 p-0">
+                    <span class="copy">© LHES</span><span>All rights reserved</span>
+                </div>
+            </div>
+        </div>
+    </footer>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
     <script src="{% static 'js/base.js' %}"></script>
 
 </body>
-</html>
+</htms>

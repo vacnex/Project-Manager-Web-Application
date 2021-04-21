@@ -24,13 +24,13 @@ $(document).ready(function () {
     });
 
     var sidebar = $("#nav-drawer"),
-        sidebarToggle = $(".sidebar-btn, .sidebar-btn--close");
+        sidebarToggle = $(".sidebar-btn2, .sidebar-btn--close");
         pageWrapper = $("#page-wrapper, #page-footer .c-container");
         topBarWrapper = $(".s-top");
 
     sidebarToggle.on("click", function(e) {
         e.preventDefault();
-        sidebar.toggleClass("closed show-rwd");
+        sidebar.toggleClass("closed");
         pageWrapper.toggleClass("l-with-sidebar");
         topBarWrapper.toggleClass("s-top--sidebar");
     });

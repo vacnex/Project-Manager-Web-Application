@@ -1,0 +1,71 @@
+.top-Menu{
+    border-bottom: 1px solid #ececec
+}
+.sidebar-btn2 {
+  background-color: #0277bd;
+  border: 0;
+  border-radius: 45px;
+  color: #fff;
+  padding: 8px 13px;
+  width: 41px;
+  height: 41px;
+  cursor: pointer;
+  -webkit-transition: all 350ms ease;
+  -o-transition: all 350ms ease;
+  transition: all 350ms ease;
+}
+.sidebar-btn2{
+    border-radius: 5px;
+    color: #000;
+    background: #fff;
+    border: 1px solid #e4e8f0;
+    -webkit-box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.05);
+    -webkit-transition: all 350ms ease;
+    -o-transition: all 350ms ease;
+    transition: all 350ms ease;
+    
+}
+.sidebar-btn2:hover {
+    background-color: #0277bd;
+    color: #fff;
+}
+.mobile-topbar-btn2{
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+}
+.mobile-topbar-btn2 i {
+    background-color: #fff;
+    border: 1px solid #e4e8f0;
+    -webkit-box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 45px;
+    padding: 9px 0;
+    width: 41px;
+    height: 41px;
+    cursor: pointer;
+    font-size: 22px;
+    color: #212121;
+}
+@media (min-width: 320px) and (max-width: 767.98px) {
+    .sidebar-btn2{
+        top: 10px;
+        left: 10px;
+    }
+    .mobile-topbar-btn {
+    position: absolute;
+    z-index: 10;
+    top: 10px;
+    right: 10px;
+    }
+    .top-Menu{
+        padding: 1rem 15px 0!important;
+        min-height: 63px;
+    }
+    .dropdown-toggle,.dropdown{
+        width: 100%;
+    }
+
+}
+

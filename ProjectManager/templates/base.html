@@ -8,11 +8,12 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/base2.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'font/css/all.css' %}" type="text/css">
 </head>
 <body>
-    <div id="page-wraper" class="l-with-sidebar">
-        <div id="topBar6" class="s-top s-top--sidebar justify-content-center">
+    <div id="page-wrapper" class="l-with-sidebar c-container">
+        <!-- <div id="topBar6" class="s-top s-top--sidebar justify-content-center">
             <div data-region="drawer-toggle" class="d-sm-inline d-md-none">
                 <button type="button" class="sidebar-btn" data-side="left">
                     <i class="fas fa-list-ul" id="sidebarBtn"></i>
@@ -41,8 +42,6 @@
                                     <a class="dropdown-item" href="" title="Vietnamese ‎(vi)‎" rel="nofollow noopener noreferrer">Vietnamese ‎(vi)‎</a>
                                 </div>
                             </span></div>
-                    
-                        <!-- navbar_plugin_output -->
                         <div class="top-icons-nav c-menu-sep me-3 w-auto">
                             <li class="popover-region collapsed popover-region-notifications" id="nav-notification-popover-container">
                                 <div class="popover-region-toggle nav-link">
@@ -55,15 +54,64 @@
                                 </a>
                             </div>
                         </div>
-                    
-                        <!-- user_menu -->
                         <div class="c-user-menu">
                             <span>user name</span>
                         </div>
-                    
                     </div>
                 </div>
             </div>
+        </div> -->
+        <div class="top-Menu shadow-sm justify-content-center">
+            <div class="d-flex">
+                <div class="d-sm-inline d-md-none">
+                    <button type="button" class="btn sidebar-btn2">
+                        <i class="fas fa-list-ul" id="sidebarBtn"></i>
+                    </button>
+                </div>
+                <div class="d-sm-inline d-md-none ms-auto">
+                    <button type="button" class="mobile-topbar-btn2 navbar-toggler" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
+                        <i class="far fa-user-circle" id="mobileTopBarBtn"></i>
+                    </button>
+                </div>
+            </div>
+            <nav class="navbar navbar-expand-md ">
+                <div class="container-fluid justify-content-start align-items-center">
+                    <div class="navbar-collapse collapse" id="collapseNavbar">
+                        <div class="d-sm-none d-md-inline ms-md-0 me-md-3">
+                            <button class="btn sidebar-btn2">
+                                <i class="fas fa-equals" id="sidebarBtn"></i>
+                            </button>
+                        </div>
+                        <div class="c-top-text">
+                            <i class="fas fa-phone"></i><strong>Trợ giúp ? </strong> +84 251 3951 344
+                        </div>
+                        <div class="navbar-nav ms-auto align-items-center justify-content-center">
+                            <div class="dropdown c-lang-menu">
+                                <button class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> English(en) </button>
+                                <ul class="dropdown-menu" >
+                                    <li><a class="dropdown-item" href="#">English(en)</a></li>
+                                    <li><a class="dropdown-item" href="#">Vietnamese(vi)</a></li>
+                                </ul>
+                            </div>
+                            <div class="top-icons-nav me-3 w-auto">
+                                <li class="popover-region collapsed popover-region-notifications" id="nav-notification-popover-container">
+                                    <div class="popover-region-toggle nav-link">
+                                        <i class="icon far fa-bell fa-fw"></i>
+                                    </div>
+                                </li>
+                                <div class="pull-right popover-region collapsed">
+                                    <a class="nav-link d-inline-block popover-region-toggle position-relative" href="#" role="button" rel="nofollow noopener noreferrer">
+                                        <i class="icon far fa-comment-dots fa-fw "></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="c-user-menu me-3">
+                                <span>user name</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
         </div>
         <div id="page" class="container-fluid">
             {% block content %}

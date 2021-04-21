@@ -26,7 +26,7 @@ $(document).ready(function () {
     var sidebar = $("#nav-drawer"),
         sidebarToggle = $(".sidebar-btn2, .sidebar-btn--close");
         pageWrapper = $("#page-wrapper, #page-footer .c-container");
-        topBarWrapper = $(".s-top");
+        topBarWrapper = $(".top-Menu");
 
     sidebarToggle.on("click", function(e) {
         e.preventDefault();

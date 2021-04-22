@@ -9,68 +9,19 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/base2.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'font/css/all.css' %}" type="text/css">
 </head>
 <body>
-    <div id="page-wrapper" class="l-with-sidebar c-container">
-        <!-- <div id="topBar6" class="s-top s-top--sidebar justify-content-center">
-            <div data-region="drawer-toggle" class="d-sm-inline d-md-none">
-                <button type="button" class="sidebar-btn" data-side="left">
-                    <i class="fas fa-list-ul" id="sidebarBtn"></i>
-                </button>
-            </div>
-            <div class="d-sm-inline d-md-none" >
-                <button type="button" class="mobile-topbar-btn">
-                    <i class="far fa-user-circle" id="mobileTopBarBtn"></i>
-                </button>
-            </div>
-            <div class="s-top-container">
-                <div id="navbar" class="c-container row g-0 justify-content-start align-items-center">
-                    <div data-region="drawer-toggle" class="d-sm-none d-md-inline ms-md-0 me-md-3 w-auto">
-                        <button type="button" class="sidebar-btn btn" data-side="left">
-                            <i class="fas fa-equals" id="sidebarBtn"></i>
-                        </button>
-                    </div>
-                    <div class="c-top-text"><i class="fas fa-phone"></i><strong>Trợ giúp ?</strong> +84 251 3951 344</div>
-                    <div class="nav ms-sm-center ms-md-auto align-items-center justify-content-center w-auto">
-                        <div class="c-lang-menu c-menu-sep ms-md-2 me-md-3 w-auto"><span class="dropdown">
-                                <a class="dropdown-toggle" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    English ‎(en)‎
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                    <a class="dropdown-item" href="" title="English ‎(en)‎" rel="nofollow noopener noreferrer">English ‎(en)‎</a>
-                                    <a class="dropdown-item" href="" title="Vietnamese ‎(vi)‎" rel="nofollow noopener noreferrer">Vietnamese ‎(vi)‎</a>
-                                </div>
-                            </span></div>
-                        <div class="top-icons-nav c-menu-sep me-3 w-auto">
-                            <li class="popover-region collapsed popover-region-notifications" id="nav-notification-popover-container">
-                                <div class="popover-region-toggle nav-link">
-                                    <i class="icon far fa-bell fa-fw"></i>
-                                </div>
-                            </li>
-                            <div class="pull-right popover-region collapsed">
-                                <a class="nav-link d-inline-block popover-region-toggle position-relative" href="#" role="button" rel="nofollow noopener noreferrer">
-                                    <i class="icon far fa-comment-dots fa-fw "></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="c-user-menu">
-                            <span>user name</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+    <div id="page-container" class="l-with-sidebar">
         <div class="top-Menu shadow-sm justify-content-center">
             <div class="d-flex">
                 <div class="d-sm-inline d-md-none">
-                    <button type="button" class="btn sidebar-btn2">
+                    <button type="button" class="btn sidebar-btn">
                         <i class="fas fa-list-ul" id="sidebarBtn"></i>
                     </button>
                 </div>
                 <div class="d-sm-inline d-md-none ms-auto">
-                    <button type="button" class="mobile-topbar-btn2 navbar-toggler" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
+                    <button type="button" class="mobile-topbar-btn navbar-toggler" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
                         <i class="far fa-user-circle" id="mobileTopBarBtn"></i>
                     </button>
                 </div>
@@ -79,34 +30,15 @@
                 <div class="container-fluid justify-content-start align-items-center">
                     <div class="navbar-collapse collapse" id="collapseNavbar">
                         <div class="d-sm-none d-md-inline ms-md-0 me-md-3">
-                            <button class="btn sidebar-btn2">
+                            <button class="btn sidebar-btn">
                                 <i class="fas fa-equals" id="sidebarBtn"></i>
                             </button>
                         </div>
-                        <div class="c-top-text">
+                        <div class="top-menu-text">
                             <i class="fas fa-phone"></i><strong>Trợ giúp ? </strong> +84 251 3951 344
                         </div>
                         <div class="navbar-nav ms-auto align-items-center justify-content-center">
-                            <div class="dropdown c-lang-menu">
-                                <button class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> English(en) </button>
-                                <ul class="dropdown-menu" >
-                                    <li><a class="dropdown-item" href="#">English(en)</a></li>
-                                    <li><a class="dropdown-item" href="#">Vietnamese(vi)</a></li>
-                                </ul>
-                            </div>
-                            <div class="top-icons-nav me-3 w-auto">
-                                <li class="popover-region collapsed popover-region-notifications" id="nav-notification-popover-container">
-                                    <div class="popover-region-toggle nav-link">
-                                        <i class="icon far fa-bell fa-fw"></i>
-                                    </div>
-                                </li>
-                                <div class="pull-right popover-region collapsed">
-                                    <a class="nav-link d-inline-block popover-region-toggle position-relative" href="#" role="button" rel="nofollow noopener noreferrer">
-                                        <i class="icon far fa-comment-dots fa-fw "></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="c-user-menu me-3">
+                            <div class="me-3">
                                 <span>username</span>
                             </div>
                         </div>
@@ -123,18 +55,18 @@
             test
         </div>
     </div>
-    <footer id="page-footer" class="s-footer">
-        <div class="c-container l-with-sidebar">
+    <footer id="footer-container" class="footer">
+        <div id="footer-wrapper" class="l-with-sidebar">
             <div class="row g-0">
                 <div class="col-12 contact p-0">
                     <ul class="list-inline">
-                        <li class="d-sm-block d-lg-inline mb-sm-3 mb-lg-0 me-sm-0 me-lg-4"><i class="me-2 fas fa-globe-africa"></i><a href="https://learn.lhu.edu.vn" rel="nofollow noopener noreferrer">Lac Hong University Project Manager System</a></li>
-                        <li class="d-sm-block d-lg-inline mb-sm-3 mb-lg-0 me-sm-0 me-lg-4"><i class="me-2 fas fa-mobile-alt"></i>+84 251 3951 344</li>
+                        <li class="d-sm-block d-lg-inline mb-3 mb-sm-3 mb-lg-0 me-sm-0 me-lg-4"><i class="me-2 fas fa-globe-africa"></i><a href="https://learn.lhu.edu.vn" rel="nofollow noopener noreferrer">Lac Hong University Project Manager System</a></li>
+                        <li class="d-sm-block d-lg-inline mb-3 mb-sm-3 mb-lg-0 me-sm-0 me-lg-4"><i class="me-2 fas fa-mobile-alt"></i>+84 251 3951 344</li>
                         <li class="d-sm-block d-lg-inline"><i class="me-2 far fa-envelope-open"></i>project@lhu.edu.vn</li>
                     </ul>
                 </div>
     
-                <div class="s-footer--social col-12 mt-2 mb-1 social p-0">
+                <div class="col-12 mt-2 mb-1 p-0">
                     <ul class="list-social list-inline m-b-1 mx-0">
                         <li class="list-inline-item">
                             <a href="https://www.facebook.com/lhuniversity" target="_blank" class="facebook" rel="nofollow noopener noreferrer">
@@ -149,7 +81,7 @@
                     </ul>
                 </div>
                 <div class="col-12 mt-4 mb-5 p-0">
-                    <span class="copy">© LHES</span><span>All rights reserved</span>
+                    <span class="copyright">© LHES</span><span>All rights reserved</span>
                 </div>
             </div>
         </div>

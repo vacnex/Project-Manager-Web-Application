@@ -29,7 +29,7 @@
             <nav class="navbar navbar-expand-md ">
                 <div class="container-fluid justify-content-start align-items-center">
                     <div class="navbar-collapse collapse" id="collapseNavbar">
-                        <div class="d-sm-none d-md-inline ms-md-0 me-md-3">
+                        <div class="d-none d-sm-none d-md-inline ms-md-0 me-md-3">
                             <button class="btn sidebar-btn">
                                 <i class="fas fa-equals" id="sidebarBtn"></i>
                             </button>
@@ -38,21 +38,69 @@
                             <i class="fas fa-phone"></i><strong>Trợ giúp ? </strong> +84 251 3951 344
                         </div>
                         <div class="navbar-nav ms-auto align-items-center justify-content-center">
-                            <div class="me-3">
-                                <span>username</span>
-                            </div>
+                                <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false" rel="nofollow noopener noreferrer">
+                                    <img src="https://secure.gravatar.com/avatar/c34d9a4e2a08b7af82778396b8c01ca1?s=105&d=mm" alt="mdo" width="32" height="32" class="rounded-circle me-2">
+                                    <strong>Usename</strong>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="dropdownUser">
+                                    <li><a class="dropdown-item" href="#" rel="nofollow noopener noreferrer">Profile</a></li>
+                                    <li><a class="dropdown-item" href="#" rel="nofollow noopener noreferrer">Settings</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#" rel="nofollow noopener noreferrer">Sign out</a></li>
+                                </ul>
                         </div>
                     </div>
                 </div>
             </nav>
         </div>
-        <div id="page" class="container-fluid">
-            {% block content %}
-            
-            {% endblock %}
-        </div>
+        <div id="page-content" class="container-fluid">{% block content %}{% endblock %}</div>
         <div id="nav-drawer">
-            test
+                <button type="button" class="sidebar-btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="d-flex flex-column p-3">
+                <div class="text-center">
+                    <img src="//learn.lhu.edu.vn/pluginfile.php/1/theme_space/customlogosidebar/1596891663/android-icon-72x72.png" alt="LHES" class="img-fluid">
+                </div>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto list-nav-item">
+                    <li class="mb-1 rounded">
+                        <a href="#" class="nav-link link-dark" rel="nofollow noopener noreferrer">
+                            <i class="fas fa-columns"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="mb-1 course-list">
+                        <a class="w-100 btn btn-course-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Môn học</a>
+                        <div class="collapse show p-1 m-0" id="home-collapse">
+                            <ul class="btn-course-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li class="rounded">
+                                    <a href="#" class="link-dark w-85">
+                                        <span style="width:30px">
+                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
+                                        </span>Môn học 1</a>
+                                </li>
+                                <li class="rounded">
+                                    <a href="#" class="link-dark w-85">
+                                        <span style="width:30px">
+                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
+                                        </span>Môn học 2</a>
+                                </li>
+                                <li class="rounded">
+                                    <a href="#" class="link-dark w-85">
+                                        <span style="width:30px">
+                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
+                                        </span>Môn học 3</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <hr>
+                
+            </div>
         </div>
     </div>
     <footer id="footer-container" class="footer">

@@ -11,6 +11,9 @@ body {
   -o-transition: padding-left 0.5s ease, padding-right 0.5s ease;
   transition: padding-left 0.5s ease, padding-right 0.5s ease;
 }
+#page {
+  padding: 20px 30px 0 40px;
+}
 #footer-wrapper {
   -webkit-transition: padding-left 0.5s ease, padding-right 0.5s ease;
   -o-transition: padding-left 0.5s ease, padding-right 0.5s ease;
@@ -35,13 +38,13 @@ body {
     padding-left: 0;
   }
 }
-@media (min-width: 320px) and (max-width: 767.98px){
-  #collapseNavbar{
-    padding-right: 0!important;
+@media (min-width: 320px) and (max-width: 767.98px) {
+  #collapseNavbar {
+    padding-right: 0 !important;
   }
-  .dropdown-menu{
+  .dropdown-menu {
     width: 100%;
-    margin-right: 0!important;
+    margin-right: 0 !important;
   }
 }
 /* #endregion */
@@ -57,7 +60,7 @@ body {
     min-height: 63px;
   }
 }
-.top-menu-text{
+.top-menu-text {
   font-size: 0.75rem;
   line-height: 1.5;
 }
@@ -79,12 +82,12 @@ body {
     max-width: 200px;
   }
 }
-@media (min-width: 320px) and (max-width: 767.98px){
-    .top-menu-text {
-        margin: 1rem 0;
-        width: 100%;
-        display: block;
-    }
+@media (min-width: 320px) and (max-width: 767.98px) {
+  .top-menu-text {
+    margin: 1rem 0;
+    width: 100%;
+    display: block;
+  }
 }
 .top-menu-text i {
   margin-right: 0.5rem;
@@ -94,13 +97,13 @@ body {
   -ms-transform: scaleX(-1);
   transform: scaleX(-1);
   filter: FlipH;
-  -ms-filter: "FlipH";
+  -ms-filter: 'FlipH';
 }
 #topBar6 .top-menu-text {
-    margin: 1rem 0;
-    width: 100%;
-    display: block;
-  }
+  margin: 1rem 0;
+  width: 100%;
+  display: block;
+}
 /* #endregion */
 /* ---------------------------------------------------------- */
 /* #region  Side bar css */
@@ -154,28 +157,60 @@ body {
     left: -100%;
   }
 }
-.course-list{
+.course-list {
   background-color: #fff;
-  -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%), 0 1px 2px rgb(0 0 0 / 5%), 0 0 2px rgb(0 0 0 / 5%), 0 3px 4px rgb(0 0 0 / 5%);
-    box-shadow: 0 1px 1px rgb(0 0 0 / 5%), 0 1px 2px rgb(0 0 0 / 5%), 0 0 2px rgb(0 0 0 / 5%), 0 3px 4px rgb(0 0 0 / 5%);
-    border-radius: 5px;
-    -webkit-transition: all 150ms cubic-bezier(.55,.09,.68,.53);
-    -o-transition: all 150ms cubic-bezier(.55,.09,.68,.53);
-    transition: all 150ms cubic-bezier(.55,.09,.68,.53);
+  -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%), 0 1px 2px rgb(0 0 0 / 5%),
+    0 0 2px rgb(0 0 0 / 5%), 0 3px 4px rgb(0 0 0 / 5%);
+  box-shadow: 0 1px 1px rgb(0 0 0 / 5%), 0 1px 2px rgb(0 0 0 / 5%),
+    0 0 2px rgb(0 0 0 / 5%), 0 3px 4px rgb(0 0 0 / 5%);
+  border-radius: 5px;
+  -webkit-transition: all 150ms cubic-bezier(0.55, 0.09, 0.68, 0.53);
+  -o-transition: all 150ms cubic-bezier(0.55, 0.09, 0.68, 0.53);
+  transition: all 150ms cubic-bezier(0.55, 0.09, 0.68, 0.53);
 }
-.course-list:hover{
-    -webkit-transform: scale(1.03);
-    -moz-transform: scale(1.03);
-    -ms-transform: scale(1.03);
-    -o-transform: scale(1.03);
-    transform: scale(1.03);
-    -webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 2px 3px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%), 0 4px 5px rgb(0 0 0 / 5%);
-    box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 2px 3px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%), 0 4px 5px rgb(0 0 0 / 5%);
+.course-list:hover {
+  -webkit-transform: scale(1.03);
+  -moz-transform: scale(1.03);
+  -ms-transform: scale(1.03);
+  -o-transform: scale(1.03);
+  transform: scale(1.03);
+  -webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 2px 3px rgb(0 0 0 / 5%),
+    0 0 4px rgb(0 0 0 / 5%), 0 4px 5px rgb(0 0 0 / 5%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 2px 3px rgb(0 0 0 / 5%),
+    0 0 4px rgb(0 0 0 / 5%), 0 4px 5px rgb(0 0 0 / 5%);
 }
 /* #endregion */
 /* ---------------------------------------------------------- */
 /* #region  Page content css */
+.course-dashboard {
+  padding: 1rem;
+  -webkit-box-shadow: rgb(0 0 0 / 5%) 0 0.5px 0, rgb(0 0 0 / 3%) 0 0 0 1px,
+    rgb(0 0 0 / 5%) 0 2px 4px;
+  box-shadow: rgb(0 0 0 / 5%) 0 0.5px 0, rgb(0 0 0 / 3%) 0 0 0 1px,
+    rgb(0 0 0 / 5%) 0 2px 4px;
+  border-radius: 5px;
+}
 
+@media (min-width: 320px) and (max-width: 576px) {
+  .cl-title {
+    text-align: center;
+  }
+  .cl-btn-group .btn-group {
+    width: 100%;
+  }
+}
+@media (min-width: 320px) and (max-width: 991.98px) {
+  .course-list-content .card {
+    margin-bottom: 1.5rem;
+  }
+}
+.course-list-content .slick-slide {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.course-list-content .slick-slide:focus {
+  outline: none;
+}
 /* #endregion */
 /* ---------------------------------------------------------- */
 /* #region  Footer css */
@@ -201,7 +236,7 @@ body {
   font-weight: 700;
   margin-right: 1rem;
 }
-#footer-wrapper{
+#footer-wrapper {
   width: 100%;
 }
 .contact {
@@ -289,7 +324,7 @@ body {
     right: 10px;
   }
 }
-.sidebar-btn-close{
+.sidebar-btn-close {
   display: none;
 }
 @media (min-width: 320px) and (max-width: 1199.98px) {
@@ -328,41 +363,41 @@ body {
   display: inline-flex;
   padding: 9px 16px;
   font-weight: 600;
-  color: rgba(0, 0, 0, .65);
+  color: rgba(0, 0, 0, 0.65);
   background-color: transparent;
 }
 .btn-course-toggle:hover {
   color: #0277bd;
   background-color: #f4f7fe;
-} 
+}
 .btn-course-toggle::before {
   width: 1.25em;
   line-height: 0;
   content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
-  transition: transform .35s ease;
-  transform-origin: .5em 50%;
+  transition: transform 0.35s ease;
+  transform-origin: 0.5em 50%;
 }
 
-.btn-course-toggle[aria-expanded="true"] {
-  color: rgba(0, 0, 0, .85);
+.btn-course-toggle[aria-expanded='true'] {
+  color: rgba(0, 0, 0, 0.85);
 }
-.btn-course-toggle[aria-expanded="true"]::before {
+.btn-course-toggle[aria-expanded='true']::before {
   transform: rotate(90deg);
 }
 .btn-course-toggle-nav a {
   display: inline-flex;
   padding: 9px;
   color: #575967;
-  margin-top: .125rem;
+  margin-top: 0.125rem;
   margin-left: 1.25rem;
   text-decoration: none;
 }
 .list-nav-item li a:hover,
-.btn-course-toggle-nav li a:hover{
+.btn-course-toggle-nav li a:hover {
   color: #0277bd;
 }
 .list-nav-item li:not(.course-list):hover,
-.btn-course-toggle-nav li:hover{
+.btn-course-toggle-nav li:hover {
   background-color: #f4f7fe;
   color: #0277bd;
 }

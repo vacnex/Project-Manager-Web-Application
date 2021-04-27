@@ -20,7 +20,7 @@ body {
   transition: padding-left 0.5s ease, padding-right 0.5s ease;
 }
 .l-with-sidebar {
-  padding-left: 250px;
+  padding-left: 350px;
   -webkit-transition: padding-left 0.5s ease, padding-right 0.5s ease;
   -o-transition: padding-left 0.5s ease, padding-right 0.5s ease;
   transition: padding-left 0.5s ease, padding-right 0.5s ease;
@@ -109,7 +109,7 @@ body {
 /* #region  Side bar css */
 #nav-drawer {
   padding: 17px;
-  width: 250px;
+  width: 350px;
   height: 100%;
   position: fixed;
   overflow: scroll;
@@ -130,11 +130,11 @@ body {
 }
 
 #nav-drawer.closed {
-  left: -250px !important;
+  left: -350px !important;
 }
 @media (min-width: 768px) and (max-width: 1199.98px) {
   #nav-drawer.closed {
-    left: -250px !important;
+    left: -350px !important;
   }
 }
 @media (min-width: 320px) and (max-width: 767.98px) {
@@ -149,7 +149,7 @@ body {
 }
 @media (min-width: 768px) and (max-width: 1199.98px) {
   #nav-drawer {
-    left: -250px;
+    left: -350px;
   }
 }
 @media (min-width: 320px) and (max-width: 767.98px) {

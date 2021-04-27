@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate, decorators
 from django.views import View
+from ProjectManager.models import Course
 
 # from django.contrib import messages
 
@@ -11,12 +12,17 @@ from django.views import View
 def index(request):
     return render(request, 'Pages/index.html')
 
+
 @decorators.login_required(login_url='/login')
 def home(request):
-    return render(request, 'Pages/home.html')
+    courses = Course.objects.all()
+    context = {'courses': courses}
+    return render(request, 'Pages/home.html', context)
+
 
 def home_guest(request):
     return render(request, 'Pages/home_guest.html')
+
 
 def loginUser(request):
     if request.method == 'POST':
@@ -34,12 +40,14 @@ def loginUser(request):
                     return redirect('home')
     else:
         form = LoginForm()
-    print("test",form)
+    print("test", form)
     return render(request, 'Pages/login.html', {'form': form})
+
 
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
+
 
 def register(request):
     if request.method == "POST":
@@ -52,6 +60,12 @@ def register(request):
     # print(form)
     return render(request, 'Pages/register.html', {'form': form})
 
+
 class CourseView(View):
-    def get(self, request):
-        return render(request, 'Pages/course.html')
+    def get(self, request, courseid):
+        CurrentCourseID = Course.objects.get(CourseID=courseid)
+        CurrentCourseName = CurrentCourseID.CourseName
+        Courses = Course.objects.all()
+        context = {'courses': Courses, 'courseid': courseid,
+                'CurrentCourseName': CurrentCourseName}
+        return render(request, 'Pages/course.html', context)

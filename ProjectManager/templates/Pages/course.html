@@ -5,5 +5,27 @@ Course
 {% endblock %}
 
 {% block content %}
-
+    <div class="page-content">
+        <div class="row g-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item">My Course</li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <a href="{% url 'home' %}{{courseid}}/">{{CurrentCourseName}}</a>
+                    </li>
+                </ol>
+            </nav>
+            <div class="Course-Content">
+                <div class="Course-Tittle">
+                    <h1>{{courseid}} - {{CurrentCourseName}}</h1>
+                </div>
+                <div class="Course-Process">
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
 {% endblock %}

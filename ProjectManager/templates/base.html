@@ -77,66 +77,14 @@
                         <a class="w-100 btn btn-course-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Môn học</a>
                         <div class="collapse show p-1 m-0" id="home-collapse">
                             <ul class="btn-course-toggle-nav list-unstyled fw-normal pb-1 small">
+                                {% for c in courses %}
                                 <li class="rounded">
-                                    <a href="#" class="link-dark w-85">
+                                    <a href="/course/{{ c.CourseID }}/" class="link-dark w-85">
                                         <span style="width:30px">
                                             <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>Môn học 1</a>
+                                        </span>{{c.CourseName}}</a>
                                 </li>
-                                <li class="rounded">
-                                    <a href="#" class="link-dark w-85">
-                                        <span style="width:30px">
-                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>Môn học 2</a>
-                                </li>
-                                <li class="rounded">
-                                    <a href="#" class="link-dark w-85">
-                                        <span style="width:30px">
-                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>Môn học 3</a>
-                                </li>
-                                <li class="rounded">
-                                    <a href="#" class="link-dark w-85">
-                                        <span style="width:30px">
-                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>Môn học 4</a>
-                                </li>
-                                <li class="rounded">
-                                    <a href="#" class="link-dark w-85">
-                                        <span style="width:30px">
-                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>Môn học 5</a>
-                                </li>
-                                <li class="rounded">
-                                    <a href="#" class="link-dark w-85">
-                                        <span style="width:30px">
-                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>Môn học 6</a>
-                                </li>
-                                <li class="rounded">
-                                    <a href="#" class="link-dark w-85">
-                                        <span style="width:30px">
-                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>Môn học 7</a>
-                                </li>
-                                <li class="rounded">
-                                    <a href="#" class="link-dark w-85">
-                                        <span style="width:30px">
-                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>Môn học 8</a>
-                                </li>
-                                <li class="rounded">
-                                    <a href="#" class="link-dark w-85">
-                                        <span style="width:30px">
-                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>Môn học 9</a>
-                                </li>
-                                <li class="rounded">
-                                    <a href="#" class="link-dark w-85">
-                                        <span style="width:30px">
-                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>Môn học 10</a>
-                                </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </li>

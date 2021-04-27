@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate, decorators
-
+from django.views import View
 
 # from django.contrib import messages
 
@@ -51,3 +51,7 @@ def register(request):
         form = RegistionForm()
     # print(form)
     return render(request, 'Pages/register.html', {'form': form})
+
+class CourseView(View):
+    def get(self, request):
+        return render(request, 'Pages/course.html')

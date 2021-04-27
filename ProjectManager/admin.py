@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User
+from .models import User, Course
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm
 # Register your models here.
@@ -15,3 +15,4 @@ class MyUserAdmin(UserAdmin):
     )
 
 admin.site.register(User, MyUserAdmin)
+admin.site.register(Course)

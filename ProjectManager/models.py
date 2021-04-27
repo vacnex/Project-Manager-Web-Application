@@ -4,7 +4,6 @@ from django.core.validators import RegexValidator
 # Create your models here.
 
 class User(AbstractUser):
-    pass
     gender_choice = ((0, 'Nữ'), (1, 'Nam'))
     gender = models.IntegerField(choices=gender_choice,default=0)
     address = models.CharField(default='', max_length=255, blank=True)
@@ -13,3 +12,9 @@ class User(AbstractUser):
     phone_number = models.CharField(
         validators=[phone_regex], max_length=10, blank=True)
 
+class Course(models.Model):
+    CourseID = models.CharField(max_length=10, primary_key=True)
+    CourseName = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.CourseName

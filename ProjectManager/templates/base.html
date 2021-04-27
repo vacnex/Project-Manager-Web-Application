@@ -41,7 +41,7 @@
                         <div class="navbar-nav ms-auto align-items-center justify-content-center">
                                 <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false" rel="nofollow noopener noreferrer">
                                     <img src="https://secure.gravatar.com/avatar/c34d9a4e2a08b7af82778396b8c01ca1?s=105&d=mm" alt="mdo" width="32" height="32" class="rounded-circle me-2">
-                                    <strong>Usename</strong>
+                                    <strong>{{user.username}}</strong>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="dropdownUser">
                                     <li><a class="dropdown-item" href="#" rel="nofollow noopener noreferrer">Profile</a></li>
@@ -49,7 +49,7 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#" rel="nofollow noopener noreferrer">Sign out</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}" rel="nofollow noopener noreferrer">Sign out</a></li>
                                 </ul>
                         </div>
                     </div>

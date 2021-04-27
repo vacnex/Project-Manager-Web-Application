@@ -2,7 +2,7 @@ from ProjectManager.forms import LoginForm, RegistionForm
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import login, authenticate, decorators
+from django.contrib.auth import login, logout, authenticate, decorators
 
 
 # from django.contrib import messages
@@ -32,12 +32,15 @@ def loginUser(request):
                     return HttpResponseRedirect(next_url)
                 else:
                     return redirect('home')
-            # print(form)
     else:
         form = LoginForm()
     print("test",form)
     return render(request, 'Pages/login.html', {'form': form})
-    
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
 def register(request):
     if request.method == "POST":
         form = RegistionForm(request.POST)

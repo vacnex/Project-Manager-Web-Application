@@ -41,8 +41,14 @@
                                 </ul>
                             </li>
                             <li class="nav-item p-3  d-flex align-items-center justify-content-center">
+                                {% if user.username %}
+                                <span><strong>Xin chào </strong></span><a class="nav-link" href="/home">{{user.username}}</a>
+                                <i class="ml-2 icon fas fa-sign-in-alt"></i>
+                                <!-- <p><a href="/redirect?Id=bPkSKQqMZ9erlLi6p21Q4A%3d%3d" url 'logout' %}">Đăng xuất</a></p> -->
+                                {% else %}
                                 <a class="nav-link" href="/login">Login</a>
                                 <i class="ml-2 icon fas fa-sign-in-alt"></i>
+                                {% endif %}
                             </li>
                         </ul>
                     </div>
@@ -60,8 +66,12 @@
                     <h1 class="h1 text-white">Lac Hong University Project Manager</h1>
                     <h3 class="h3 text-white">
                         <div class="row mt-5 justify-content-center">
-                            <a href="/register" class="my-2 me-2 ms-2 btn btn-primary col-auto">Đăng ký</a>
-                            <a href="/login" class="my-2 me-2 ms-2 btn btn-secondary col-auto">Đăng nhập</a>
+                                {% if user.username %}
+                                <a href="/home" type="button" class="btn btn-outline-info">Đến bảng điều khiển</a>
+                                {% else %}
+                                <a href="/register" class="my-2 me-2 ms-2 btn btn-primary col-auto">Đăng ký</a>
+                                <a href="/login" class="my-2 me-2 ms-2 btn btn-secondary col-auto">Đăng nhập</a>
+                                {% endif %}
                         </div>
                     </h3>
                     <div class="row mt-5 justify-content-center">

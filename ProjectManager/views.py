@@ -25,22 +25,24 @@ def home_guest(request):
 
 
 def loginUser(request):
-    if request.method == 'POST':
-        form = LoginForm(request=request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                next_url = request.POST.get('next')
-                if next_url:
-                    return HttpResponseRedirect(next_url)
-                else:
-                    return redirect('home')
+    if request.user.is_authenticated:
+        return redirect('home')
     else:
-        form = LoginForm()
-    print("test", form)
+        if request.method == 'POST':
+            form = LoginForm(request=request, data=request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    next_url = request.POST.get('next')
+                    if next_url:
+                        return HttpResponseRedirect(next_url)
+                    else:
+                        return redirect('home')
+        else:
+            form = LoginForm()
     return render(request, 'Pages/login.html', {'form': form})
 
 

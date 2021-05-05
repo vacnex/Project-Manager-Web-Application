@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate, decorators
 from django.views import View
-from ProjectManager.models import Course
+from ProjectManager.models import Course, Project, User
 
 # from django.contrib import messages
 
@@ -15,8 +15,12 @@ def index(request):
 
 @decorators.login_required(login_url='/login')
 def home(request):
-    courses = Course.objects.all()
-    context = {'courses': courses}
+    current_user = request.user
+    Project_Home_View = Project.objects.filter(Users=current_user)
+    # print(user_in_project)
+    # for c in courses:
+    #     print(c.courses.Course_Name)
+    context = {'Project': Project_Home_View}
     return render(request, 'Pages/home.html', context)
 
 
@@ -65,9 +69,12 @@ def register(request):
 
 class CourseView(View):
     def get(self, request, courseid):
-        CurrentCourseID = Course.objects.get(CourseID=courseid)
-        CurrentCourseName = CurrentCourseID.CourseName
-        Courses = Course.objects.all()
-        context = {'courses': Courses, 'courseid': courseid,
-                'CurrentCourseName': CurrentCourseName}
+        CurrentCourseID = Course.objects.get(Course_ID=courseid)
+        CurrentCourseName = CurrentCourseID.Course_Name
+        current_user = request.user
+        Project_Courses_view = Project.objects.filter(Users=current_user)
+        Project_contents = Project.objects.filter(courses=CurrentCourseID)
+        Project_content = Project_contents[0].Project_Content
+        context = {'Project': Project_Courses_view, 'courseid': courseid,
+                   'CurrentCourseName': CurrentCourseName, 'Project_content': Project_content}
         return render(request, 'Pages/course.html', context)

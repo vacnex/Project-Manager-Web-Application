@@ -68,7 +68,7 @@
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto list-nav-item">
                     <li class="mb-1 rounded">
-                        <a href="#" class="nav-link link-dark" rel="nofollow noopener noreferrer">
+                        <a href="{% url 'home' %}" class="nav-link link-dark" rel="nofollow noopener noreferrer">
                             <i class="fas fa-columns"></i>
                             Dashboard
                         </a>
@@ -77,12 +77,12 @@
                         <a class="w-100 btn btn-course-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Môn học</a>
                         <div class="collapse show p-1 m-0" id="home-collapse">
                             <ul class="btn-course-toggle-nav list-unstyled fw-normal pb-1 small">
-                                {% for c in courses %}
+                                {% for p in Project %}
                                 <li class="rounded">
-                                    <a href="/course/{{ c.CourseID }}/" class="link-dark w-85">
+                                    <a href="/course/{{ p.courses.Course_ID }}/" class="link-dark w-85">
                                         <span style="width:30px">
                                             <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>{{c.CourseName}}</a>
+                                        </span>{{p.courses.Course_Name}}</a>
                                 </li>
                                 {% endfor %}
                             </ul>

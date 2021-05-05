@@ -20,7 +20,7 @@ Home
                 </div>
             </div>
             <div class="course-list-content">
-                {% for c in courses %}
+                {% for p in Project %}
                     <div>
                         <div class="card">
                             <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -28,7 +28,7 @@ Home
                             </svg>
                             <div class="card-body">
                                 <p class="card-text"><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
-                                <h5 class="card-title">{{c.CourseName}}</h5>
+                                <h5 class="card-title">{{p.courses.Course_Name}}</h5>
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ from django.contrib.auth import login, logout, authenticate, decorators
 from django.views import View
 from ProjectManager.models import Course, Project, User
 from django.urls import reverse
+from django.contrib.auth.models import Group
 # from django.contrib import messages
 
 
@@ -65,11 +66,12 @@ def register(request):
     if request.method == "POST":
         form = RegistionForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            group = Group.objects.get(name='Student')
+            user.groups.add(group)
             return redirect('index')
     else:
         form = RegistionForm()
-    # print(form)
     return render(request, 'Pages/register.html', {'form': form})
 
 

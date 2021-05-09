@@ -5,12 +5,15 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate, decorators
 from django.views import View
 from ProjectManager.models import Course, Project, User
-
+from django.urls import reverse
 # from django.contrib import messages
 
 
 def index(request):
-    return render(request, 'Pages/index.html')
+    if request.user.is_superuser:
+        return HttpResponseRedirect(reverse('admin:index'))
+    else:
+        return render(request, 'Pages/index.html')
 
 
 @decorators.login_required(login_url='/login')
@@ -41,10 +44,13 @@ def loginUser(request):
                 if user is not None:
                     login(request, user)
                     next_url = request.POST.get('next')
-                    if next_url:
-                        return HttpResponseRedirect(next_url)
+                    if request.user.is_superuser:
+                        return HttpResponseRedirect(reverse('admin:index'))
                     else:
-                        return redirect('home')
+                        if next_url:
+                            return HttpResponseRedirect(next_url)
+                        else:
+                            return redirect('home')
         else:
             form = LoginForm()
     return render(request, 'Pages/login.html', {'form': form})

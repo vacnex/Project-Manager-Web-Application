@@ -54,7 +54,8 @@ def loginUser(request):
                             return redirect('home')
         else:
             form = LoginForm()
-    return render(request, 'Pages/login.html', {'form': form})
+    context = {'form': form}
+    return render(request, 'Pages/login.html', context)
 
 
 def logout_view(request):

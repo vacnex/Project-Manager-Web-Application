@@ -77,13 +77,17 @@
                         <a class="w-100 btn btn-course-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Môn học</a>
                         <div class="collapse show p-1 m-0" id="home-collapse">
                             <ul class="btn-course-toggle-nav list-unstyled fw-normal pb-1 small">
-                                {% for p in Project %}
+                                {% for p in obj_Project %}
+                                {% ifchanged p.courses.Course_Name %}
                                 <li class="rounded">
                                     <a href="/course/{{ p.courses.Course_ID }}/" class="link-dark w-85">
                                         <span style="width:30px">
                                             <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>{{p.courses.Course_Name}}</a>
+                                        </span>
+                                        {{p.courses.Course_Name}} 
+                                        </a>
                                 </li>
+                                {% endifchanged %}
                                 {% endfor %}
                             </ul>
                         </div>

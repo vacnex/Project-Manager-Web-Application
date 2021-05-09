@@ -19,12 +19,13 @@ def index(request):
 
 @decorators.login_required(login_url='/login')
 def home(request):
-    current_user = request.user
-    Project_Home_View = Project.objects.filter(Users=current_user)
-    # print(user_in_project)
+    current_user = request.user.id
+    # print(current_user.id)
+    obj_Project = Project.objects.filter(Users=current_user)
+    print(obj_Project)
     # for c in courses:
     #     print(c.courses.Course_Name)
-    context = {'Project': Project_Home_View}
+    context = {'obj_Project': obj_Project}
     return render(request, 'Pages/home.html', context)
 
 
@@ -76,14 +77,40 @@ def register(request):
     return render(request, 'Pages/register.html', {'form': form})
 
 
-class CourseView(View):
+class CourseDetailView(View):
     def get(self, request, courseid):
-        CurrentCourseID = Course.objects.get(Course_ID=courseid)
-        CurrentCourseName = CurrentCourseID.Course_Name
-        current_user = request.user
-        Project_Courses_view = Project.objects.filter(Users=current_user)
-        Project_contents = Project.objects.filter(courses=CurrentCourseID)
-        Project_content = Project_contents[0].Project_Content
-        context = {'Project': Project_Courses_view, 'courseid': courseid,
-                   'CurrentCourseName': CurrentCourseName, 'Project_content': Project_content}
+        current_user = request.user.id
+        course_name = Course.objects.get(Course_ID=courseid)
+        list_Project = Project.objects.filter(Users=current_user)
+        # name = Project.objects.filter(Users__in=[current_user])
+        # TeacherName = ""
+        # List = []
+
+        # for i, p in enumerate(list_Project):
+        #     lista=[]
+        #     for j, pp in enumerate(p.Users.all()):
+                
+
+        #         if pp.is_Teacher is False:
+        #         # print(str(i) + str(j) + pp.get_full_name() + " student")
+        #             List.append(pp.get_full_name())
+        #         if pp.is_Teacher:
+        #         # print(str(i) + str(j) + pp.get_full_name())
+        #             TeacherName = pp.get_full_name()
+        student_data = dict()
+        for p in list_Project:
+            student_data[p.Project_Name] = [pp.get_full_name() for pp in p.Users.all()
+                                             if pp.is_Teacher is False]
+
+        print(student_data)
+        context = {'CourseID': courseid, 'Student_data': student_data,
+                   'CourseName': course_name, 'ListProject': list_Project}
+        # CurrentCourseID = Course.objects.get(Course_ID=courseid)
+        # CurrentCourseName = CurrentCourseID.Course_Name
+        # current_user = request.user
+        # Project_Courses_view = Project.objects.filter(Users=current_user)
+        # Project_contents = Project.objects.filter(courses=CurrentCourseID)
+        # Project_content = Project_contents[0].Project_Content
+        # context = {'Project': Project_Courses_view, 'courseid': courseid,
+        #            'CurrentCourseName': CurrentCourseName, 'Project_content': Project_content}
         return render(request, 'Pages/course.html', context)

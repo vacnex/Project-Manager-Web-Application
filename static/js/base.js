@@ -70,4 +70,38 @@ $(document).ready(function () {
         },
       ],
     });
+    $('.project-list-content').slick({
+      mobileFirst: true,
+      slidesToShow: 1,
+
+      arrows: true,
+      nextArrow: '#btn-next',
+      prevArrow: '#btn-prev',
+      responsive: [
+        {
+          breakpoint: breakpoint.sm,
+          settings: {
+            slidesToShow: 2,
+          },
+        },
+        {
+          breakpoint: breakpoint.md,
+          settings: {
+            slidesToShow: 3,
+          },
+        },
+        {
+          breakpoint: breakpoint.lg,
+          settings: {
+            slidesToShow: 4,
+          },
+        },
+        {
+          breakpoint: breakpoint.xl,
+          settings: {
+            slidesToShow: 5,
+          },
+        },
+      ],
+    });
 });

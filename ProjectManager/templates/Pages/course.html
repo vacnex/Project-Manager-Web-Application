@@ -10,15 +10,80 @@ Course
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
-                    <li class="breadcrumb-item">My Course</li>
+                    <li class="breadcrumb-item">Môn Học</li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <a href="{% url 'home' %}{{courseid}}/">{{CurrentCourseName}}</a>
+                        <a href="{% url 'home' %}{{CourseID}}/">{{CourseName}}</a>
                     </li>
                 </ol>
             </nav>
             <div class="Course-Content">
-                <div class="Course-Tittle">
-                    <h1>{{courseid}} - {{CurrentCourseName}}</h1>
+                <section class="project-wrapper">
+                    <div class="row course-list-header mb-3">
+                        <div class="cl-title col-lg-auto col-md-auto col-sm-auto ">
+                            <h4>Danh Sách Dự Án Môn</h4>
+                        </div>
+                        <div class="cl-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button id="btn-prev" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-left fa-fw " aria-hidden="true" aria-label=""></i></span></button>
+                                <button id="btn-next" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-right fa-fw " aria-hidden="true" aria-label=""></i></span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-list-content">
+                        <!-- {% for p in ListProject %}
+                        <div>
+                            <div class="card">
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <rect width="100%" height="100%" fill="#868e96"></rect>
+                                </svg>
+                                <div class="card-body">
+                                    <p class="card-text"><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
+                                    <p><h5 class="card-title">{{p.Project_Name}}</h5></p>
+                                    <footer class="blockquote-footer">Thành viên: 
+                                        {% for pp in p.Users.all %}
+                                            {% if pp.is_Teacher is False %}
+                                                {{pp.get_full_name}},
+                                            {%endif%}
+                                        {% endfor %}
+                                    </footer>
+                                    <footer class="blockquote-footer">Giảng Viên:
+                                        {% for pp in p.Users.all %}
+                                            {% if pp.is_Teacher %}
+                                                {{pp.get_full_name}}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %} -->
+                        {% for Project_Name, Member in Student_data.items %}
+                        <div>
+                            <div class="card">
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <rect width="100%" height="100%" fill="#868e96"></rect>
+                                </svg>
+                                <div class="card-body">
+                                    <p class="card-text"><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
+                                    <p>
+                                        {% if Project_Name is not "Teacher" %}
+                                    <h5 class="card-title">{{Project_Name}}</h5>
+                                        {% endif %}
+                                    </p>
+                                    <footer class="blockquote-footer">Thành viên:
+                                            {{Member|join:', '}}
+                                    </footer>
+                                    <footer class="blockquote-footer">Giảng Viên:
+                                            
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                <div class="Project-Tittle">
+                    <!-- <h4>{{courseid}} - {{CurrentCourseName}}</h4> -->
                 </div>
                 <div class="Course-Process">
                         {{Project_content |safe}}

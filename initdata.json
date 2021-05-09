@@ -1,0 +1,870 @@
+[
+    {
+        "model": "auth.group",
+        "pk": 1,
+        "fields": {
+            "name": "Student",
+            "permissions": []
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 2,
+        "fields": {
+            "name": "Teacher",
+            "permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$1oagLAvV5Ft6$Oz0yx63WHX/Vgyk6dYwWb3wKSfCk8PfJBtvgswhO/hg=",
+            "last_login": "2021-05-09T09:37:42.136Z",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "admin@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2021-05-09T09:37:24.273Z",
+            "is_Teacher": false,
+            "gender": 0,
+            "address": "",
+            "phone_number": "",
+            "_Class": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": "2021-05-09T09:37:42Z",
+            "is_superuser": true,
+            "username": "truonghuy",
+            "first_name": "Trương",
+            "last_name": "Gia Huy",
+            "email": "",
+            "is_staff": false,
+            "is_active": false,
+            "date_joined": "2021-05-09T09:37:24Z",
+            "is_Teacher": false,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17CN111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "kieuhuy",
+            "first_name": "Kiều",
+            "last_name": "Gia Huy",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": false,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17CN111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 4,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "khonghuy",
+            "first_name": "Khổng",
+            "last_name": "Gia Huy",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": false,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17CN111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 5,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "thaianh",
+            "first_name": "Ngô",
+            "last_name": "Huỳnh thái anh",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": false,
+            "gender": 0,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17CN111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 6,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "myvien",
+            "first_name": "Mỹ",
+            "last_name": "Viên",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": false,
+            "gender": 0,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17CN111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 7,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "minhanh",
+            "first_name": "Lê",
+            "last_name": "Ngọc Minh anh",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": false,
+            "gender": 0,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17CN111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 8,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "hoangdung",
+            "first_name": "Vũ",
+            "last_name": "Hoàng Dũng",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": false,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17CN111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 9,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "ducminh",
+            "first_name": "Mã",
+            "last_name": "Đức Minh",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": false,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17CN111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 10,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "baokha",
+            "first_name": "Bảo",
+            "last_name": "Kha",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": false,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17CN111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 11,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": "2021-05-09T09:37:42.136Z",
+            "is_superuser": true,
+            "username": "quocviet",
+            "first_name": "Văn",
+            "last_name": "Quốc Việt",
+            "email": "admin@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2021-05-09T09:37:24.273Z",
+            "is_Teacher": false,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17SE111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 12,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": "2021-05-09T09:37:42Z",
+            "is_superuser": true,
+            "username": "lananh",
+            "first_name": "Nguyễn",
+            "last_name": "Thị Lan Anh",
+            "email": "",
+            "is_staff": false,
+            "is_active": false,
+            "date_joined": "2021-05-09T09:37:24Z",
+            "is_Teacher": false,
+            "gender": 0,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17SE111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 13,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "kimanh",
+            "first_name": "Trần",
+            "last_name": "Kim Anh",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": false,
+            "gender": 0,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17SE111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 14,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "thanhchau",
+            "first_name": "Lê",
+            "last_name": "Thanh Châu",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": false,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17SE111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 15,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "minhchau",
+            "first_name": "Phan",
+            "last_name": "Minh Châu",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": false,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": "17SE111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 16,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "xuanbinh",
+            "first_name": "Nguyễn",
+            "last_name": "Xuân Bình",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": false,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": "18CT111",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 17,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "minhphuc",
+            "first_name": "Nguyễn",
+            "last_name": "Minh Phúc",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": true,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": null,
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 18,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "vyphuong",
+            "first_name": "Văn Đình",
+            "last_name": "Vỹ Phương",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": true,
+            "gender": 0,
+            "address": "",
+            "phone_number": "",
+            "_Class": null,
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 19,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "tanguyen",
+            "first_name": "Tạ",
+            "last_name": "Nguyễn",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": true,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": null,
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 20,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "thihuong",
+            "first_name": "Phan",
+            "last_name": "Thị Hường",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": true,
+            "gender": 0,
+            "address": "",
+            "phone_number": "",
+            "_Class": null,
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 21,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "caotuan",
+            "first_name": "Huỳnh",
+            "last_name": "Cao Tuấn",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": true,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": null,
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 22,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "minhson",
+            "first_name": "Nguyễn",
+            "last_name": "Minh Sơn",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": true,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": null,
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 23,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "duyquang",
+            "first_name": "Nguyễn",
+            "last_name": "Vũ Duy Quang",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": true,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": null,
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 24,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "hongduc",
+            "first_name": "Nguyễn",
+            "last_name": "Thị Hồng Đức",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": true,
+            "gender": 0,
+            "address": "",
+            "phone_number": "",
+            "_Class": null,
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 25,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "thanhhien",
+            "first_name": "Lê",
+            "last_name": "Thành hiển",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": true,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": null,
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.user",
+        "pk": 26,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$zrVu01Y1IZse$myTTLnW+8E4gi3fgNCYHQJMZm8fTKkhU6h1V2T83Tj8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "congxuyen",
+            "first_name": "Phạm",
+            "last_name": "Công Xuyên",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-05-09T10:25:57.621Z",
+            "is_Teacher": true,
+            "gender": 1,
+            "address": "",
+            "phone_number": "",
+            "_Class": null,
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "ProjectManager.schoolclass",
+        "pk": "17CN111",
+        "fields": {}
+    },
+    {
+        "model": "ProjectManager.schoolclass",
+        "pk": "17SE111",
+        "fields": {}
+    },
+    {
+        "model": "ProjectManager.schoolclass",
+        "pk": "18CT111",
+        "fields": {}
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "102014",
+        "fields": {
+            "Course_Name": "Tin học đại cương"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111001",
+        "fields": {
+            "Course_Name": "Cấu trúc và lắp ráp máy tính"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111002",
+        "fields": {
+            "Course_Name": "Ngôn ngữ C/C++"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111003",
+        "fields": {
+            "Course_Name": "Tin học quản lý"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111004",
+        "fields": {
+            "Course_Name": "Cơ sở dữ liệu"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111005",
+        "fields": {
+            "Course_Name": "Cấu trúc dữ liệu và thuật giải"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111007",
+        "fields": {
+            "Course_Name": "Lập trình hướng đối tượng"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111008",
+        "fields": {
+            "Course_Name": "Thiết kế web"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111011",
+        "fields": {
+            "Course_Name": "Hệ quản trị CSDL"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111012",
+        "fields": {
+            "Course_Name": "Lập trình C#"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111014",
+        "fields": {
+            "Course_Name": "Lập trình cơ bản với Java"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111015",
+        "fields": {
+            "Course_Name": "Lập trình web"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111017",
+        "fields": {
+            "Course_Name": "Lập trình ứng dụng CSDL với C#"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111029",
+        "fields": {
+            "Course_Name": "Kỹ Thuật Lập Trình (Ngôn Ngữ C)"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111030",
+        "fields": {
+            "Course_Name": "Thiết kế web nâng cao"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111035",
+        "fields": {
+            "Course_Name": "Mạng Máy Tính"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111036",
+        "fields": {
+            "Course_Name": "Dịch Vụ Mạng"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111038",
+        "fields": {
+            "Course_Name": "Phát triển ứng dụng"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111039",
+        "fields": {
+            "Course_Name": "Lập trình thiết bị di động"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111040",
+        "fields": {
+            "Course_Name": "Phát triển phần mềm mã nguồn mở"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111042",
+        "fields": {
+            "Course_Name": "Công nghệ xử lý ảnh"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "111043",
+        "fields": {
+            "Course_Name": "Phân tích thiết kế hệ thống hướng đối tượng"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "112002",
+        "fields": {
+            "Course_Name": "Hệ điều hành Linux"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "112023",
+        "fields": {
+            "Course_Name": "An toàn và bảo mật hệ thống mạng"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "112032",
+        "fields": {
+            "Course_Name": "Lập trình mạng căn bản"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "112033",
+        "fields": {
+            "Course_Name": "Mạng máy tính nâng cao"
+        }
+    },
+    {
+        "model": "ProjectManager.course",
+        "pk": "112034",
+        "fields": {
+            "Course_Name": "Lập trình giao tiếp thiết bị"
+        }
+    }
+]

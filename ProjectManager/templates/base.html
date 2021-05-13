@@ -66,7 +66,7 @@
                     <img src="//learn.lhu.edu.vn/pluginfile.php/1/theme_space/customlogosidebar/1596891663/android-icon-72x72.png" alt="LHES" class="img-fluid">
                 </div>
                 <hr>
-                <ul class="nav nav-pills flex-column mb-auto list-nav-item">
+                <ul class="nav nav-pills flex-column mb-auto list-nav-item flex-nowrap">
                     <li class="mb-1 rounded">
                         <a href="{% url 'home' %}" class="nav-link link-dark" rel="nofollow noopener noreferrer">
                             <i class="fas fa-columns"></i>
@@ -77,17 +77,15 @@
                         <a class="w-100 btn btn-course-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Môn học</a>
                         <div class="collapse show p-1 m-0" id="home-collapse">
                             <ul class="btn-course-toggle-nav list-unstyled fw-normal pb-1 small">
-                                {% for p in obj_Project %}
-                                {% ifchanged p.courses.Course_Name %}
+                                {% for id,name in course_list.items %}                                
                                 <li class="rounded">
-                                    <a href="/course/{{ p.courses.Course_ID }}/" class="link-dark w-85">
+                                    <a href="/course/{{id}}/" class="link-dark w-85">
                                         <span style="width:30px">
                                             <i class="icon fas fa-graduation-cap fa-fw"></i>
                                         </span>
-                                        {{p.courses.Course_Name}} 
+                                        {{name|join:""}}
                                         </a>
-                                </li>
-                                {% endifchanged %}
+                                </li>                                
                                 {% endfor %}
                             </ul>
                         </div>

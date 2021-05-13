@@ -47,6 +47,25 @@ body {
     margin-right: 0 !important;
   }
 }
+a h5.card-title {
+  color: #212529;
+}
+.slick-list{
+  padding: 1rem!important;
+}
+.card{
+  cursor: pointer;
+  transition: all 150ms cubic-bezier(0.55, 0.09, 0.68, 0.53);
+}
+.card:hover {
+    -webkit-transform: scale(1.03);
+    -moz-transform: scale(1.03);
+    -ms-transform: scale(1.03);
+    -o-transform: scale(1.03);
+    transform: scale(1.03);
+    -webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 2px 3px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%), 0 4px 5px rgb(0 0 0 / 5%);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 2px 3px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%), 0 4px 5px rgb(0 0 0 / 5%);
+}
 /* #endregion */
 /* ---------------------------------------------------------- */
 /* #region  Top menu */

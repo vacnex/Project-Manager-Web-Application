@@ -8,33 +8,93 @@ Home
 <div id="page-content">
     <div class="row g-0">
         <section class="course-dashboard">
-            <div class="row course-list-header mb-3">
-                <div class="cl-title col-lg-auto col-md-auto col-sm-auto ">
-                    <h4>Course List</h4>
-                </div>
-                <div class="cl-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button id= "btn-prev" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-left fa-fw " aria-hidden="true" aria-label=""></i></span></button>
-                        <button id="btn-next" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-right fa-fw " aria-hidden="true" aria-label=""></i></span></button>
-                    </div>
-                </div>
+            {% if request_pj%}
+            <div class="Request">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ProjectRegister">Đăng kí đề tài</button>
             </div>
-            <div class="course-list-content">
-                {% for id,name in course_list.items %}
-                    <div>
-                        <a href="/course/{{id}}/" class="card text-decoration-none" >
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <rect width="100%" height="100%" fill="#868e96"></rect>
-                            </svg>
-                            <div class="card-body">
-                                <p class="card-text"><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
-                                <h5 class="card-title">{{name|join:""}}</h5>
+            {% else %}
+                {% if Is_Confirm%}
+                    {%if user.is_Teacher%}
+                    <div class="row course-list-header mb-3">
+                        <div class="cl-title col-lg-auto col-md-auto col-sm-auto ">
+                            <h4>Danh Sách Đề Tài</h4>
+                        </div>
+                        <div class="cl-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button id= "btn-prev" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-left fa-fw " aria-hidden="true" aria-label=""></i></span></button>
+                                <button id="btn-next" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-right fa-fw " aria-hidden="true" aria-label=""></i></span></button>
                             </div>
-                        </a>
+                        </div>
+
                     </div>
-                {% endfor %}
-            </div>
+                    <div class="course-list-content">
+                        {%for name in Project_list%}
+                        <div>
+                            <a href="" class="card text-decoration-none">
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <rect width="100%" height="100%" fill="#868e96"></rect>
+                                </svg>
+                                <div class="card-body">
+                                    <p class="card-text"><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
+                                    <h5 class="card-title">{{name}}</h5>
+                                </div>
+                            </a>
+                        </div>
+                        {%endfor%}
+                    </div>
+                    {% else %}
+                    <div class="row course-list-header mb-3">
+                        <div class="cl-title col-lg-auto col-md-auto col-sm-auto ">
+                            <h4>{{project_data.1}}</h4>
+                        </div>
+                    </div>
+                    <div class="Process-list-content">
+                        {{project_data.2|safe}}
+                    </div>
+                    {% endif %}
+                {% else %}
+                <div class="Waiting">
+                    <h1>Đang đợi Xác nhận</h1>
+                </div>
+                {% endif %}
+            {% endif %}
         </section>
+    </div>
+    <div class="modal fade" id="ProjectRegister" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ProjectRegisterLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg modal-fullscreen-lg-down ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ProjectRegisterLabel">Đăng Ký Dự Án</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="ProjectRegister" action="." method="POST">
+                        {% csrf_token %}
+                        <div class="form-floating mb-3">
+                            {{ form.Project_Name }}
+                            <label>Tên Đề Tài</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.Type }}
+                            <label>Loại Đề Tài</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.schoolYear }}
+                            <label>Khoá</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.description }}
+                            <label>Mô Tả Đề Tài</label>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary mt-3 btn-lg" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary mt-3 btn-lg">Đăng Ký</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

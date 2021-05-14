@@ -73,26 +73,26 @@
                             Dashboard
                         </a>
                     </li>
+                    {%if user.is_Teacher%}
                     <li class="mb-1 course-list">
-                        <a class="w-100 btn btn-course-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Môn học</a>
+                        <a class="w-100 btn btn-course-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Khoá</a>
                         <div class="collapse show p-1 m-0" id="home-collapse">
                             <ul class="btn-course-toggle-nav list-unstyled fw-normal pb-1 small">
-                                {% for id,name in course_list.items %}                                
+                                {%for y in Year_list%}
                                 <li class="rounded">
-                                    <a href="/course/{{id}}/" class="link-dark w-85">
+                                    <a href="" class="link-dark w-85">
                                         <span style="width:30px">
                                             <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>
-                                        {{name|join:""}}
-                                        </a>
-                                </li>                                
-                                {% endfor %}
+                                        </span>{{y}}
+                                    </a>
+                                </li>
+                                {%endfor%}
                             </ul>
                         </div>
                     </li>
+                    {%endif%}
                 </ul>
                 <hr>
-                
             </div>
         </div>
     </div>

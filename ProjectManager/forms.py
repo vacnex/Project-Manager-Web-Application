@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User
+from .models import User, Project
 from django.core.exceptions import ValidationError
 import re
 
@@ -37,3 +37,14 @@ class LoginForm(AuthenticationForm):
         'invalid_login': ("Hãy nhập đúng %(username)s và mật khẩu."),
         'inactive': ("Tài khoản này không hoạt động."),
     }
+
+class ProjectRegisters(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['Project_Name', 'Type', 'schoolYear', 'description']
+        widgets = {
+            'Project_Name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tên Đề Tài'}),
+            'Type': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Loại Đề Tài'}),
+            'schoolYear': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Khoá'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Mô Tả'}),
+        }

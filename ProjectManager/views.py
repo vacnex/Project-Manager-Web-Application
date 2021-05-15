@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate, decorators
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views import View
 from ProjectManager.models import Project, User
 from django.urls import reverse
@@ -19,51 +21,51 @@ def index(request):
 # endregion
 
 # region home
-@decorators.login_required(login_url='/login')
-def home(request):
-    instance = request.user
-    current_user = request.user.id
-    cur_Project = Project.objects.filter(Users=current_user)
-    Project_list = Year_list = project_data = []
-    Is_Confirm = request_pj = False
-    form = None
-    if request.user.is_Manager:
-        pass
-    elif request.user.is_Teacher:
-        for project in cur_Project:
-            if not project.Is_Confirm:
-                pass
-            else:
-                Is_Confirm = True
-                Year_list.append(project.schoolYear)
-                Project_list.append(project.Project_Name)
-    elif request.user.is_Reviewer:
-        pass
-    else:
-        if not len(cur_Project) > 0:
-            request_pj = True
-            form = ProjectRegisters()
-        else:
+@method_decorator(login_required(login_url='/login'), name='get')
+class HomeIndex(View):
+    def get(self, request):
+        current_user = request.user.id
+        cur_Project = Project.objects.filter(Users=current_user)
+        Teacher_project_list = []
+        Year_list = []
+        student_project_data = []
+        Is_Confirm = False
+        request_pj = False
+        Manager_project_list = None
+        form = None
+        if request.user.is_Manager:
+            Manager_project_list = Project.objects.all()
+        elif request.user.is_Reviewer:
+            pass
+        elif request.user.is_Teacher:
             for project in cur_Project:
-                if not project.Is_Confirm:
-                    pass
-                else:
                     Is_Confirm = True
-                    project_data.append(project.Project_ID)
-                    project_data.append(project.Project_Name)
-                    project_data.append(project.Project_Content)
-    if request.method == "POST":
-        form = ProjectRegisters(request.POST)
-        if form.is_valid():
-            obj = form.save()
-            obj.Users.add(request.user)
-            obj.save()
-
-
-
-    context = {'request_pj': request_pj,
-               'Is_Confirm': Is_Confirm, 'project_data': project_data, 'Year_list': Year_list, 'Project_list': Project_list,'form': form}
-    return render(request, 'Pages/home.html', context)
+                    Year_list.append(project.schoolYear)
+                    Teacher_project_list.append(project.Project_Name)
+        else:
+            if not len(cur_Project) > 0:
+                request_pj = True
+                form = ProjectRegisters()
+            else:
+                for project in cur_Project:
+                    if project.Is_Confirm:
+                        Is_Confirm = True
+                        student_project_data.append(project.Project_ID)
+                        student_project_data.append(project.Project_Name)
+                        student_project_data.append(project.Project_Content)
+        context = {'request_pj': request_pj,
+                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Year_list': Year_list, 'Teacher_project_list': Teacher_project_list, 'form': form}
+        return render(request, 'Pages/home.html', context)
+    def post(self, request):
+        form = None
+        if request.method == "POST":
+            form = ProjectRegisters(request.POST)
+            if form.is_valid():
+                obj = form.save()
+                obj.Users.add(request.user)
+                obj.save()
+        context = {'form': form}
+        return render(request, 'Pages/home.html', context)
 # endregion
 
 # region home_guest
@@ -140,7 +142,6 @@ class CourseDetailView(View):
         if project_list_by_course.exists():
             for course in courses_list_by_user:
                 all_courses_of_user[course.courses.Course_ID] = {course.courses.Course_Name}
-
             for course in courses_list_by_user:
                 for p in project_list_by_course:
                     if course.courses.Course_ID == p.courses.Course_ID:

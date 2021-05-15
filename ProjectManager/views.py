@@ -31,10 +31,13 @@ class HomeIndex(View):
         student_project_data = []
         Is_Confirm = False
         request_pj = False
-        Manager_project_list = None
+        Manager_project_list = []
         form = None
         if request.user.is_Manager:
-            Manager_project_list = Project.objects.all()
+            # Manager_project_list = 
+            for mp in Project.objects.all():
+                if not mp.Is_Confirm:
+                    Manager_project_list.append(mp)
         elif request.user.is_Reviewer:
             pass
         elif request.user.is_Teacher:
@@ -54,7 +57,7 @@ class HomeIndex(View):
                         student_project_data.append(project.Project_Name)
                         student_project_data.append(project.Project_Content)
         context = {'request_pj': request_pj,
-                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Year_list': Year_list, 'Teacher_project_list': Teacher_project_list, 'form': form}
+                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Year_list': Year_list, 'Manager_project_list': Manager_project_list, 'Teacher_project_list': Teacher_project_list, 'form': form}
         return render(request, 'Pages/home.html', context)
     def post(self, request):
         form = None

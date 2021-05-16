@@ -36,7 +36,7 @@ $(document).ready(function () {
         xxxxl: 2500,
     };
       
-    $('.course-list-content').slick({
+    $('.list-content').slick({
         mobileFirst: true,
         slidesToShow: 1,
         arrows: true,

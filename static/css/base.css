@@ -176,7 +176,7 @@ a h5.card-title {
     left: -100%;
   }
 }
-.course-list {
+.nav-list {
   background-color: #fff;
   -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%), 0 1px 2px rgb(0 0 0 / 5%),
     0 0 2px rgb(0 0 0 / 5%), 0 3px 4px rgb(0 0 0 / 5%);
@@ -187,7 +187,7 @@ a h5.card-title {
   -o-transition: all 150ms cubic-bezier(0.55, 0.09, 0.68, 0.53);
   transition: all 150ms cubic-bezier(0.55, 0.09, 0.68, 0.53);
 }
-.course-list:hover {
+.nav-list:hover {
   -webkit-transform: scale(1.03);
   -moz-transform: scale(1.03);
   -ms-transform: scale(1.03);
@@ -201,7 +201,7 @@ a h5.card-title {
 /* #endregion */
 /* ---------------------------------------------------------- */
 /* #region  Page content css */
-.course-dashboard {
+.page-dashboard, .Project-Manager-Content{
   padding: 1rem;
   -webkit-box-shadow: rgb(0 0 0 / 5%) 0 0.5px 0, rgb(0 0 0 / 3%) 0 0 0 1px,
     rgb(0 0 0 / 5%) 0 2px 4px;
@@ -211,23 +211,23 @@ a h5.card-title {
 }
 
 @media (min-width: 320px) and (max-width: 576px) {
-  .cl-title {
+  .title {
     text-align: center;
   }
-  .cl-btn-group .btn-group {
+  .slick-btn-group .btn-group {
     width: 100%;
   }
 }
 @media (min-width: 320px) and (max-width: 991.98px) {
-  .course-list-content .card {
+  .list-content .card {
     margin-bottom: 1.5rem;
   }
 }
-.course-list-content .slick-slide {
+.list-content .slick-slide {
   padding-right: 15px;
   padding-left: 15px;
 }
-.course-list-content .slick-slide:focus {
+.list-content .slick-slide:focus {
   outline: none;
 }
 @media (min-width: 320px) and (max-width: 991.98px) {
@@ -398,18 +398,18 @@ a h5.card-title {
     left: calc(100% - 61px);
   }
 }
-.btn-course-toggle {
+.btn-toggle {
   display: inline-flex;
   padding: 9px 16px;
   font-weight: 600;
   color: rgba(0, 0, 0, 0.65);
   background-color: transparent;
 }
-.btn-course-toggle:hover {
+.btn-toggle:hover {
   color: #0277bd;
   background-color: #f4f7fe;
 }
-.btn-course-toggle::before {
+.btn-toggle::before {
   width: 1.25em;
   line-height: 0;
   content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
@@ -417,13 +417,13 @@ a h5.card-title {
   transform-origin: 0.5em 50%;
 }
 
-.btn-course-toggle[aria-expanded='true'] {
+.btn-toggle[aria-expanded='true'] {
   color: rgba(0, 0, 0, 0.85);
 }
-.btn-course-toggle[aria-expanded='true']::before {
+.btn-toggle[aria-expanded='true']::before {
   transform: rotate(90deg);
 }
-.btn-course-toggle-nav a {
+.btn-toggle-nav a {
   display: inline-flex;
   padding: 9px;
   color: #575967;
@@ -432,11 +432,11 @@ a h5.card-title {
   text-decoration: none;
 }
 .list-nav-item li a:hover,
-.btn-course-toggle-nav li a:hover {
+.btn-toggle-nav li a:hover {
   color: #0277bd;
 }
-.list-nav-item li:not(.course-list):hover,
-.btn-course-toggle-nav li:hover {
+.list-nav-item li:not(.nav-list):hover,
+.btn-toggle-nav li:hover {
   background-color: #f4f7fe;
   color: #0277bd;
 }

@@ -7,23 +7,23 @@ Home
 {% block content %}
 <div id="page-content">
     <div class="row g-0">
-        <section class="course-dashboard">
+        <section class="page-dashboard">
             {% if user.is_Manager%}     <!-- Giáo Viên quản lý -->
-            <div class="row course-list-header mb-3">
-                <div class="cl-title col-lg-auto col-md-auto col-sm-auto ">
+            <div class="row mb-3">
+                <div class="title col-lg-auto col-md-auto col-sm-auto ">
                     <h4>Danh Sách Đề Tài Cần Xác Nhận</h4>
                 </div>
-                <div class="cl-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
+                <div class="slick-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <button id="btn-prev" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-left fa-fw " aria-hidden="true" aria-label=""></i></span></button>
                         <button id="btn-next" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-right fa-fw " aria-hidden="true" aria-label=""></i></span></button>
                     </div>
                 </div>
             </div>
-            <div class="course-list-content">
+            <div class="list-content">
                 {% for p in Manager_project_list%}
                 <div>
-                    <a href="" class="card text-decoration-none">
+                    <a href="/confirm/{{ p.Project_ID }}/" class="card text-decoration-none">
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
                             <rect width="100%" height="100%" fill="#868e96"></rect>
                         </svg>
@@ -44,18 +44,18 @@ Home
             {% elif user.is_Reviewer %} <!-- Giáo Viên phản Biện -->
             {% elif user.is_Teacher %} <!-- Giáo viên -->
                 {% if Is_Confirm%}
-                <div class="row course-list-header mb-3">
-                    <div class="cl-title col-lg-auto col-md-auto col-sm-auto ">
+                <div class="row mb-3">
+                    <div class="title col-lg-auto col-md-auto col-sm-auto ">
                         <h4>Danh Sách Đề Tài</h4>
                     </div>
-                    <div class="cl-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
+                    <div class="slick-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <button id="btn-prev" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-left fa-fw " aria-hidden="true" aria-label=""></i></span></button>
                             <button id="btn-next" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-right fa-fw " aria-hidden="true" aria-label=""></i></span></button>
                         </div>
                     </div>
                 </div>
-                <div class="course-list-content">
+                <div class="list-content">
                     {%for name in Teacher_project_list%}
                     <div>
                         <a href="" class="card text-decoration-none">
@@ -82,8 +82,8 @@ Home
                     </div>
                 {% else %}
                     {% if Is_Confirm%}
-                    <div class="row course-list-header mb-3">
-                        <div class="cl-title col-lg-auto col-md-auto col-sm-auto ">
+                    <div class="row mb-3">
+                        <div class="title col-lg-auto col-md-auto col-sm-auto ">
                             <h4>{{student_project_data.1}}</h4>
                         </div>
                     </div>

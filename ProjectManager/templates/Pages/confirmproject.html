@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Project Manager
+{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <div class="row g-0">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+                <li class="breadcrumb-item">Quản Lý Dự Án</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {%for p in unconfirm_project_list_by_id%}
+                    <a href="/confirm/{{projectid}}/">{{p.Project_Name}}</a>
+                    {% endfor %}
+                </li>
+            </ol>
+        </nav>
+        <div class="Project-Manager-Content">
+            <section class="Project-Manager-wrapper">
+                <div class="Project-Tittle">
+                    {%for p in unconfirm_project_list_by_id%}
+                    <h1>Thông Tin Đề Tài {{p.Project_Name}}</h1>
+                    {% endfor %}
+                </div>
+                <div>
+                    <form id="ConfirmProjectForm" action="." method="POST" >{% csrf_token %}
+                        <input type="hidden" id="project_id" value="{{projectid}}" disabled="">
+                        <div class="form-floating mb-3">
+                            {{ confirm_form.Project_Name }}
+                            <label>Tên Đề Tài</label>
+                        </div>
+                        <p>Sinh Viên Đăng Kí: {{fullname.0}}</p>
+                        <div class="form-floating mb-3">
+                            {{ confirm_form.Type }}
+                            <label>Loại Đề Tài</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ confirm_form.schoolYear }}
+                            <label>Khoá</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ confirm_form.description }}
+                            <label>Mô Tả Đề Tài</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            {{ confirm_form.Is_Confirm }}
+                            <label>Xác nhận đề tài</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select id="teacher" name="teacher" class="form-select" placeholder="Chỉ định giáo viên hướng dẫn">
+                                <option value="" selected>---------</option>
+                                {%for t in teacher%}
+                                    <option value="{{t.username}}">{{t.get_full_name}}</option>
+                                {%endfor%}
+                            </select>
+                            <label>Chỉ định giáo viên hướng dẫn</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select id="reviewer" name="reviewer" class="form-select" placeholder="Chỉ định giáo viên phản biện" >
+                                <option value="" selected>---------</option>
+                                {%for t in teacher%}
+                                    <option value="{{t.username}}">{{t.get_full_name}}</option>
+                                {%endfor%}
+                            </select>
+                            <label>Chỉ định giáo viên phản biện</label>
+                        </div>
+                        <button type="submit" id="confirmProject" class="btn btn-primary mt-3 btn-lg">Xác Nhận Đăng Ký</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

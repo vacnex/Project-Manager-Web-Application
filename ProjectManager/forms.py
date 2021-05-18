@@ -38,7 +38,7 @@ class LoginForm(AuthenticationForm):
         'inactive': ("Tài khoản này không hoạt động."),
     }
 
-class ProjectRegisters(forms.ModelForm):
+class ProjectRegistersForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['Project_Name', 'Type', 'schoolYear', 'description']
@@ -47,4 +47,17 @@ class ProjectRegisters(forms.ModelForm):
             'Type': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Loại Đề Tài'}),
             'schoolYear': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Khoá'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Mô Tả'}),
+        }
+
+
+class ConfirmProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['Project_Name', 'Type', 'schoolYear', 'description', 'Users','Is_Confirm']
+        widgets = {
+            'Project_Name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tên Đề Tài'}),
+            'Type': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Loại Đề Tài'}),
+            'schoolYear': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Khoá'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Mô Tả'}),
+            'Is_Confirm': forms.CheckboxInput(attrs={'class': 'form-check-input', 'placeholder': 'Xác nhận đề tài'}),
         }

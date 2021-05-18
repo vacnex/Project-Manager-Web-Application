@@ -152,4 +152,5 @@ $(document).ready(function () {
             },
         ],
     });
+    $('#id_Project_Name , #id_Type, #id_schoolYear, #id_description').attr('disabled','disabled');
 });

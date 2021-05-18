@@ -110,19 +110,19 @@ Home
                     <form id="ProjectRegister" action="." method="POST">
                         {% csrf_token %}
                         <div class="form-floating mb-3">
-                            {{ form.Project_Name }}
+                            {{ register_form.Project_Name }}
                             <label>Tên Đề Tài</label>
                         </div>
                         <div class="form-floating mb-3">
-                            {{ form.Type }}
+                            {{ register_form.Type }}
                             <label>Loại Đề Tài</label>
                         </div>
                         <div class="form-floating mb-3">
-                            {{ form.schoolYear }}
+                            {{ register_form.schoolYear }}
                             <label>Khoá</label>
                         </div>
                         <div class="form-floating mb-3">
-                            {{ form.description }}
+                            {{ register_form.description }}
                             <label>Mô Tả Đề Tài</label>
                         </div>
                         <div class="modal-footer">

@@ -25,15 +25,10 @@ class HomeIndex(View):
     def get(self, request):
         current_user = request.user.id
         cur_Project = Project.objects.filter(Users=current_user)
-        Teacher_project_list = []
-        Year_list = []
-        student_project_data = []
-        Is_Confirm = False
-        request_pj = False
-        Manager_project_list = []
+        Manager_project_list, student_project_data, Teacher_project_list, Year_list = [], [], [], []
+        request_pj, Is_Confirm = False, False
         register_form = None
         if request.user.is_Manager:
-            # Manager_project_list =
             for mp in Project.objects.all():
                 if not mp.Is_Confirm:
                     Manager_project_list.append(mp)

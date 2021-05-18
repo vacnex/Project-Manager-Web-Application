@@ -25,7 +25,7 @@ class HomeIndex(View):
     def get(self, request):
         current_user = request.user.id
         cur_Project = Project.objects.filter(Users=current_user)
-        Manager_project_list, student_project_data, Teacher_project_list, Year_list = [], [], [], []
+        Manager_project_list, student_project_data, Teacher_project_list, Teacher_year_list, teacher = [], [], [], [], []
         request_pj, Is_Confirm = False, False
         register_form = None
         if request.user.is_Manager:
@@ -37,7 +37,7 @@ class HomeIndex(View):
         elif request.user.is_Teacher:
             for project in cur_Project:
                 Is_Confirm = True
-                Year_list.append(project.schoolYear)
+                Teacher_year_list.append(project.schoolYear)
                 Teacher_project_list.append(project.Project_Name)
         else:
             if not len(cur_Project) > 0:
@@ -50,18 +50,29 @@ class HomeIndex(View):
                         student_project_data.append(project.Project_ID)
                         student_project_data.append(project.Project_Name)
                         student_project_data.append(project.Project_Content)
+        all_users = User.objects.all()
+        for user in all_users:
+            if user.is_Teacher:
+                teacher.append(user)
         context = {'request_pj': request_pj,
-                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Year_list': Year_list, 'Manager_project_list': Manager_project_list, 'Teacher_project_list': Teacher_project_list, 'register_form': register_form}
+                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Year_list': Teacher_year_list, 'Manager_project_list': Manager_project_list, 'Teacher_project_list': Teacher_project_list, 'register_form': register_form, 'teacher': teacher}
         return render(request, 'Pages/home.html', context)
 
     def post(self, request):
-        register_form = None
+        teacher_id, register_form = None, None
+        teacher = User.objects.filter(
+            username=request.POST.get('teacher', None))
+        for t in teacher:
+            teacher_id = t.id
         if request.method == "POST":
             register_form = ProjectRegistersForm(request.POST)
             if register_form.is_valid():
                 obj = register_form.save()
                 obj.Users.add(request.user)
+                obj.Users.add(teacher_id)
                 obj.save()
+            else:
+                print(register_form.errors)
         context = {'register_form': register_form}
         return render(request, 'Pages/home.html', context)
 # endregion

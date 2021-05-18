@@ -125,6 +125,15 @@ Home
                             {{ register_form.description }}
                             <label>Mô Tả Đề Tài</label>
                         </div>
+                            <div class="form-floating mb-3">
+                                <select id="teacher" name="teacher" class="form-select" placeholder="Chỉ định giáo viên hướng dẫn">
+                                    <option value="" selected>---------</option>
+                                    {%for t in teacher%}
+                                    <option value="{{t.username}}">{{t.get_full_name}}</option>
+                                    {%endfor%}
+                                </select>
+                                <label>Giáo viên hướng dẫn mong muốn</label>
+                            </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary mt-3 btn-lg" data-bs-dismiss="modal">Đóng</button>
                             <button type="submit" class="btn btn-primary mt-3 btn-lg">Đăng Ký</button>

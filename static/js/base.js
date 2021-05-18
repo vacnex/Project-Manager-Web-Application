@@ -152,5 +152,5 @@ $(document).ready(function () {
             },
         ],
     });
-    $('#id_Project_Name , #id_Type, #id_schoolYear, #id_description').attr('disabled','disabled');
+    $('#ConfirmProjectForm #id_Project_Name, #ConfirmProjectForm #id_Type, #ConfirmProjectForm #id_schoolYear, #ConfirmProjectForm #id_description').attr('disabled', 'disabled');
 });

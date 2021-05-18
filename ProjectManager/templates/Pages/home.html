@@ -31,7 +31,11 @@ Home
                             <p class="card-text"><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
                             <h5 class="card-title">{{p.Project_Name}}</h5>
                             {% for u in p.Users.all%}
+                            {% if u.is_Teacher %}
+                            <p class="card-text"><small class="text-muted">Giáo viên mong muốn: <strong>{{u.get_full_name}}</strong></small></p>
+                            {%else%}
                             <p class="card-text"><small class="text-muted">Sinh viên đăng kí: <strong>{{u.get_full_name}}</strong></small></p>
+                            {%endif%}
                             {%endfor%}
                         </div>
                         <div class="card-footer">

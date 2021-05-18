@@ -32,7 +32,11 @@ Project Manager
                             {{ confirm_form.Project_Name }}
                             <label>Tên Đề Tài</label>
                         </div>
-                        <p>Sinh Viên Đăng Kí: {{fullname.0}}</p>
+                        {% for u in fullname%}
+                        {% if not u.is_Teacher %}
+                        <p>Sinh Viên Đăng Kí: {{u.get_full_name}}</p>
+                        {%endif%}
+                        {%endfor%}
                         <div class="form-floating mb-3">
                             {{ confirm_form.Type }}
                             <label>Loại Đề Tài</label>
@@ -49,8 +53,14 @@ Project Manager
                             {{ confirm_form.Is_Confirm }}
                             <label>Xác nhận đề tài</label>
                         </div>
+                        {% for u in fullname%}
+                        {% if u.is_Teacher %}
+                        <input type="hidden" name="wishteacher" value="{{u.username}}" disabled="">
+                        <p>Giáo viên hướng dẫn mong muốn: {{u.get_full_name}}</p>
+                        {%endif%}
+                        {%endfor%}
                         <div class="form-floating mb-3">
-                            <select id="teacher" name="teacher" class="form-select" placeholder="Chỉ định giáo viên hướng dẫn">
+                            <select id="teacher" name="teacher" class="form-select" placeholder="Chỉ định giáo viên hướng dẫn" required>
                                 <option value="" selected>---------</option>
                                 {%for t in teacher%}
                                     <option value="{{t.username}}">{{t.get_full_name}}</option>
@@ -59,7 +69,7 @@ Project Manager
                             <label>Chỉ định giáo viên hướng dẫn</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <select id="reviewer" name="reviewer" class="form-select" placeholder="Chỉ định giáo viên phản biện" >
+                            <select id="reviewer" name="reviewer" class="form-select" placeholder="Chỉ định giáo viên phản biện" required>
                                 <option value="" selected>---------</option>
                                 {%for t in teacher%}
                                     <option value="{{t.username}}">{{t.get_full_name}}</option>

@@ -8,7 +8,7 @@ class RegistionForm(UserCreationForm):
     username = forms.CharField(max_length=12, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Tài khoản'}))
     email = forms.EmailField(widget=forms.EmailInput(
-        attrs={'class': 'form-control', 'placeholder': 'Nhập lại email'}))
+        attrs={'class': 'form-control', 'placeholder': 'Nhập lại email', 'required': ''}))
     password1 = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'placeholder': 'Mật khẩu'}))
     password2 = forms.CharField(widget=forms.PasswordInput(
@@ -59,5 +59,5 @@ class ConfirmProjectForm(forms.ModelForm):
             'Type': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Loại Đề Tài'}),
             'schoolYear': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Khoá'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Mô Tả'}),
-            'Is_Confirm': forms.CheckboxInput(attrs={'class': 'form-check-input', 'placeholder': 'Xác nhận đề tài'}),
+            'Is_Confirm': forms.CheckboxInput(attrs={'class': 'form-check-input', 'placeholder': 'Xác nhận đề tài', 'required':''}),
         }

@@ -96,7 +96,7 @@ class ConfirmProject(View):
             description = p.description
             Is_Confirm = p.Is_Confirm
             username = [u.username for u in p.Users.all()]
-            fullname = [u.get_full_name() for u in p.Users.all()]
+            fullname = [u for u in p.Users.all()]
         confirm_form = ConfirmProjectForm(initial={'Project_ID': pk, 'Project_Name': Project_Name, 'Type': Type, 'schoolYear': schoolYear,'description': description, 'Is_Confirm': Is_Confirm})
         context = {'projectid': pk,
                    'unconfirm_project_list_by_id': unconfirm_project_list_by_id, 'teacher': teacher, 'confirm_form': confirm_form, 'student_username': username, 'fullname': fullname}
@@ -110,17 +110,16 @@ class ConfirmProject(View):
         teacher = User.objects.filter(
             username=request.POST.get('teacher', None))
         Is_Confirm = True if request.POST.get('Is_Confirm', None) == "on" else False
-        username_student = [p.username for p in cur_Project.Users.all()]
+        username_student = [p.username for p in cur_Project.Users.all() if not p.is_Teacher]
         cur_student = User.objects.filter(username=username_student[0])
         if request.method == "POST":
             data = {
                 'Project_Name': cur_Project.Project_Name,
                 'Type': cur_Project.Type,
                 'schoolYear': cur_Project.schoolYear,
-                'Users': teacher | reviewer|cur_student,
+                'Users': teacher|reviewer|cur_student,
                 'Is_Confirm' : Is_Confirm
             }
-            
             confirm_form = ConfirmProjectForm(
                 data, instance=cur_Project)
             if confirm_form.is_valid():

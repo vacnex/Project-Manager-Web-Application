@@ -25,7 +25,7 @@ class HomeIndex(View):
     def get(self, request):
         current_user = request.user.id
         cur_Project = Project.objects.filter(Users=current_user)
-        Manager_project_list, student_project_data, Teacher_project_list, Teacher_year_list, teacher = [], [], [], [], []
+        Manager_project_list, student_project_data, Teacher_project_list, teacher = [], [], [], []
         request_pj, Is_Confirm = False, False
         register_form = None
         if request.user.is_superuser:
@@ -39,8 +39,7 @@ class HomeIndex(View):
         elif request.user.is_Teacher:
             for project in cur_Project:
                 Is_Confirm = True
-                Teacher_year_list.append(project.schoolYear)
-                Teacher_project_list.append(project.Project_Name)
+                Teacher_project_list.append(project)
         else:
             if not len(cur_Project) > 0:
                 request_pj = True
@@ -57,7 +56,7 @@ class HomeIndex(View):
             if user.is_Teacher:
                 teacher.append(user)
         context = {'request_pj': request_pj,
-                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Year_list': Teacher_year_list, 'Manager_project_list': Manager_project_list, 'Teacher_project_list': Teacher_project_list, 'register_form': register_form, 'teacher': teacher}
+                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Manager_project_list': Manager_project_list, 'Teacher_project_list': Teacher_project_list, 'register_form': register_form, 'teacher': teacher}
         return render(request, 'Pages/home.html', context)
 
     def post(self, request):

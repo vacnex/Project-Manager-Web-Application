@@ -60,15 +60,23 @@ Home
                     </div>
                 </div>
                 <div class="list-content">
-                    {%for name in Teacher_project_list%}
-                    <div>
-                        <a href="" class="card text-decoration-none">
+                    {%for p in Teacher_project_list%}
+                    <div id="{{p.Project_ID}}">
+                        <a href="" class="card text-decoration-none ">
                             <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
                                 <rect width="100%" height="100%" fill="#868e96"></rect>
                             </svg>
                             <div class="card-body">
                                 <p class="card-text"><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
-                                <h5 class="card-title">{{name}}</h5>
+                                <h5 class="card-title">{{p.Project_Name}}</h5>
+                                {% for u in p.Users.all%}
+                                {% if not u.is_Teacher %}
+                                <p class="card-text"><small class="text-muted">Sinh viên: <strong>{{u.get_full_name}}</strong></small></p>
+                                {%endif%}
+                                {%endfor%}
+                            </div>
+                            <div class="card-footer">
+                                <span class="text-muted">Khoá: {{p.schoolYear}}</span>
                             </div>
                         </a>
                     </div>

@@ -49,7 +49,7 @@ Home
             {% elif user.is_Teacher %} <!-- Giáo viên -->
                 {% if Is_Confirm%}
                 <div class="row mb-3">
-                    <div class="title col-lg-auto col-md-auto col-sm-auto ">
+                    <div class="t-tittle col-lg-auto col-md-auto col-sm-auto ">
                         <h4>Danh Sách Đề Tài</h4>
                     </div>
                     <div class="slick-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
@@ -59,9 +59,9 @@ Home
                         </div>
                     </div>
                 </div>
-                <div class="list-content">
+                <div class="list-content c-item">
                     {%for p in Teacher_project_list%}
-                    <div id="{{p.Project_ID}}">
+                    <div class="" id="{{p.Project_ID}}">
                         <a href="" class="card text-decoration-none ">
                             <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
                                 <rect width="100%" height="100%" fill="#868e96"></rect>

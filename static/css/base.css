@@ -66,6 +66,15 @@ a h5.card-title {
     -webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 2px 3px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%), 0 4px 5px rgb(0 0 0 / 5%);
     box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 2px 3px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%), 0 4px 5px rgb(0 0 0 / 5%);
 }
+.choosed{
+  background-color: #f4f7fe
+}
+.choosed a {
+  color: #0277bd!important;
+} 
+.yearlist li{
+  cursor: pointer;
+}
 /* #endregion */
 /* ---------------------------------------------------------- */
 /* #region  Top menu */

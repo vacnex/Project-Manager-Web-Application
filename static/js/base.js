@@ -35,7 +35,7 @@ $(document).ready(function () {
         xxxl: 1900,
         xxxxl: 2500,
     };
-      
+
     $('.list-content').slick({
         mobileFirst: true,
         slidesToShow: 1,
@@ -151,6 +151,28 @@ $(document).ready(function () {
                 },
             },
         ],
+    });
+
+    if ($('.yearlist li').length !== 0) {
+        content =
+            '<li tabindex="0" class="rounded year choosed" data-filtertarget="ALL"><a class="link-dark w-85">Tất cả</a></li>';
+        $('.yearlist').prepend(content);
+    }
+
+    $('.year').on('click', function () {
+        let target = $(this).attr('data-filtertarget');
+        let year = $(this).text();
+        $('.list-content').slick('slickUnfilter');
+        if (target != 'ALL') {
+            $('.list-content').slick('slickFilter', `#${target}`);
+            $('.t-tittle h4').html(`Danh Sách Đề Tài Khoá ${year}`);
+            $('.year').removeClass('choosed');
+            $(this).toggleClass('choosed');
+        } else {
+            $('.year').removeClass('choosed');
+            $(this).toggleClass('choosed');
+            $('.t-tittle h4').html('Danh Sách Đề Tài');
+        }
     });
     $('#ConfirmProjectForm #id_Project_Name, #ConfirmProjectForm #id_Type, #ConfirmProjectForm #id_schoolYear, #ConfirmProjectForm #id_description').attr('disabled', 'disabled');
 });

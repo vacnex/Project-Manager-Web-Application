@@ -77,9 +77,9 @@
                     <li class="mb-1 nav-list">
                         <a class="w-100 btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Khoá</a>
                         <div class="collapse show p-1 m-0" id="home-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <ul class="yearlist btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 {%for p in Teacher_project_list%}
-                                <li class="rounded year" data-filtertarget="{{p.Project_ID}}">
+                                <li tabindex="0" class="rounded year" data-filtertarget="{{p.Project_ID}}">
                                     <a class="link-dark w-85">
                                         <span style="width:30px">
                                             <i class="icon fas fa-graduation-cap fa-fw"></i>

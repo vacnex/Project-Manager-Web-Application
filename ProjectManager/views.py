@@ -28,6 +28,8 @@ class HomeIndex(View):
         Manager_project_list, student_project_data, Teacher_project_list, Teacher_year_list, teacher = [], [], [], [], []
         request_pj, Is_Confirm = False, False
         register_form = None
+        if request.user.is_superuser:
+            return HttpResponseRedirect(reverse('admin:index'))
         if request.user.is_Manager:
             for mp in Project.objects.all():
                 if not mp.Is_Confirm:

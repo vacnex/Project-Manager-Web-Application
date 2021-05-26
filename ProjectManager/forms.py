@@ -30,7 +30,7 @@ class RegistionForm(UserCreationForm):
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(max_length=12, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Tài khoản'}))
+        attrs={'class': 'form-control', 'placeholder': 'Tài khoản', 'autofocus':''}))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'placeholder': 'Mật khẩu'}))
     error_messages = {

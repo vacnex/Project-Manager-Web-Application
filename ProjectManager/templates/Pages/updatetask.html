@@ -21,7 +21,9 @@ Cập Nhật Công Việc
         <div class="Project-Manager-Content">
             <section class="Project-Manager-wrapper">
                 <div class="Project-Tittle">
-                    <h1>Thông Tin Đề Tài</h1>
+                    {%for p in cur_Project%}
+                        <h1>{{p.Project_Name}}</h1>
+                    {%endfor%}
                 </div>
             </section>
         </div>

@@ -143,12 +143,9 @@ class ConfirmProject(View):
 @method_decorator(login_required(login_url='/login'), name='get')
 class UpdateTask(View):
     def get(self, request, pk):
-        cur_Project = Project.objects.filter(Users=request.user.id)
-        Teacher_project_list = []
-        if request.user.is_Teacher:
-            for project in cur_Project:
-                Teacher_project_list.append(project)
-        context = {'Teacher_project_list': Teacher_project_list,'details': False}
+        cur_Project = Project.objects.filter(Project_ID=pk)
+
+        context = {'cur_Project': cur_Project, 'details': False}
         return render(request, 'Pages/updatetask.html',context)
 
     def post(self, request, pk):

@@ -58,10 +58,10 @@
         </div>
         <div id="page" class="container-fluid">{% block content %}{% endblock %}</div>
         <div id="nav-drawer">
-                <button type="button" class="sidebar-btn-close">
-                    <i class="fas fa-times"></i>
-                </button>
-                <div class="d-flex flex-column p-3">
+            <button type="button" class="sidebar-btn-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="d-flex flex-column p-3">
                 <div class="text-center">
                     <img src="//learn.lhu.edu.vn/pluginfile.php/1/theme_space/customlogosidebar/1596891663/android-icon-72x72.png" alt="LHES" class="img-fluid">
                 </div>
@@ -74,6 +74,7 @@
                         </a>
                     </li>
                     {%if user.is_Teacher%}
+                    {%if details %}
                     <li class="mb-1 nav-list">
                         <a class="w-100 btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Khoá</a>
                         <div class="collapse show p-1 m-0" id="home-collapse">
@@ -90,6 +91,7 @@
                             </ul>
                         </div>
                     </li>
+                    {%endif%}
                     {%endif%}
                 </ul>
                 <hr>

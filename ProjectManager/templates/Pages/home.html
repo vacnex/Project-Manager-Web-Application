@@ -8,7 +8,8 @@ Home
 <div id="page-content">
     <div class="row g-0">
         <section class="page-dashboard">
-            {% if user.is_Manager%}     <!-- Giáo Viên quản lý -->
+            {% if user.is_Manager%}
+            <!-- #region Giáo Viên quản lý-->
             <div class="row mb-3">
                 <div class="title col-lg-auto col-md-auto col-sm-auto ">
                     <h4>Danh Sách Đề Tài Cần Xác Nhận</h4>
@@ -45,72 +46,80 @@ Home
                 </div>
                 {%endfor%}
             </div>
-            {% elif user.is_Reviewer %} <!-- Giáo Viên phản Biện -->
-            {% elif user.is_Teacher %} <!-- Giáo viên -->
-                {% if Is_Confirm%}
-                <div class="row mb-3">
-                    <div class="t-tittle col-lg-auto col-md-auto col-sm-auto ">
-                        <h4>Danh Sách Đề Tài</h4>
+            <!-- #endregion -->
+            {% elif user.is_Reviewer %}
+            <!--#region Giáo Viên phản Biện -->
+            <!-- #endregion -->
+            {% elif user.is_Teacher %}
+            <!-- #region Giáo viên -->
+            {% if Is_Confirm%}
+            <div class="row mb-3">
+                <div class="t-tittle col-lg-auto col-md-auto col-sm-auto ">
+                    <h4>Danh Sách Đề Tài</h4>
+                </div>
+                <div class="slick-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button id="btn-prev" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-left fa-fw " aria-hidden="true" aria-label=""></i></span></button>
+                        <button id="btn-next" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-right fa-fw " aria-hidden="true" aria-label=""></i></span></button>
                     </div>
-                    <div class="slick-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button id="btn-prev" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-left fa-fw " aria-hidden="true" aria-label=""></i></span></button>
-                            <button id="btn-next" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-right fa-fw " aria-hidden="true" aria-label=""></i></span></button>
+                </div>
+            </div>
+            <div class="list-content c-item">
+                {%for p in Teacher_project_list%}
+                <div id="{{p.Project_ID}}">
+                    <a href="/updatetask/{{ p.Project_ID }}/" class="card text-decoration-none">
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <rect width="100%" height="100%" fill="#868e96"></rect>
+                        </svg>
+                        <div class="card-body">
+                            <p class="card-text"><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
+                            <h5 class="card-title">{{p.Project_Name}}</h5>
+                            {% for u in p.Users.all%}
+                            {% if not u.is_Teacher %}
+                            <p class="card-text"><small class="text-muted">Sinh viên: <strong>{{u.get_full_name}}</strong></small></p>
+                            {%endif%}
+                            {%endfor%}
                         </div>
-                    </div>
-                </div>
-                <div class="list-content c-item">
-                    {%for p in Teacher_project_list%}
-                    <div class="" id="{{p.Project_ID}}">
-                        <a href="" class="card text-decoration-none ">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <rect width="100%" height="100%" fill="#868e96"></rect>
-                            </svg>
-                            <div class="card-body">
-                                <p class="card-text"><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
-                                <h5 class="card-title">{{p.Project_Name}}</h5>
-                                {% for u in p.Users.all%}
-                                {% if not u.is_Teacher %}
-                                <p class="card-text"><small class="text-muted">Sinh viên: <strong>{{u.get_full_name}}</strong></small></p>
-                                {%endif%}
-                                {%endfor%}
-                            </div>
-                            <div class="card-footer">
-                                <span class="text-muted">Khoá: {{p.schoolYear}}</span>
-                            </div>
-                        </a>
-                    </div>
-                    {%endfor%}
-                </div>
-                {% else %}
-                <div class="Waiting">
-                    <h1>Chưa có sinh viên đăng kí đề tài</h1>
-                </div>
-                {% endif %}
-            {% else %} <!-- Sinh viên -->
-                {% if request_pj%}
-                    <div class="Request">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ProjectRegister">Đăng kí đề tài</button>
-                    </div>
-                {% else %}
-                    {% if Is_Confirm%}
-                    <div class="row mb-3">
-                        <div class="title col-lg-auto col-md-auto col-sm-auto ">
-                            <h4>{{student_project_data.1}}</h4>
+                        <div class="card-footer">
+                            <span class="text-muted">Khoá: {{p.schoolYear}}</span>
                         </div>
-                    </div>
-                    <div class="Process-list-content">
-                        {{student_project_data.2|safe}}
-                    </div>
-                    {% else %}
-                    <div class="Waiting">
-                        <h1>Đang đợi Xác nhận</h1>
-                    </div>
-                    {% endif %}
-                {% endif %}
+                    </a>
+                </div>
+                {%endfor%}
+            </div>
+            {% else %}
+            <div class="Waiting">
+                <h1>Chưa có sinh viên đăng kí đề tài</h1>
+            </div>
             {% endif %}
+            <!-- #endregion -->
+            {% else %}
+            <!-- #region Sinh viên -->
+            {% if request_pj%}
+            <div class="Request">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ProjectRegister">Đăng kí đề tài</button>
+            </div>
+            {% else %}
+            {% if Is_Confirm%}
+            <div class="row mb-3">
+                <div class="title col-lg-auto col-md-auto col-sm-auto ">
+                    <h4>{{student_project_data.1}}</h4>
+                </div>
+            </div>
+            <div class="Process-list-content">
+                {{student_project_data.2|safe}}
+            </div>
+            {% else %}
+            <div class="Waiting">
+                <h1>Đang đợi Xác nhận</h1>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            <!-- #endregion -->
         </section>
     </div>
+    <!-- #region project register modal-->
     <div class="modal fade" id="ProjectRegister" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ProjectRegisterLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg modal-fullscreen-lg-down ">
             <div class="modal-content">
@@ -137,24 +146,24 @@ Home
                             {{ register_form.description }}
                             <label>Mô Tả Đề Tài</label>
                         </div>
-                            <div class="form-floating mb-3">
-                                <select id="teacher" name="teacher" class="form-select" placeholder="Chỉ định giáo viên hướng dẫn">
-                                    <option value="" selected>---------</option>
-                                    {%for t in teacher%}
-                                    <option value="{{t.username}}">{{t.get_full_name}}</option>
-                                    {%endfor%}
-                                </select>
-                                <label>Giáo viên hướng dẫn mong muốn</label>
-                            </div>
+                        <div class="form-floating mb-3">
+                            <select id="teacher" name="teacher" class="form-select" placeholder="Chỉ định giáo viên hướng dẫn">
+                                <option value="" selected>---------</option>
+                                {%for t in teacher%}
+                                <option value="{{t.username}}">{{t.get_full_name}}</option>
+                                {%endfor%}
+                            </select>
+                            <label>Giáo viên hướng dẫn mong muốn</label>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary mt-3 btn-lg" data-bs-dismiss="modal">Đóng</button>
                             <button type="submit" class="btn btn-primary mt-3 btn-lg">Đăng Ký</button>
                         </div>
                     </form>
                 </div>
-                
             </div>
         </div>
     </div>
+    <!-- #endregion -->
 </div>
 {% endblock %}

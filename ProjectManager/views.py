@@ -20,6 +20,8 @@ def index(request):
 # endregion
 
 # region home
+
+
 @method_decorator(login_required(login_url='/login'), name='get')
 class HomeIndex(View):
     def get(self, request):
@@ -56,9 +58,10 @@ class HomeIndex(View):
             if user.is_Teacher:
                 teacher.append(user)
         context = {'request_pj': request_pj,
-                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Manager_project_list': Manager_project_list, 'Teacher_project_list': Teacher_project_list, 'register_form': register_form, 'teacher': teacher}
+                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Manager_project_list': Manager_project_list, 'Teacher_project_list': Teacher_project_list, 'register_form': register_form, 'teacher': teacher, 'details': True}
         return render(request, 'Pages/home.html', context)
 
+# region POST request
     def post(self, request):
         teacher_id, register_form = None, None
         teacher = User.objects.filter(
@@ -77,11 +80,12 @@ class HomeIndex(View):
         context = {'register_form': register_form}
         return render(request, 'Pages/home.html', context)
 # endregion
+# endregion
 
 # region confirm
 @method_decorator(login_required(login_url='/login'), name='get')
 class ConfirmProject(View):
-    def get(self, request,pk):
+    def get(self, request, pk):
         confirm_form, Project_Name, Type, schoolYear, description, Is_Confirm = None, None, None, None, None, None
         teacher, username, fullname = [], [], []
         unconfirm_project_list_by_id = Project.objects.filter(
@@ -98,28 +102,31 @@ class ConfirmProject(View):
             Is_Confirm = p.Is_Confirm
             username = [u.username for u in p.Users.all()]
             fullname = [u for u in p.Users.all()]
-        confirm_form = ConfirmProjectForm(initial={'Project_ID': pk, 'Project_Name': Project_Name, 'Type': Type, 'schoolYear': schoolYear,'description': description, 'Is_Confirm': Is_Confirm})
+        confirm_form = ConfirmProjectForm(initial={'Project_ID': pk, 'Project_Name': Project_Name,
+                                                   'Type': Type, 'schoolYear': schoolYear, 'description': description, 'Is_Confirm': Is_Confirm})
         context = {'projectid': pk,
                    'unconfirm_project_list_by_id': unconfirm_project_list_by_id, 'teacher': teacher, 'confirm_form': confirm_form, 'student_username': username, 'fullname': fullname}
         return render(request, 'Pages/confirmproject.html', context)
 
-    def post(self, request,pk):
+    def post(self, request, pk):
         confirm_form, cur_student = None, None
         cur_Project = Project.objects.get(pk=pk)
         reviewer = User.objects.filter(
             username=request.POST.get('reviewer', None))
         teacher = User.objects.filter(
             username=request.POST.get('teacher', None))
-        Is_Confirm = True if request.POST.get('Is_Confirm', None) == "on" else False
-        username_student = [p.username for p in cur_Project.Users.all() if not p.is_Teacher]
+        Is_Confirm = True if request.POST.get(
+            'Is_Confirm', None) == "on" else False
+        username_student = [
+            p.username for p in cur_Project.Users.all() if not p.is_Teacher]
         cur_student = User.objects.filter(username=username_student[0])
         if request.method == "POST":
             data = {
                 'Project_Name': cur_Project.Project_Name,
                 'Type': cur_Project.Type,
                 'schoolYear': cur_Project.schoolYear,
-                'Users': teacher|reviewer|cur_student,
-                'Is_Confirm' : Is_Confirm
+                'Users': teacher | reviewer | cur_student,
+                'Is_Confirm': Is_Confirm
             }
             confirm_form = ConfirmProjectForm(
                 data, instance=cur_Project)
@@ -128,16 +135,35 @@ class ConfirmProject(View):
                 return redirect('home')
         else:
             confirm_form = ConfirmProjectForm()
-        
+
         return render(request, 'Pages/confirmproject.html', {'confirm_form': confirm_form})
 # endregion
 
+
+@method_decorator(login_required(login_url='/login'), name='get')
+class UpdateTask(View):
+    def get(self, request, pk):
+        cur_Project = Project.objects.filter(Users=request.user.id)
+        Teacher_project_list = []
+        if request.user.is_Teacher:
+            for project in cur_Project:
+                Teacher_project_list.append(project)
+        context = {'Teacher_project_list': Teacher_project_list,'details': False}
+        return render(request, 'Pages/updatetask.html',context)
+
+    def post(self, request, pk):
+        pass
+
 # region home_guest
+
+
 def home_guest(request):
     return render(request, 'Pages/home_guest.html')
 # endregion
 
 # region loginUser
+
+
 def loginUser(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -165,12 +191,16 @@ def loginUser(request):
 # endregion
 
 # region logout_view
+
+
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
 # endregion
 
 # region register
+
+
 def register(request):
     if request.method == "POST":
         form = RegistionForm(request.POST)

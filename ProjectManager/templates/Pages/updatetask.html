@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Cập Nhật Công Việc
+{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <div class="row g-0">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+                <li class="breadcrumb-item">Quản Lý Dự Án</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {%for p in unconfirm_project_list_by_id%}
+                    <a href="/confirm/{{projectid}}/">{{p.Project_Name}}</a>
+                    {% endfor %}
+                </li>
+            </ol>
+        </nav>
+        <div class="Project-Manager-Content">
+            <section class="Project-Manager-wrapper">
+                <div class="Project-Tittle">
+                    <h1>Thông Tin Đề Tài</h1>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

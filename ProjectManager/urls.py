@@ -10,6 +10,8 @@ urlpatterns = [
     path('homeguest/', views.home_guest, name='home_guest'),
     path('confirm/<slug:pk>/',
          views.ConfirmProject.as_view(), name='ConfirmProject'),
+    path('updatetask/<slug:pk>/',
+         views.UpdateTask.as_view(), name='UpdateTask'),
     # path('course/<int:courseid>/', views.CourseDetailView.as_view(), name='course'),
     # path('course/detail/',
     #      views.project_Details, name='projectdetails'),

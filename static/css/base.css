@@ -75,6 +75,9 @@ a h5.card-title {
 .yearlist li{
   cursor: pointer;
 }
+.hide{
+  display:none;
+}
 /* #endregion */
 /* ---------------------------------------------------------- */
 /* #region  Top menu */

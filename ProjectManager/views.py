@@ -144,12 +144,18 @@ class ConfirmProject(View):
 class UpdateTask(View):
     def get(self, request, pk):
         cur_Project = Project.objects.filter(Project_ID=pk)
+        null = False
+        for p in cur_Project:
+            if not p.Project_Content:
+                null = True
 
-        context = {'cur_Project': cur_Project, 'details': False}
+
+        context = {'cur_Project': cur_Project, 'null': null, 'details': False,}
         return render(request, 'Pages/updatetask.html',context)
 
     def post(self, request, pk):
-        pass
+        print(request.POST.get('taskcontent', None))
+        return render(request, 'Pages/updatetask.html')
 
 # region home_guest
 

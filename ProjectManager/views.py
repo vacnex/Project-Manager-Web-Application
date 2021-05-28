@@ -155,8 +155,9 @@ class UpdateTask(View):
         for project in cur_project:
             project.Project_Content = request.POST.get('taskcontent', None)
             project.save()
-        print(request.POST.get('taskcontent', None))
-        return render(request, 'Pages/updatetask.html')
+        # print(request.POST.get('taskcontent', None))
+        context = {'cur_Project': cur_project,}
+        return render(request, 'Pages/updatetask.html', context)
 
 # region home_guest
 

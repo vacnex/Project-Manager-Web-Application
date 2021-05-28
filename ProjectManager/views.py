@@ -138,8 +138,6 @@ class ConfirmProject(View):
 
         return render(request, 'Pages/confirmproject.html', {'confirm_form': confirm_form})
 # endregion
-
-
 @method_decorator(login_required(login_url='/login'), name='get')
 class UpdateTask(View):
     def get(self, request, pk):
@@ -149,11 +147,14 @@ class UpdateTask(View):
             if not p.Project_Content:
                 null = True
 
-
         context = {'cur_Project': cur_Project, 'null': null, 'details': False,}
         return render(request, 'Pages/updatetask.html',context)
 
     def post(self, request, pk):
+        cur_project = Project.objects.filter(Project_ID=pk)
+        for project in cur_project:
+            project.Project_Content = request.POST.get('taskcontent', None)
+            project.save()
         print(request.POST.get('taskcontent', None))
         return render(request, 'Pages/updatetask.html')
 

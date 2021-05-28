@@ -87,14 +87,11 @@ $(document).ready(function () {
                 $('.toolbar').removeClass('hide');
                 $('.todoScroll').prepend(content);
             }
-            alltask = $('.task-container');
+            lt = $('.todoScroll').children().not('.emptylist');
             html = [];
-            for (let i = 0; i <= alltask.length; i++) {
-                if ($(alltask[i]).html()) {
-                    html.push($(alltask[i]).html());
-                }
+            for (let i = 0; i < lt.length; i++) {
+                html.push($(lt[i]).prop('outerHTML'));
             }
-            console.log(html.join(''));
             $('#taskcontent').val(html.join(''));
         } else {
             $('#taskname').toggleClass('is-invalid');

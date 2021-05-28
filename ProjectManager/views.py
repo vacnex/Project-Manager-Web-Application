@@ -20,8 +20,6 @@ def index(request):
 # endregion
 
 # region home
-
-
 @method_decorator(login_required(login_url='/login'), name='get')
 class HomeIndex(View):
     def get(self, request):
@@ -155,8 +153,11 @@ class UpdateTask(View):
         for project in cur_project:
             project.Project_Content = request.POST.get('taskcontent', None)
             project.save()
-        # print(request.POST.get('taskcontent', None))
-        context = {'cur_Project': cur_project,}
+        null = False
+        for p in cur_project:
+            if not p.Project_Content:
+                null = True
+        context = {'cur_Project': cur_project, 'null': null}
         return render(request, 'Pages/updatetask.html', context)
 
 # region home_guest

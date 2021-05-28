@@ -18,30 +18,45 @@ $(document).ready(function () {
         $(this).toggleClass('done');
         $(this).parent().find('.line').toggleClass('linedone');
         $(this).parent().find('.todoTitle').toggleClass('titledone');
+        save();
     });
+
+    if ($('.todoScroll').children('.emptylist').length == 0) {
+        $('.todoScroll').append(
+            '<div class="px-4 py-5 my-5 text-center emptylist hide"> <h1 class="display-5 fw-bold">Danh sách công việc trống</h1> <div class="col-lg-6 mx-auto"> <p class="lead mb-4">Hãy nhấn thêm công việc để tạo danh sách công việc.</p> <div class="d-sm-flex justify-content-sm-center"> <div class="submitButtonBlue" data-bs-toggle="modal" data-bs-target="#AddTask"> <span>+</span> <p class="addSubmitBlue">Thêm công việc</p> </div> </div> </div> </div>');
+    }
+
     $('.todoScroll').on('click', '.deleteX', function () {
-        console.log(($(this).parent().parent().parent()).children().length);
-        if ($(this).parent().parent().parent().children().length == 1) {
+        if ($('.todoScroll').children().not('.emptylist').length == 1) {
             $(this).parent().parent().remove();
-            $('.todoScroll').prepend(
-                '<div class="px-4 py-5 my-5 text-center emptylist"> <h1 class="display-5 fw-bold">Danh sách công việc trống</h1> <div class="col-lg-6 mx-auto"> <p class="lead mb-4">Hãy nhấn thêm công việc để tạo danh sách công việc.</p> <div class="d-sm-flex justify-content-sm-center"> <div class="submitButtonBlue" data-bs-toggle="modal" data-bs-target="#AddTask"> <span>+</span> <p class="addSubmitBlue">Thêm công việc</p> </div> </div> </div> </div>'
-            );
+            $('.emptylist').removeClass('hide');
             $('.toolbar').addClass('hide');
-        } else if ($(this).parent().parent().parent().children().length == 2) {
-            console.log($('.todoScroll').find('.emptylist'));
-            if (($('.todoScroll').find('.emptylist')).length !=0) {
-                $(this).parent().parent().remove();
-                $('.emptylist').removeClass('hide');
-                $('.toolbar').addClass('hide');
-            }
-            else {
-                $(this).parent().parent().remove();
-                $('.emptylist').removeClass('hide');
-            }
+            
         } else {
             $(this).parent().parent().remove();
         }
-    });
+        save();
+    })
+
+    function save() {
+        lt = $('.todoScroll').children().not('.emptylist');
+        html = [];
+        for (let i = 0; i < lt.length; i++) {
+            html.push($(lt[i]).prop('outerHTML'));
+        }
+        $('#taskcontent').val(html.join(''));
+        $('form[name=task-update-form]').submit();
+    }
+
+    function dayleft(endDate) {
+        endDate2 = endDate.split('/');
+        dateleft = Math.ceil(
+            (new Date(endDate2[1] + '/' + endDate2[0] + '/' + endDate2[2]) -
+                new Date()) /
+                (1000 * 60 * 60 * 24)
+        );
+        return dateleft;
+    }
 
     $('#btn-add-task').on('click', function () {
         if ($('#taskname').val()) {
@@ -54,12 +69,6 @@ $(document).ready(function () {
             endDate = $('#date-sel')
                 .data('daterangepicker')
                 .endDate.format('DD/MM/YYYY');
-            endDate2 = endDate.split('/');
-            dateleft = Math.ceil(
-                (new Date(endDate2[1] + '/' + endDate2[0] + '/' + endDate2[2]) -
-                    new Date()) /
-                    (1000 * 60 * 60 * 24)
-            );
             content =
                 '<div class="task-container"> <div class="todoElement py-3 mb-5 container justify-content-between"> <input class="chkb" type="checkbox"> <div class="height p-2 w-100"> <div class="line"></div> <div class="todoDetails w-100 p-3"> <p class="todoTitle mb-3">' +
                 title +
@@ -72,7 +81,7 @@ $(document).ready(function () {
                 ' | Ngày kết thúc ' +
                 endDate +
                 '</div> <div class="todoDeadline">Còn lại: ' +
-                dateleft +
+                dayleft(endDate) +
                 ' ngày</div> </div> </div> </div> <div class="deleteX"></div> </div> </div>';
             if ($('.todoScroll .emptylist').length == 0) {
                 $('.todoScroll').prepend(content);
@@ -81,18 +90,11 @@ $(document).ready(function () {
                 $('.toolbar').removeClass('hide');
                 $('.todoScroll').prepend(content);
             }
-            lt = $('.todoScroll').children().not('.emptylist');
-            html = [];
-            for (let i = 0; i < lt.length; i++) {
-                html.push($(lt[i]).prop('outerHTML'));
-            }
-            $('#taskcontent').val(html.join(''));
-            $('form[name=task-update-form]').submit();
+            save();
         } else {
             $('#taskname').toggleClass('is-invalid');
         }
     });
-    
 
     $('#taskname').change(function (e) {
         $('#taskname').removeClass('is-invalid');

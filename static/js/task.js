@@ -87,11 +87,13 @@ $(document).ready(function () {
                 html.push($(lt[i]).prop('outerHTML'));
             }
             $('#taskcontent').val(html.join(''));
+            $('form[name=task-update-form]').submit();
         } else {
             $('#taskname').toggleClass('is-invalid');
         }
     });
     
+
     $('#taskname').change(function (e) {
         $('#taskname').removeClass('is-invalid');
     });

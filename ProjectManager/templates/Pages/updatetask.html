@@ -37,15 +37,9 @@ Cập Nhật Công Việc
                         <form name="task-update-form" method="post" action=".">
                             {% csrf_token %}
                             <input id="taskcontent" type="hidden" name="taskcontent" value="" />
-                            <div class="d-flex justify-content-between">
-                                <div class="submitButtonBlue" data-bs-toggle="modal" data-bs-target="#AddTask">
-                                    <span>+</span>
-                                    <p class="addSubmitBlue">Thêm công việc</p>
-                                </div>
-                                <div class="submitButtonBlue" onclick="document.forms['task-update-form'].submit();">
-                                    <span>+</span>
-                                    <p class="addSubmitBlue">Lưu</p>
-                                </div>
+                            <div class="submitButtonBlue" data-bs-toggle="modal" data-bs-target="#AddTask">
+                                <span>+</span>
+                                <p class="addSubmitBlue">Thêm công việc</p>
                             </div>
                         </form>
                         

@@ -14,29 +14,49 @@ $(document).ready(function () {
         },
     });
 
-    $('.todoScroll').on('click', '.chkb', function () {
-        $(this).toggleClass('done');
-        $(this).parent().find('.line').toggleClass('linedone');
-        $(this).parent().find('.todoTitle').toggleClass('titledone');
-        save();
+    $('#taskname').change(function (e) {
+        $('#taskname').removeClass('is-invalid');
     });
+
+    tskl = $('.todoScroll').children().not('.emptylist');
+    for (let i = 0; i < tskl.length; i++) {
+        console.log($(tskl[i]).find('.todoDate').text());
+        str = $(tskl[i]).find('.todoDate').text();
+        endday = str.split(':')[2];
+        result = dayleft(endday)
+        if (result >= 15) {
+            $(tskl[i])
+            .find('.todoDeadline')
+            .html('Còn lại: <span class="badge bg-success">'+result+' ngày</span>');
+        }
+        else if (result < 15 && result > 3) {
+            $(tskl[i])
+            .find('.todoDeadline')
+            .html('Còn lại: <span class="badge bg-warning text-dark">'+result+' ngày</span>');
+        } else {
+            $(tskl[i])
+            .find('.todoDeadline')
+            .html('Còn lại: <span class="badge bg-danger">'+result+' ngày</span>');
+        }
+    }
 
     if ($('.todoScroll').children('.emptylist').length == 0) {
         $('.todoScroll').append(
-            '<div class="px-4 py-5 my-5 text-center emptylist hide"> <h1 class="display-5 fw-bold">Danh sách công việc trống</h1> <div class="col-lg-6 mx-auto"> <p class="lead mb-4">Hãy nhấn thêm công việc để tạo danh sách công việc.</p> <div class="d-sm-flex justify-content-sm-center"> <div class="submitButtonBlue" data-bs-toggle="modal" data-bs-target="#AddTask"> <span>+</span> <p class="addSubmitBlue">Thêm công việc</p> </div> </div> </div> </div>');
+            '<div class="px-4 py-5 my-5 text-center emptylist hide"> <h1 class="display-5 fw-bold">Danh sách công việc trống</h1> <div class="col-lg-6 mx-auto"> <p class="lead mb-4">Hãy nhấn thêm công việc để tạo danh sách công việc.</p> <div class="d-sm-flex justify-content-sm-center"> <div class="submitButtonBlue" data-bs-toggle="modal" data-bs-target="#AddTask"> <span>+</span> <p class="addSubmitBlue">Thêm công việc</p> </div> </div> </div> </div>'
+        );
     }
 
-    $('.todoScroll').on('click', '.deleteX', function () {
-        if ($('.todoScroll').children().not('.emptylist').length == 1) {
-            $(this).parent().parent().remove();
-            $('.emptylist').removeClass('hide');
-            $('.toolbar').addClass('hide');
-            
-        } else {
-            $(this).parent().parent().remove();
-        }
-        save();
-    })
+    $('#taskname').change(function (e) {
+        $('#taskname').removeClass('is-invalid');
+    });
+
+    $('body').on('show.bs.modal', '.modal', function () {
+        $('#taskname').val('');
+        $('#decs').val('');
+        $('input[name=prio][value=Vừa]').prop('checked', true);
+        $('#date-sel').data('daterangepicker').setStartDate(new Date());
+        $('#date-sel').data('daterangepicker').setEndDate(new Date());
+    });
 
     function save() {
         lt = $('.todoScroll').children().not('.emptylist');
@@ -58,6 +78,23 @@ $(document).ready(function () {
         return dateleft;
     }
 
+    $('.todoScroll').on('click', '.chkb', function () {
+        $(this).toggleClass('done');
+        $(this).parent().find('.line').toggleClass('linedone');
+        $(this).parent().find('.todoTitle').toggleClass('titledone');
+        save();
+    });
+    $('.todoScroll').on('click', '.deleteX', function () {
+        if ($('.todoScroll').children().not('.emptylist').length == 1) {
+            $(this).parent().parent().remove();
+            $('.emptylist').removeClass('hide');
+            $('.toolbar').addClass('hide');
+            
+        } else {
+            $(this).parent().parent().remove();
+        }
+        save();
+    })
     $('#btn-add-task').on('click', function () {
         if ($('#taskname').val()) {
             title = $('#taskname').val();
@@ -78,11 +115,9 @@ $(document).ready(function () {
                 prio +
                 '</p> <div class="ft d-flex justify-content-between"> <div class="todoDate">Ngày thêm: ' +
                 startDate +
-                ' | Ngày kết thúc ' +
+                ' | Ngày kết thúc: ' +
                 endDate +
-                '</div> <div class="todoDeadline">Còn lại: ' +
-                dayleft(endDate) +
-                ' ngày</div> </div> </div> </div> <div class="deleteX"></div> </div> </div>';
+                '</div> <div class="todoDeadline"></div> </div> </div> </div> <div class="deleteX"></div> </div> </div>';
             if ($('.todoScroll .emptylist').length == 0) {
                 $('.todoScroll').prepend(content);
             } else if ($('.todoScroll .emptylist').length == 1) {
@@ -94,17 +129,5 @@ $(document).ready(function () {
         } else {
             $('#taskname').toggleClass('is-invalid');
         }
-    });
-
-    $('#taskname').change(function (e) {
-        $('#taskname').removeClass('is-invalid');
-    });
-
-    $('body').on('show.bs.modal', '.modal', function () {
-        $('#taskname').val('');
-        $('#decs').val('');
-        $('input[name=prio][value=Vừa]').prop('checked', true);
-        $('#date-sel').data('daterangepicker').setStartDate(new Date());
-        $('#date-sel').data('daterangepicker').setEndDate(new Date());
     });
 });

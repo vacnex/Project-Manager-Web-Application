@@ -102,12 +102,27 @@ Home
             {% else %}
             {% if Is_Confirm%}
             <div class="row mb-3">
-                <div class="title col-lg-auto col-md-auto col-sm-auto ">
-                    <h4>{{student_project_data.1}}</h4>
+                <div class="Process-list-content">
+                    <section class="Project-Manager-wrapper">
+                        <div class="Project-header d-flex mb-4 justify-content-between">
+                            <div class="Project-Tittle">
+                                <h1 class="display-5 fw-bold">{{student_project_data.1}}</h1>
+                            </div>
+                            <div class="toolbar hide">
+                                <form name="task-update-form" method="post" action=".">
+                                    {% csrf_token %}
+                                    <input id="taskcontent" type="hidden" name="taskcontent" value="" />
+                                    <input id="pjid" type="hidden" name="pjid" value="{{pk}}" />
+                                </form>
+                            </div>
+                        </div>
+                        <div class="task-wrapper">
+                            <div class="todoScroll p-4">
+                                {{student_project_data.2|safe}}
+                            </div>
+                        </div>
+                    </section>
                 </div>
-            </div>
-            <div class="Process-list-content">
-                {{student_project_data.2|safe}}
             </div>
             {% else %}
             <div class="Waiting">

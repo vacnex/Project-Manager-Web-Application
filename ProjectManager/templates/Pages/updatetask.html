@@ -31,6 +31,7 @@ Cập Nhật Công Việc
                         <form name="task-update-form" method="post" action=".">
                                 {% csrf_token %}
                             <input id="taskcontent" type="hidden" name="taskcontent" value="" />
+                            <input id="pjid" type="hidden" name="pjid" value="{{pk}}" />
                             <div class="submitButtonBlue" data-bs-toggle="modal" data-bs-target="#AddTask">
                                 <span>+</span>
                                 <p class="addSubmitBlue">Thêm công việc</p>
@@ -42,6 +43,7 @@ Cập Nhật Công Việc
                         <form name="task-update-form" method="post" action=".">
                             {% csrf_token %}
                             <input id="taskcontent" type="hidden" name="taskcontent" value="" />
+                            <input id="pjid" type="hidden" name="pjid" value="{{pk}}" />
                             <div class="submitButtonBlue" data-bs-toggle="modal" data-bs-target="#AddTask">
                                 <span>+</span>
                                 <p class="addSubmitBlue">Thêm công việc</p>

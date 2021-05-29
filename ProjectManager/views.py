@@ -46,11 +46,12 @@ class HomeIndex(View):
                 register_form = ProjectRegistersForm()
             else:
                 for project in cur_Project:
+                    studenttask = project.Project_Content.replace('<div class="deleteX"></div>', '')
                     if project.Is_Confirm:
                         Is_Confirm = True
                         student_project_data.append(project.Project_ID)
                         student_project_data.append(project.Project_Name)
-                        student_project_data.append(project.Project_Content)
+                        student_project_data.append(studenttask)
         all_users = User.objects.all()
         for user in all_users:
             if user.is_Teacher:
@@ -61,12 +62,13 @@ class HomeIndex(View):
 
 # region POST request
     def post(self, request):
-        teacher_id, register_form = None, None
-        teacher = User.objects.filter(
-            username=request.POST.get('teacher', None))
-        for t in teacher:
-            teacher_id = t.id
-        if request.method == "POST":
+        Is_Confirm, teacher_id, register_form = None, None, None
+        student_project_data = []
+        if request.POST.get('teacher', None) != None:
+            teacher = User.objects.filter(
+                username=request.POST.get('teacher', None))
+            for t in teacher:
+                teacher_id = t.id
             register_form = ProjectRegistersForm(request.POST)
             if register_form.is_valid():
                 obj = register_form.save()
@@ -75,7 +77,17 @@ class HomeIndex(View):
                 obj.save()
             else:
                 print(register_form.errors)
-        context = {'register_form': register_form}
+        elif request.POST.get('pjid', None) != None:
+            cur_project = Project.objects.filter(Project_ID=request.POST.get('pjid', None))
+            for project in cur_project:
+                project.Project_Content = request.POST.get('taskcontent', None)
+                project.save()
+                Is_Confirm = True
+                student_project_data.append(project.Project_ID)
+                student_project_data.append(project.Project_Name)
+                student_project_data.append(project.Project_Content)
+                
+        context = {'register_form': register_form, 'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data}
         return render(request, 'Pages/home.html', context)
 # endregion
 # endregion
@@ -145,7 +157,7 @@ class UpdateTask(View):
             if not p.Project_Content:
                 null = True
 
-        context = {'cur_Project': cur_Project, 'null': null, 'details': False,}
+        context = {'cur_Project': cur_Project, 'null': null, 'details': False, 'pk': pk}
         return render(request, 'Pages/updatetask.html',context)
 
     def post(self, request, pk):
@@ -157,19 +169,15 @@ class UpdateTask(View):
         for p in cur_project:
             if not p.Project_Content:
                 null = True
-        context = {'cur_Project': cur_project, 'null': null}
+        context = {'cur_Project': cur_project, 'null': null, 'pk': pk}
         return render(request, 'Pages/updatetask.html', context)
 
 # region home_guest
-
-
 def home_guest(request):
     return render(request, 'Pages/home_guest.html')
 # endregion
 
 # region loginUser
-
-
 def loginUser(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -197,16 +205,12 @@ def loginUser(request):
 # endregion
 
 # region logout_view
-
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
 # endregion
 
 # region register
-
-
 def register(request):
     if request.method == "POST":
         form = RegistionForm(request.POST)

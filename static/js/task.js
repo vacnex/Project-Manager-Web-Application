@@ -20,7 +20,6 @@ $(document).ready(function () {
 
     tskl = $('.todoScroll').children().not('.emptylist');
     for (let i = 0; i < tskl.length; i++) {
-        console.log($(tskl[i]).find('.todoDate').text());
         str = $(tskl[i]).find('.todoDate').text();
         endday = str.split(':')[2];
         result = dayleft(endday)
@@ -37,6 +36,15 @@ $(document).ready(function () {
             $(tskl[i])
             .find('.todoDeadline')
             .html('Còn lại: <span class="badge bg-danger">'+result+' ngày</span>');
+        }
+    }
+    id = 0
+    for (let i = 0; i < tskl.length; i++) {
+        if (!$('#pjid').val()) {
+            $('#pjid').val($(tskl[i]).attr('class').split(' ')[1]);
+        }
+        else {
+            id = $('#pjid').val();
         }
     }
 
@@ -106,8 +114,9 @@ $(document).ready(function () {
             endDate = $('#date-sel')
                 .data('daterangepicker')
                 .endDate.format('DD/MM/YYYY');
+            
             content =
-                '<div class="task-container"> <div class="todoElement py-3 mb-5 container justify-content-between"> <input class="chkb" type="checkbox"> <div class="height p-2 w-100"> <div class="line"></div> <div class="todoDetails w-100 p-3"> <p class="todoTitle mb-3">' +
+                '<div class="task-container '+id+'"> <div class="todoElement py-3 mb-5 container justify-content-between"> <input class="chkb" type="checkbox"> <div class="height p-2 w-100"> <div class="line"></div> <div class="todoDetails w-100 p-3"> <p class="todoTitle mb-3">' +
                 title +
                 '</p> <div class="todoDecs">' +
                 decs +

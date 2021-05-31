@@ -59,11 +59,13 @@ $(document).ready(function () {
     });
 
     $('body').on('show.bs.modal', '.modal', function () {
+        if (!$(this).hasClass('regprojectmodal')) {
         $('#taskname').val('');
         $('#decs').val('');
         $('input[name=prio][value=Vừa]').prop('checked', true);
         $('#date-sel').data('daterangepicker').setStartDate(new Date());
         $('#date-sel').data('daterangepicker').setEndDate(new Date());
+        }
     });
 
     function save() {

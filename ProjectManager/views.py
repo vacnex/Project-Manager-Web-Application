@@ -6,7 +6,8 @@ from django.contrib.auth import login, logout, authenticate, decorators
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
-from ProjectManager.models import Project, User
+from ProjectManager.models import Project, User, TeacherAssignment as TA
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.http import JsonResponse
 
@@ -51,14 +52,18 @@ class HomeIndex(View):
         current_user = request.user.id
         cur_Project = Project.objects.filter(Users=current_user)
         Manager_project_list, student_project_data, Teacher_project_list, teacher = [], [], [], []
+        list_teacher_user,list_student_user = [],[]
         request_pj, Is_Confirm = False, False
         register_form = None
         if request.user.is_superuser:
             return HttpResponseRedirect(reverse('admin:index'))
         if request.user.is_Manager:
-            for mp in Project.objects.all():
-                if not mp.Is_Confirm:
-                    Manager_project_list.append(mp)
+            User = get_user_model()
+            for user in User.objects.all():
+                if user.is_Teacher:
+                    list_teacher_user.append(user)
+                if not user.is_Teacher and not user.is_Manager and not user.is_Reviewer and not user.is_superuser:
+                    list_student_user.append(user)
         elif request.user.is_Reviewer:
             pass
         elif request.user.is_Teacher:
@@ -83,7 +88,7 @@ class HomeIndex(View):
             if user.is_Teacher:
                 teacher.append(user)
         context = {'request_pj': request_pj,
-                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Manager_project_list': Manager_project_list, 'Teacher_project_list': Teacher_project_list, 'register_form': register_form, 'teacher': teacher, 'details': True}
+                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Manager_project_list': Manager_project_list, 'Teacher_project_list': Teacher_project_list, 'register_form': register_form, 'teacher': teacher, 'details': True, 'list_student_user': list_student_user, 'list_teacher_user': list_teacher_user}
         return render(request, 'Pages/home.html', context)
 
 # region POST request
@@ -121,8 +126,6 @@ class HomeIndex(View):
 # endregion
 
 # region confirm
-
-
 @method_decorator(login_required(login_url='/login'), name='get')
 class ConfirmProject(View):
     def get(self, request, pk):
@@ -207,10 +210,35 @@ class UpdateTask(View):
 # endregion
 
 # region home_guest
-
-
-def home_guest(request):
-    return render(request, 'Pages/home_guest.html')
+@method_decorator(login_required(login_url='/'), name='get')
+class TeacherAssignment(View):
+    def get(self, request):
+        ta_dict = {}
+        tName, sName, pName = "","",""
+        list_teacher_user, list_student_user, list_teacher_assignment = [], [], []
+        for user in User.objects.all():
+                if user.is_Teacher:
+                    list_teacher_user.append(user)
+                if not user.is_Teacher and not user.is_Manager and not user.is_Reviewer and not user.is_superuser:
+                    list_student_user.append(user)
+        for a in TA.objects.all():
+            for user in User.objects.all():
+                if a.TeacherID_id == user.id:
+                    tName = user.get_full_name()
+                if a.StudentID_id == user.id:
+                    sName = user.get_full_name()
+            for p in Project.objects.all():
+                if a.ProjectID_id == p.Project_ID:
+                    pName = p.Project_Name
+                else:
+                    pName = ""
+            ta_dict = {"id": a.AsmID, "Teacher": tName, "Student": sName, "ProjectName":pName}
+            ta_dict_copy = ta_dict.copy()
+            list_teacher_assignment.append(ta_dict_copy)
+        print(list_teacher_assignment[0]['Teacher'])
+        context = {'list_student_user': list_student_user,
+                   'list_teacher_user': list_teacher_user, 'list_teacher_assignment': list_teacher_assignment}
+        return render(request, 'Pages/assignment.html', context)
 # endregion
 
 

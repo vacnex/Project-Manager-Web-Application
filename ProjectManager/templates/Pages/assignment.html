@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Phân Giáo Viên
+{% endblock %}
+
+{% block content %}
+<div id="page-content">
+    <div class="row g-0">
+        <div class="col-lg-7">
+            <div class="assignment_list shadow">
+                <h4 class="box-title mb-4">DANH SÁCH PHÂN GIÁO VIÊN HƯỚNG DẪN</h4>
+                <div class="list-wraper">
+                    {% for ta in list_teacher_assignment %}
+
+                    <div class="item shadow" onclick="">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="mini-box" style="font-family: Roboto;font-size: 1.4em;font-style: normal; font-weight: 400;line-height: 21px;color: #EB5757;">
+                                    {{ta.id}}
+                                </div>
+                            </div>
+                            <div class="col-sm-10">
+                                <div class="asm-Content">
+                                    <h3>
+                                        {% if ta.ProjectName == "" %}
+                                        Tên đề tài chưa cập nhật
+                                        {% else %}
+                                        {{ta.ProjectName}}
+                                        {% endif %}
+                                    </h3>
+                                    <div class="assignment-info">
+                                        <span style="color: blue"> GVHD: </span>
+                                        <span class="me-2">{{ta.Teacher}}</span>
+                                        <span style="color: blue"> Sinh Viên:</span>
+                                        <span class="me-2">{{ta.Student}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="assignment-wraper" style="padding-left: 90px;">
+                <div class="assignment_box shadow">
+                    <h4 class="box-title mb-4">PHÂN GIÁO VIÊN</h4>
+                    <div class="assignment_box-body text-center p-3">
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <select class="selectpicker" data-live-search="true" data-width="auto" title="Chọn giáo viên">
+                                    {% for t in list_teacher_user%}
+                                    <option>{{t.get_full_name}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                            <div class="col-lg-6">
+                            <select class="selectpicker" data-live-search="true" data-width="auto" title="Chọn sinh viên">
+                                {% for s in list_student_user%}
+                                <option>{{s.get_full_name}}</option>
+                                {%endfor%}
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <a class="btn-login btn-dashboard w-100 mt-3 btn-lg nav-link">Phân Giáo Viên</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

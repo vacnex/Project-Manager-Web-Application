@@ -7,12 +7,79 @@ Home
 {% block content %}
 <div id="page-content">
     <div class="row g-0">
-        <section class="page-dashboard">
+        <section class="page-wrapper">
             {% if user.is_Manager%}
             <!-- #region Giáo Viên quản lý-->
-            <div class="row mb-3">
+            <div class="row">
+                <div class="col-lg-6">
+                    <ul class="nav nav-pills mb-3 btnlist" id="pills-tab" role="tablist">
+                        <li class="nav-item tabTitle" role="presentation">
+                            <a class="nav-link" id="pills-dsgv-tab" data-bs-toggle="pill" data-bs-target="#pills-dsgv" type="button" role="tab" aria-controls="pills-dsgv" aria-selected="false">DANH SÁCH GIÁO VIÊN</a>
+                        </li>
+                        <li class="nav-item tabTitle" role="presentation">
+                            <a class="nav-link active" id="pills-dssv-tab" data-bs-toggle="pill" data-bs-target="#pills-dssv" type="button" role="tab" aria-controls="pills-dssv" aria-selected="true">DANH SÁCH SINH VIÊN</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade rounded-3 shadow-sm w-100 show active" id="pills-dssv" role="tabpanel" aria-labelledby="pills-dssv-tab">
+                            <div class="list-student">
+                                {% for s in list_student_user%}
+                                <div class="item shadow" onclick="">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="student-pic">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <div class="desc-student content">
+                                                <h5 class="student-name">
+                                                    {{s.get_full_name}}
+                                                </h5>
+                                                <div class="student-infor">
+                                                    <p class="desc">Khoá: {{s.Class_id}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endfor%}
+                            </div>
+                        </div>
+                        <div class="tab-pane fade rounded-3 shadow-sm w-100" id="pills-dsgv" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <div class="list-teacher">
+                                {% for t in list_teacher_user%}
+                                <div class="item shadow" onclick="">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="teacher-pic">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <div class="desc-teacher content">
+                                                <h5 class="teacher-name">
+                                                        {{t.get_full_name}}
+                                                </h5>
+                                                <div class="teacher-infor">
+                                                    <p class="desc">thông tin giáo viên.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endfor%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3"></div>
+                <div class="col-lg-3"></div>
+            </div>
+            <!-- <div class="row mb-3">
                 <div class="title col-lg-auto col-md-auto col-sm-auto ">
-                    <h4>Danh Sách Đề Tài Cần Xác Nhận</h4>
+                    <h4>PHÂN CÔNG</h4>
+                    <div class="list-btn">
+
+                    </div>
                 </div>
                 <div class="slick-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
                     <div class="btn-group" role="group" aria-label="Basic example">
@@ -20,7 +87,7 @@ Home
                         <button id="btn-next" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-right fa-fw " aria-hidden="true" aria-label=""></i></span></button>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="list-content">
                 {% for p in Manager_project_list%}
                 <div>

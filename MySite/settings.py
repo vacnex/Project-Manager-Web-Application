@@ -80,12 +80,23 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'joorp162ef8lf0s6',
+    #     'USER': 'tly4lutrpknmsfzc',
+    #     'PASSWORD': 'nn6ywnr47g42mv5g',
+    #     'HOST': 'nnsgluut5mye50or.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    #     'PORT': '3306',
+    #     'OPTIONS': {
+    #         'sql_mode': 'traditional',
+    #     },
+    # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'joorp162ef8lf0s6',
-        'USER': 'tly4lutrpknmsfzc',
-        'PASSWORD': 'nn6ywnr47g42mv5g',
-        'HOST': 'nnsgluut5mye50or.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        'NAME': 'projectmanagerdb',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
             'sql_mode': 'traditional',

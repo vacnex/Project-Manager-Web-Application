@@ -7,7 +7,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register, name='register'),
     path('home/', views.HomeIndex.as_view(), name='home'),
-    path('homeguest/', views.home_guest, name='home_guest'),
+    path('assignment/', views.TeacherAssignment.as_view(), name='assignment'),
     path('confirm/<slug:pk>/',
          views.ConfirmProject.as_view(), name='ConfirmProject'),
     path('updatetask/<slug:pk>/',

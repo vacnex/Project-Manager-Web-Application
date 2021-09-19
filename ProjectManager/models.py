@@ -14,7 +14,7 @@ class User(AbstractUser):
         regex=r'(:?^|\s)(09|08|03|07|05)+([0-9]{8})\b', message="Số điện thoại phải bắt đầu với những đầu số sau (09,08,07,05,03) và có 10 chữ số.")
     phone_number = models.CharField(
         validators=[phone_regex], max_length=10, blank=True)
-    _Class = models.ForeignKey(
+    Class = models.ForeignKey(
         'SchoolClass', on_delete=models.CASCADE, default=None, blank=True, null=True)
 
 
@@ -56,3 +56,15 @@ class Project(models.Model):
 
     def Project_members(self):
         return "\n".join([u.username for u in self.Users.all()])
+
+
+class TeacherAssignment(models.Model):
+    AsmID = models.CharField(max_length=10, primary_key=True)
+    TeacherID = models.ForeignKey(
+        'User', on_delete=models.CASCADE, default=None, null=False, related_name='Teacher')
+    StudentID = models.ForeignKey(
+        'User', on_delete=models.CASCADE, default=None, null=False, related_name='Student')
+    ProjectID = models.ForeignKey(
+        'Project', on_delete=models.CASCADE, default=None, null=True, blank=True)
+    def __str__(self):
+        return self.AsmID

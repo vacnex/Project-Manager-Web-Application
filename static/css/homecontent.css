@@ -1,0 +1,53 @@
+.tabTitle:hover {
+    font-size: 1.1em;
+    text-shadow: 5px 5px 5px #8080808f;
+}
+.btnlist .nav-item .nav-link {
+    width: 250px;
+    height: 40px;
+    margin: auto;
+    border: none;
+    border-radius: 20px;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: 500;
+    text-align: center;
+    color: #828282;
+}
+.btnlist .nav-item .nav-link.active {
+    background-color: #2F58E2;
+    box-shadow: 0px 0px 16px #2f58e250, 0px 0px 24px #2f58e250, 0px 8px 56px #2f58e250!important;
+    color: #ffffff;
+}
+
+.btnlist .nav-item {
+    width: 50%;
+    border-right: 1px solid #E4E4E4;
+}
+.btnlist .nav-item:last-child {
+	border-right: 0;
+}
+.list-student .item, .list-teacher .item{
+    margin-bottom: 2rem;
+    padding: 1.1rem;
+    border-radius: 10px;
+    background: #fff;
+}
+.list-student, .list-teacher {
+    height: 550px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 2rem;
+
+}
+.list-student::-webkit-scrollbar, .list-teacher::-webkit-scrollbar {
+	width: 0px;
+}
+.item {
+  margin-right: .25rem!important;
+  margin-left: .25rem!important;
+}
+.item:hover {
+    transform: scale(1.03, 1.03);
+    cursor: pointer;
+}

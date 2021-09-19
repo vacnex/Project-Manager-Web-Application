@@ -9,9 +9,12 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/homecontent.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/assignment.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/task.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'font/css/all.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'slick/slick.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"  type="text/css"/>
 </head>
 <body>
@@ -70,11 +73,37 @@
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto list-nav-item flex-nowrap">
                     <li class="mb-1 rounded">
-                        <a href="{% url 'home' %}" class="nav-link link-dark" rel="nofollow noopener noreferrer">
+                        <a href="{% url 'index' %}" class="nav-link link-dark" >
+                            <i class="fas fa-columns"></i>
+                            Trang chủ
+                        </a>
+                    </li>
+                    {%if user.is_Manager%}
+                    <li class="mb-1 rounded">
+                        <a href="{% url 'home' %}" class="nav-link link-dark">
                             <i class="fas fa-columns"></i>
                             Dashboard
                         </a>
                     </li>
+                    <li class="mb-1 rounded">
+                        <a href="{% url 'assignment' %}" class="nav-link link-dark">
+                            <i class="fas fa-columns"></i>
+                            Phân giáo viên
+                        </a>
+                    </li>
+                    <li class="mb-1 rounded">
+                        <a href="" class="nav-link link-dark">
+                            <i class="fas fa-columns"></i>
+                            Đặt mốc thời gian
+                        </a>
+                    </li>
+                    <li class="mb-1 rounded">
+                        <a href="" class="nav-link link-dark">
+                            <i class="fas fa-columns"></i>
+                            Đăng thông báo
+                        </a>
+                    </li>
+                    {%endif%}
                     {%if user.is_Teacher%}
                     {%if details %}
                     <li class="mb-1 nav-list">
@@ -131,12 +160,14 @@
             </div>
         </div>
     </footer>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/base.js' %}"></script>
     <script src="{% static 'js/task.js' %}"></script>
     <script src="{% static 'js/course.js' %}"></script>
     <script src="{% static 'slick/slick.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+    <script src="{% static 'js/defaults-vi_VN.min.js' %}"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 </body>

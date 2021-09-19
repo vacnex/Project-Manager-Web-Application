@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, SchoolYear, ProjectType, Project, SchoolClass
+from .models import User, SchoolYear, ProjectType, Project, SchoolClass, TeacherAssignment
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm
 
@@ -14,10 +14,10 @@ class MyUserAdmin(UserAdmin):
     form = MyUserChangeForm
     fieldsets = UserAdmin.fieldsets + (
         (None, {'fields': ('gender',
-                           'address', 'phone_number', '_Class', 'is_Manager', 'is_Teacher', 'is_Reviewer')}),
+                           'address', 'phone_number', 'Class', 'is_Manager', 'is_Teacher', 'is_Reviewer')}),
     )
     list_display = ('username', 'email',
-                    'is_staff', '_Class', 'is_Manager', 'is_Teacher', 'is_Reviewer')
+                    'is_staff', 'Class', 'is_Manager', 'is_Teacher', 'is_Reviewer')
 
 
 class MySchoolYearAdmin (admin.ModelAdmin):
@@ -38,8 +38,13 @@ class MySchoolClassAdmin (admin.ModelAdmin):
     model = SchoolClass
     list_display = ('ClassID',)
 
+class MyTeacherAssignmentAdmin (admin.ModelAdmin):
+    model = TeacherAssignment
+    list_display = ('AsmID',)
+
 admin.site.register(User, MyUserAdmin)
 admin.site.register(SchoolYear, MySchoolYearAdmin)
 admin.site.register(Project, MyProjectAdmin)
 admin.site.register(SchoolClass, MySchoolClassAdmin)
 admin.site.register(ProjectType, MyProjectTypeAdmin)
+admin.site.register(TeacherAssignment, MyTeacherAssignmentAdmin)

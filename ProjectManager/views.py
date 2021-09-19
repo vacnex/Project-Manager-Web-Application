@@ -16,11 +16,33 @@ def index(request):
     if request.user.is_superuser:
         return HttpResponseRedirect(reverse('admin:index'))
     else:
-        return render(request, 'Pages/index.html')
+        if request.user.is_authenticated:
+            return redirect('home')
+        else:
+            if request.method == 'POST':
+                form = LoginForm(request=request, data=request.POST)
+                if form.is_valid():
+                    username = form.cleaned_data['username']
+                    password = form.cleaned_data['password']
+                    user = authenticate(username=username, password=password)
+                    if user is not None:
+                        login(request, user)
+                        next_url = request.POST.get('next')
+                        if request.user.is_superuser:
+                            return HttpResponseRedirect(reverse('admin:index'))
+                        else:
+                            if next_url:
+                                return HttpResponseRedirect(next_url)
+                            else:
+                                return redirect('home')
+            else:
+                form = LoginForm()
+        context = {'form': form}
+        return render(request, 'Pages/index.html',context)
 # endregion
 
 # region home
-@method_decorator(login_required(login_url='/login'), name='get')
+@method_decorator(login_required(login_url='/'), name='get')
 class HomeIndex(View):
     def get(self, request):
         current_user = request.user.id
@@ -46,7 +68,8 @@ class HomeIndex(View):
                 register_form = ProjectRegistersForm()
             else:
                 for project in cur_Project:
-                    studenttask = project.Project_Content.replace('<div class="deleteX"></div>', '')
+                    studenttask = project.Project_Content.replace(
+                        '<div class="deleteX"></div>', '')
                     if project.Is_Confirm:
                         Is_Confirm = True
                         student_project_data.append(project.Project_ID)
@@ -78,7 +101,8 @@ class HomeIndex(View):
             else:
                 print(register_form.errors)
         elif request.POST.get('pjid', None) != None:
-            cur_project = Project.objects.filter(Project_ID=request.POST.get('pjid', None))
+            cur_project = Project.objects.filter(
+                Project_ID=request.POST.get('pjid', None))
             for project in cur_project:
                 project.Project_Content = request.POST.get('taskcontent', None)
                 project.save()
@@ -86,13 +110,16 @@ class HomeIndex(View):
                 student_project_data.append(project.Project_ID)
                 student_project_data.append(project.Project_Name)
                 student_project_data.append(project.Project_Content)
-                
-        context = {'register_form': register_form, 'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data}
+
+        context = {'register_form': register_form, 'Is_Confirm': Is_Confirm,
+                   'student_project_data': student_project_data}
         return render(request, 'Pages/home.html', context)
 # endregion
 # endregion
 
 # region confirm
+
+
 @method_decorator(login_required(login_url='/login'), name='get')
 class ConfirmProject(View):
     def get(self, request, pk):
@@ -148,6 +175,8 @@ class ConfirmProject(View):
 
         return render(request, 'Pages/confirmproject.html', {'confirm_form': confirm_form})
 # endregion
+
+# region
 @method_decorator(login_required(login_url='/login'), name='get')
 class UpdateTask(View):
     def get(self, request, pk):
@@ -157,8 +186,9 @@ class UpdateTask(View):
             if not p.Project_Content:
                 null = True
 
-        context = {'cur_Project': cur_Project, 'null': null, 'details': False, 'pk': pk}
-        return render(request, 'Pages/updatetask.html',context)
+        context = {'cur_Project': cur_Project,
+                   'null': null, 'details': False, 'pk': pk}
+        return render(request, 'Pages/updatetask.html', context)
 
     def post(self, request, pk):
         cur_project = Project.objects.filter(Project_ID=pk)
@@ -171,8 +201,11 @@ class UpdateTask(View):
                 null = True
         context = {'cur_Project': cur_project, 'null': null, 'pk': pk}
         return render(request, 'Pages/updatetask.html', context)
+# endregion
 
 # region home_guest
+
+
 def home_guest(request):
     return render(request, 'Pages/home_guest.html')
 # endregion
@@ -205,12 +238,16 @@ def loginUser(request):
 # endregion
 
 # region logout_view
+
+
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
 # endregion
 
 # region register
+
+
 def register(request):
     if request.method == "POST":
         form = RegistionForm(request.POST)

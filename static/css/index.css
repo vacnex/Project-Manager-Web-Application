@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
 }
+
 .logo {
     display: flex;
     justify-content: center;
@@ -248,7 +249,7 @@ button {
     outline: none;
     border: none;
 }
-.btn-submit:hover {
+.btn-submit:hover,.btn-login:hover {
     transform: scale(1.03, 1.03);
     cursor: pointer;
 }
@@ -276,6 +277,9 @@ button {
 }
 .login-box-body .form-control:focus{
   box-shadow: none;
+}
+.btn-dashboard:hover{
+    color:white;
 }
 .login-box-body input{
   border-bottom: 3px solid !important;

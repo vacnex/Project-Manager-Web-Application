@@ -291,13 +291,29 @@
                     </div>
                 </div>
                 <div class="col-lg-5">
+                    {% if logged %}
+                    <div class="logged-wraper">
+                        <div class="login-wraper" style="padding-left: 90px;">
+                            <div class="login_form shadow">
+                                <h4 class="form-title mb-4">Chào {{request.user.get_full_name}}!</h4>
+                                <div class="login-box-body text-center p-3">
+                                    <p>Bạn đã đăng nhập, bạn có thể sử dụng thanh tìm kiếm bên trái hoặc đến trang Dashboard để quản lý. </p>
+                                    <a class="nav-link" href="{% url 'logout' %}" >Đăng Xuất</a>
+                                    <div class="row">
+                                            <a href="/home" class="btn-login btn-dashboard w-100 mt-3 btn-lg nav-link">Đến trang Dashboard</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%else%}
                     <div class="login-wraper" style="padding-left: 90px;">
                         <div class="login_form shadow">
                             <h4 class="form-title mb-4">ĐĂNG NHẬP</h4>
                             <div class="login-box-body p-3">
                                 <div class="row">
                                     <form action="." method="POST">
-                                    {% csrf_token %}
+                                        {% csrf_token %}
                                         <div class="form-floating mb-3">
                                             {{ form.username }}
                                             <label for="form.username">Tài Khoản</label>
@@ -314,6 +330,7 @@
                             </div>
                         </div>
                     </div>
+                    {%endif%}
                 </div>
             </div>
         </div>

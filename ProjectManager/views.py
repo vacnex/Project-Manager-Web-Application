@@ -16,8 +16,11 @@ def index(request):
     if request.user.is_superuser:
         return HttpResponseRedirect(reverse('admin:index'))
     else:
+        logged = False
         if request.user.is_authenticated:
-            return redirect('home')
+            logged = True
+            context = {'logged': logged}
+            return render(request, 'Pages/index.html', context)
         else:
             if request.method == 'POST':
                 form = LoginForm(request=request, data=request.POST)
@@ -210,32 +213,6 @@ def home_guest(request):
     return render(request, 'Pages/home_guest.html')
 # endregion
 
-# region loginUser
-def loginUser(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    else:
-        if request.method == 'POST':
-            form = LoginForm(request=request, data=request.POST)
-            if form.is_valid():
-                username = form.cleaned_data['username']
-                password = form.cleaned_data['password']
-                user = authenticate(username=username, password=password)
-                if user is not None:
-                    login(request, user)
-                    next_url = request.POST.get('next')
-                    if request.user.is_superuser:
-                        return HttpResponseRedirect(reverse('admin:index'))
-                    else:
-                        if next_url:
-                            return HttpResponseRedirect(next_url)
-                        else:
-                            return redirect('home')
-        else:
-            form = LoginForm()
-    context = {'form': form}
-    return render(request, 'Pages/login.html', context)
-# endregion
 
 # region logout_view
 

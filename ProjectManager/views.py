@@ -1,4 +1,4 @@
-from ProjectManager.forms import LoginForm, RegistionForm, ProjectRegistersForm, ConfirmProjectForm
+from ProjectManager.forms import LoginForm, RegistionForm, ProjectRegistersForm, ConfirmProjectForm, TeacherAssignmentForm
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -42,17 +42,19 @@ def index(request):
             else:
                 form = LoginForm()
         context = {'form': form}
-        return render(request, 'Pages/index.html',context)
+        return render(request, 'Pages/index.html', context)
 # endregion
 
 # region home
+
+
 @method_decorator(login_required(login_url='/'), name='get')
 class HomeIndex(View):
     def get(self, request):
         current_user = request.user.id
         cur_Project = Project.objects.filter(Users=current_user)
         Manager_project_list, student_project_data, Teacher_project_list, teacher = [], [], [], []
-        list_teacher_user,list_student_user = [],[]
+        list_teacher_user, list_student_user = [], []
         request_pj, Is_Confirm = False, False
         register_form = None
         if request.user.is_superuser:
@@ -126,6 +128,8 @@ class HomeIndex(View):
 # endregion
 
 # region confirm
+
+
 @method_decorator(login_required(login_url='/login'), name='get')
 class ConfirmProject(View):
     def get(self, request, pk):
@@ -183,6 +187,8 @@ class ConfirmProject(View):
 # endregion
 
 # region
+
+
 @method_decorator(login_required(login_url='/login'), name='get')
 class UpdateTask(View):
     def get(self, request, pk):
@@ -209,36 +215,55 @@ class UpdateTask(View):
         return render(request, 'Pages/updatetask.html', context)
 # endregion
 
-# region home_guest
+# region TeacherAssignment
+
+
 @method_decorator(login_required(login_url='/'), name='get')
 class TeacherAssignment(View):
+    # region get
     def get(self, request):
+        assignment_form = None
         ta_dict = {}
-        tName, sName, pName = "","",""
-        list_teacher_user, list_student_user, list_teacher_assignment = [], [], []
-        for user in User.objects.all():
-                if user.is_Teacher:
-                    list_teacher_user.append(user)
-                if not user.is_Teacher and not user.is_Manager and not user.is_Reviewer and not user.is_superuser:
-                    list_student_user.append(user)
+        tName, sName, pName = "", "", ""
+        list_teacher_assignment = []
         for a in TA.objects.all():
             for user in User.objects.all():
-                if a.TeacherID_id == user.id:
+                if a.Teacher_id == user.id:
                     tName = user.get_full_name()
-                if a.StudentID_id == user.id:
+                if a.Student_id == user.id:
                     sName = user.get_full_name()
             for p in Project.objects.all():
-                if a.ProjectID_id == p.Project_ID:
+                if a.Project_id == p.Project_ID:
                     pName = p.Project_Name
                 else:
                     pName = ""
-            ta_dict = {"id": a.AsmID, "Teacher": tName, "Student": sName, "ProjectName":pName}
+            ta_dict = {"id": a.id, "Teacher": tName,
+                       "Student": sName, "ProjectName": pName}
             ta_dict_copy = ta_dict.copy()
             list_teacher_assignment.append(ta_dict_copy)
-        print(list_teacher_assignment[0]['Teacher'])
-        context = {'list_student_user': list_student_user,
-                   'list_teacher_user': list_teacher_user, 'list_teacher_assignment': list_teacher_assignment}
+        assignment_form = TeacherAssignmentForm()
+        context = {'list_teacher_assignment': list_teacher_assignment,
+                   'assignment_form': assignment_form}
         return render(request, 'Pages/assignment.html', context)
+# endregion
+
+    def post(self, request):
+        student = User.objects.get(id=request.POST.get('Student'))
+        teacher = User.objects.get(id=request.POST.get('Teacher'))
+        data = {
+            'Teacher': teacher,
+            'Student': student,
+        }
+        assignment_form = TeacherAssignmentForm(data)
+        # assignment_form = TeacherAssignmentForm(request.POST)
+        if assignment_form.is_valid():
+            assignment_form.save()
+            return HttpResponseRedirect('/assignment/')
+        else:
+            print(assignment_form.errors)
+
+        return render(request, 'Pages/assignment.html', {'assignment_form': assignment_form})
+
 # endregion
 
 

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User, Project
+from .models import User, Project, TeacherAssignment
 from django.core.exceptions import ValidationError
 import re
 
@@ -61,3 +61,13 @@ class ConfirmProjectForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Mô Tả'}),
             'Is_Confirm': forms.CheckboxInput(attrs={'class': 'form-check-input', 'placeholder': 'Xác nhận đề tài', 'required':''}),
         }
+
+
+class TeacherAssignmentForm(forms.ModelForm):
+    Teacher = forms.ModelChoiceField(queryset=User.objects.filter(is_Teacher=True), empty_label=None, widget=forms.Select(
+        attrs={'class': 'selectpicker', 'title': "Chọn giáo viên", 'data-live-search': "true", 'data-width': "auto",  'name': "teacher"}))
+    Student = forms.ModelChoiceField(queryset=User.objects.filter(is_Teacher=False, is_superuser=False, is_Reviewer=False), empty_label=None, widget=forms.Select(
+        attrs={'class': 'selectpicker', 'title': "Chọn sinh viên", 'data-live-search': "true", 'data-width': "auto",  'name': "student"}))
+    class Meta:
+        model = TeacherAssignment
+        fields = ['Teacher', 'Student']

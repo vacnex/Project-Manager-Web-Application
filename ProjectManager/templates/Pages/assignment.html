@@ -48,26 +48,20 @@ Phân Giáo Viên
                 <div class="assignment_box shadow">
                     <h4 class="box-title mb-4">PHÂN GIÁO VIÊN</h4>
                     <div class="assignment_box-body text-center p-3">
-                        <div class="row mb-3">
-                            <div class="col-lg-6">
-                                <select class="selectpicker" data-live-search="true" data-width="auto" title="Chọn giáo viên">
-                                    {% for t in list_teacher_user%}
-                                    <option>{{t.get_full_name}}</option>
-                                    {%endfor%}
-                                </select>
+                        <form id="assignmentForm" action="." method="POST">
+                            {% csrf_token %}
+                            <div class="row mb-3">
+                                <div class="col-lg-6">
+                                    {{ assignment_form.Teacher }}
+                                </div>
+                                <div class="col-lg-6">
+                                    {{ assignment_form.Student }}
+                                </div>
                             </div>
-                            <div class="col-lg-6">
-                            <select class="selectpicker" data-live-search="true" data-width="auto" title="Chọn sinh viên">
-                                {% for s in list_student_user%}
-                                <option>{{s.get_full_name}}</option>
-                                {%endfor%}
-                            </select>
+                            <div class="row">
+                                <button type="submit" class="btn-assignment btn-dashboard w-100 mt-3 btn-lg nav-link">Phân Giáo Viên</button>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <a class="btn-login btn-dashboard w-100 mt-3 btn-lg nav-link">Phân Giáo Viên</a>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

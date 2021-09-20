@@ -17,6 +17,9 @@ class User(AbstractUser):
     Class = models.ForeignKey(
         'SchoolClass', on_delete=models.CASCADE, default=None, blank=True, null=True)
 
+    def __str__(self):
+        return self.get_full_name()
+
 
 class SchoolClass(models.Model):
     ClassID = models.CharField(max_length=10, primary_key=True)
@@ -50,6 +53,8 @@ class Project(models.Model):
     description = models.TextField(blank=True)
     Is_Done = models.BooleanField(default=False)
     Is_Confirm = models.BooleanField(default=False)
+    TeacherAssignment = models.ForeignKey(
+        'TeacherAssignment', on_delete=models.CASCADE, default=None, null=True)
 
     def __str__(self):
         return self.Project_Name
@@ -59,12 +64,11 @@ class Project(models.Model):
 
 
 class TeacherAssignment(models.Model):
-    AsmID = models.CharField(max_length=10, primary_key=True)
-    TeacherID = models.ForeignKey(
-        'User', on_delete=models.CASCADE, default=None, null=False, related_name='Teacher')
-    StudentID = models.ForeignKey(
-        'User', on_delete=models.CASCADE, default=None, null=False, related_name='Student')
-    ProjectID = models.ForeignKey(
+    Project = models.ForeignKey(
         'Project', on_delete=models.CASCADE, default=None, null=True, blank=True)
+    Teacher = models.ForeignKey(
+        'User', on_delete=models.CASCADE, default=None, null=False, related_name='Teacher')
+    Student = models.ForeignKey(
+        'User', on_delete=models.CASCADE, default=None, null=False, related_name='Student')
     def __str__(self):
-        return self.AsmID
+        return self.id

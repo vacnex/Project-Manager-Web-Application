@@ -32,7 +32,7 @@ class MyProjectTypeAdmin (admin.ModelAdmin):
 class MyProjectAdmin (admin.ModelAdmin):
     model = Project
     list_display = ('Project_ID', 'Project_Name',
-                    'Type', 'schoolYear', 'Project_members', 'Is_Done', 'Is_Confirm')
+                    'Type', 'schoolYear', 'Project_members', 'Is_Done', 'Is_Confirm', 'TeacherAssignment')
 
 class MySchoolClassAdmin (admin.ModelAdmin):
     model = SchoolClass
@@ -40,7 +40,7 @@ class MySchoolClassAdmin (admin.ModelAdmin):
 
 class MyTeacherAssignmentAdmin (admin.ModelAdmin):
     model = TeacherAssignment
-    list_display = ('AsmID',)
+    list_display = ('Teacher', 'Student', 'Project')
 
 admin.site.register(User, MyUserAdmin)
 admin.site.register(SchoolYear, MySchoolYearAdmin)

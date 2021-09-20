@@ -40,3 +40,21 @@
     flex-direction: column;
     float: left;
 }
+.btn-assignment {
+    background-color: #2F58E2;
+    box-shadow: 0px 4px 16px #2f58e250, 0px 8px 24px #2f58e250, 0px 16px 56px #2f58e250;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.5em;
+    font-style: normal;
+    font-weight: 500;
+    text-align: center;
+}
+.btn-assignment:hover{
+    color: #ffffff;
+    transform: scale(1.03, 1.03);
+}

@@ -10,6 +10,8 @@ from ProjectManager.models import Project, User, TeacherAssignment as TA
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.http import JsonResponse
+from django.core import serializers
+import json
 
 
 # region index
@@ -222,7 +224,7 @@ class UpdateTask(View):
 class TeacherAssignment(View):
     # region get
     def get(self, request):
-        assignment_form = None
+        assignment_form = TeacherAssignmentForm()
         ta_dict = {}
         tName, sName, pName = "", "", ""
         list_teacher_assignment = []
@@ -241,28 +243,27 @@ class TeacherAssignment(View):
                        "Student": sName, "ProjectName": pName}
             ta_dict_copy = ta_dict.copy()
             list_teacher_assignment.append(ta_dict_copy)
-        assignment_form = TeacherAssignmentForm()
         context = {'list_teacher_assignment': list_teacher_assignment,
                    'assignment_form': assignment_form}
         return render(request, 'Pages/assignment.html', context)
 # endregion
 
     def post(self, request):
-        student = User.objects.get(id=request.POST.get('Student'))
-        teacher = User.objects.get(id=request.POST.get('Teacher'))
-        data = {
-            'Teacher': teacher,
-            'Student': student,
-        }
-        assignment_form = TeacherAssignmentForm(data)
-        # assignment_form = TeacherAssignmentForm(request.POST)
-        if assignment_form.is_valid():
-            assignment_form.save()
-            return HttpResponseRedirect('/assignment/')
-        else:
-            print(assignment_form.errors)
-
-        return render(request, 'Pages/assignment.html', {'assignment_form': assignment_form})
+        if request.is_ajax:
+            assignment_form = TeacherAssignmentForm(request.POST)
+            if assignment_form.is_valid():
+                assignment_form.save()
+                data = TA.objects.get(id=len(TA.objects.all()))
+                a = {
+                    "id":data.id,
+                    "teacher": data.Teacher.get_full_name(),
+                    "student": data.Student.get_full_name()
+                }
+                return JsonResponse(json.dumps(a), status=200, safe = False)
+            else:
+                print(assignment_form.errors)
+                return JsonResponse({"error": assignment_form.errors}, status=400)
+        return JsonResponse({"error": ""}, status=400)
 
 # endregion
 

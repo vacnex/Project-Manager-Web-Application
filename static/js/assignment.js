@@ -14,25 +14,17 @@ $(document).ready(function () {
         }
         return '';
     }
-    // $('.assignment_list .item').hover(
-    //     function () {
-    //         $('.btn-circle', this).removeClass('d-none');
-    //     },
-    //     function () {
-    //         $('.btn-circle', this).addClass('d-none');
-    //     }
-    // );
-        $(document).on(
-            {
-                mouseenter: function () {
-                    $('.btn-circle', this).removeClass('d-none');
-                },
-                mouseleave: function () {
-                    $('.btn-circle', this).addClass('d-none');
-                },
+    $(document).on(
+        {
+            mouseenter: function () {
+                $('.btn-circle', this).removeClass('d-none');
             },
-            '.assignment_list .item'
-        );
+            mouseleave: function () {
+                $('.btn-circle', this).addClass('d-none');
+            },
+        },
+        '.assignment_list .item'
+    );
 
 
     $(document).on('keyup','#myInput', function () {
@@ -93,13 +85,6 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response.message === 'success') {
-                    // $(cur_record).fadeOut('slow', function () {
-                    //     $(cur_record).remove();
-                    // });
-                    // $('cur_record').addClass('removed-item');
-                    // setTimeout(function () {
-                    //     $(cur_record).remove();
-                    // }, 2000);
                     $(cur_record)
                         .removeClass('new-item')
                         .addClass('removed-item')

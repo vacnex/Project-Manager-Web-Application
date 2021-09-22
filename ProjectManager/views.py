@@ -250,19 +250,26 @@ class TeacherAssignment(View):
 
     def post(self, request):
         if request.is_ajax:
-            assignment_form = TeacherAssignmentForm(request.POST)
-            if assignment_form.is_valid():
-                assignment_form.save()
-                data = TA.objects.get(id=len(TA.objects.all()))
-                a = {
-                    "id":data.id,
-                    "teacher": data.Teacher.get_full_name(),
-                    "student": data.Student.get_full_name()
-                }
-                return JsonResponse(json.dumps(a), status=200, safe = False)
-            else:
-                print(assignment_form.errors)
-                return JsonResponse({"error": assignment_form.errors}, status=400)
+            if request.POST['action'] == 'add':
+                print('running add assignment')
+                assignment_form = TeacherAssignmentForm(request.POST)
+                if assignment_form.is_valid():
+                    assignment_form.save()
+                    data = TA.objects.last()
+                    a = {
+                        "id": data.id,
+                        "teacher": data.Teacher.get_full_name(),
+                        "student": data.Student.get_full_name()
+                    }
+                    return JsonResponse(json.dumps(a), status=200, safe=False)
+                else:
+                    print(assignment_form.errors)
+                    return JsonResponse({"error": assignment_form.errors}, status=400)
+            elif request.POST['action'] == 'del':
+                pk = request.POST['pk']
+                assignment = TA.objects.get(pk=int(pk))
+                assignment.delete()
+                return JsonResponse({"message": 'success'})
         return JsonResponse({"error": ""}, status=400)
 
 # endregion

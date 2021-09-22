@@ -58,3 +58,50 @@
     color: #ffffff;
     transform: scale(1.03, 1.03);
 }
+.btn-circle{
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 25px;
+    margin-top: -2.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.removed-item {
+    animation: removed-item-animation .8s cubic-bezier(.65,-0.02,.72,.29);
+}
+ 
+@keyframes removed-item-animation {
+   0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+ 
+    30% {
+        opacity: 1;
+        transform: translateX(50px);
+    }
+ 
+    80% {
+        opacity: 1;
+        transform: translateX(-800px);
+    }
+ 
+    100% {
+        opacity: 0;
+        transform: translateX(-800px);
+    }
+}
+.new-item {
+    opacity: 0;
+    -webkit-animation: fadeIn .3s linear forwards;
+    -o-animation: fadeIn .3s linear forwards;
+    animation: fadeIn .3s linear forwards
+}
+@keyframes fadeIn {
+  to {
+    opacity: 1
+  }
+}

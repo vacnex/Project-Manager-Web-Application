@@ -10,16 +10,17 @@ Phân Giáo Viên
         <div class="col-lg-7">
             <div class="assignment_list shadow">
                 <h4 class="box-title mb-4">DANH SÁCH PHÂN GIÁO VIÊN HƯỚNG DẪN</h4>
-                <div class="list-wraper">
+                <input id="myInput" type="text" placeholder="Search..">
+                <ul class="list-wraper list-unstyled">
                     {% for ta in list_teacher_assignment %}
-                    <div class="item shadow" onclick="">
+                    <li class="item shadow" onclick="">
                         <div class="row">
                             <div class="col-sm-2">
                                 <div class="mini-box" style="font-family: Roboto;font-size: 1.4em;font-style: normal; font-weight: 400;line-height: 21px;color: #EB5757;">
                                     {{ta.id}}
                                 </div>
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9">
                                 <div class="asm-Content">
                                     <h3>
                                         {% if ta.ProjectName == "" %}
@@ -36,10 +37,15 @@ Phân Giáo Viên
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-sm-1">
+                                <a id='btn-asdel' class="btn btn-danger btn-circle d-none">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    </li>
                     {%endfor%}
-                </div>
+                </ul>
             </div>
         </div>
         <div class="col-lg-5">

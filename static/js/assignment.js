@@ -67,14 +67,13 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#btn-asdel', function (e) {
-        cur_record = $(this).parent().parent().parent();
+        cur_record = $(this).parent().parent();
         record_id = parseInt($(this)
             .parent()
             .parent()
             .find('.col-sm-2')
             .text()
             .replace(/\s/g, ''));
-        console.log(record_id);
         e.preventDefault();
         $.ajax({
             type: 'POST',

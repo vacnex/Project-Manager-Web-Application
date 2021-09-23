@@ -10,42 +10,49 @@ Phân Giáo Viên
         <div class="col-lg-7">
             <div class="assignment_list shadow">
                 <h4 class="box-title mb-4">DANH SÁCH PHÂN GIÁO VIÊN HƯỚNG DẪN</h4>
-                <input id="myInput" type="text" placeholder="Search..">
-                <ul class="list-wraper list-unstyled">
-                    {% for ta in list_teacher_assignment %}
-                    <li class="item shadow" onclick="">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <div class="mini-box" style="font-family: Roboto;font-size: 1.4em;font-style: normal; font-weight: 400;line-height: 21px;color: #EB5757;">
-                                    {{ta.id}}
-                                </div>
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="asm-Content">
-                                    <h3>
-                                        {% if ta.ProjectName == "" %}
-                                        Tên đề tài chưa cập nhật
-                                        {% else %}
-                                        {{ta.ProjectName}}
-                                        {% endif %}
-                                    </h3>
-                                    <div class="assignment-info">
-                                        <span style="color: blue"> GVHD: </span>
-                                        <span class="me-2">{{ta.Teacher}}</span>
-                                        <span style="color: blue"> Sinh Viên:</span>
-                                        <span class="me-2">{{ta.Student}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <a id='btn-asdel' class="btn btn-danger btn-circle d-none">
-                                    <i class="fas fa-times"></i>
-                                </a>
-                            </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group input--large">
+                            <label class="label">Tìm kiếm</label>
+                            <input id="myInput" class="input--style-1" type="text" placeholder="Tên đề tài, giáo viên, sinh viên...." name="search">
                         </div>
-                    </li>
-                    {%endfor%}
-                </ul>
+                    </div>
+                    <div class="col-lg-12">
+                        <ul class="list-wraper list-unstyled">
+                            {% for ta in list_teacher_assignment %}
+                            <li class="item shadow" onclick="">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="mini-box" style="font-family: Roboto;font-size: 1.4em;font-style: normal; font-weight: 400;line-height: 21px;color: #EB5757;">
+                                            {{ta.id}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <div class="asm-Content">
+                                            <h3>
+                                                {% if ta.ProjectName == "" %}
+                                                Tên đề tài chưa cập nhật
+                                                {% else %}
+                                                {{ta.ProjectName}}
+                                                {% endif %}
+                                            </h3>
+                                            <div class="assignment-info">
+                                                <span style="color: blue"> GVHD: </span>
+                                                <span class="me-2">{{ta.Teacher}}</span>
+                                                <span style="color: blue"> Sinh Viên:</span>
+                                                <span class="me-2">{{ta.Student}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a id='btn-asdel' class="btn btn-danger btn-circle d-none">
+                                        <i class="fas fa-times"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            {%endfor%}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-lg-5">

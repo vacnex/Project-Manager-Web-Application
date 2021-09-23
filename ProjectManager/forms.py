@@ -65,9 +65,9 @@ class ConfirmProjectForm(forms.ModelForm):
 
 class TeacherAssignmentForm(forms.ModelForm):
     Teacher = forms.ModelChoiceField(queryset=User.objects.filter(is_Teacher=True), empty_label=None, widget=forms.Select(
-        attrs={'class': 'selectpicker', 'title': "Chọn giáo viên", 'data-live-search': "true", 'data-width': "auto",  'name': "teacher"}))
+        attrs={'class': 'selectpicker form-control', 'title': "Chọn giáo viên", 'data-live-search': "true",  'name': "teacher"}))
     Student = forms.ModelChoiceField(queryset=User.objects.filter(is_Teacher=False, is_superuser=False, is_Reviewer=False, is_Manager=False), empty_label=None, widget=forms.Select(
-        attrs={'class': 'selectpicker', 'title': "Chọn sinh viên", 'data-live-search': "true", 'data-width': "auto",  'name': "student"}))
+        attrs={'class': 'selectpicker form-control', 'title': "Chọn sinh viên", 'data-live-search': "true",  'name': "student"}))
     class Meta:
         model = TeacherAssignment
         fields = ['Teacher', 'Student']

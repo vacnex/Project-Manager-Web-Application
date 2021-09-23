@@ -64,10 +64,14 @@ Phân Giáo Viên
                             {% csrf_token %}
                             <div class="row mb-3">
                                 <div class="col-lg-6">
-                                    {{ assignment_form.Teacher }}
+                                    <div class="form-group">
+                                        {{ assignment_form.Teacher }}
+                                    </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    {{ assignment_form.Student }}
+                                    <div class="form-group">
+                                        {{ assignment_form.Student }}
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

@@ -39,7 +39,35 @@
     justify-content: center;
     flex-direction: column;
     float: left;
+    font-family: Roboto;
+    font-size: 1.4em;
+    font-style: normal; 
+    font-weight: 400;
+    line-height: 21px;color: #EB5757;
 }
+@media (min-width: 1024px){
+   .asm-Content{
+       text-align: center;
+   }
+}
+
+@media (max-width: 430px){
+   .mini-box{
+    height: 42px;
+    width: 100%;
+    margin-bottom: 1rem;
+   }
+   .asm-Content{
+       text-align: center;
+   }
+   .list-wraper{
+       padding: 1.5rem;
+   }
+   .sel_teach{
+    margin-bottom: 1rem;
+   }
+}
+
 .btn-assignment {
     background-color: #2F58E2;
     box-shadow: 0px 4px 16px #2f58e250, 0px 8px 24px #2f58e250, 0px 16px 56px #2f58e250;
@@ -54,6 +82,7 @@
     font-weight: 500;
     text-align: center;
 }
+
 .btn-assignment:hover{
     color: #ffffff;
     transform: scale(1.03, 1.03);
@@ -143,4 +172,13 @@ input {
     font-size: 18px;
     padding: 9px 0;
     color: #666;
+}
+.assignment-wraper{
+    padding-left: 90px;
+}
+@media (max-width: 992px){
+   .assignment-wraper{
+    padding-left: 0px;
+    margin-bottom: 20px;
+    } 
 }

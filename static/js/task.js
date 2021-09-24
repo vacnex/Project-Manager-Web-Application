@@ -58,13 +58,13 @@ $(document).ready(function () {
         $('#taskname').removeClass('is-invalid');
     });
 
-    $('body').on('show.bs.modal', '.modal', function () {
+    $('body').on('show.bs.modal', '#AddTask', function () {
         if (!$(this).hasClass('regprojectmodal')) {
-        $('#taskname').val('');
-        $('#decs').val('');
-        $('input[name=prio][value=Vừa]').prop('checked', true);
-        $('#date-sel').data('daterangepicker').setStartDate(new Date());
-        $('#date-sel').data('daterangepicker').setEndDate(new Date());
+            $('#taskname').val('');
+            $('#decs').val('');
+            $('input[name=prio][value=Vừa]').prop('checked', true);
+            $('#date-sel').data('daterangepicker').setStartDate(new Date());
+            $('#date-sel').data('daterangepicker').setEndDate(new Date());
         }
     });
 

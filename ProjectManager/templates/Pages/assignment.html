@@ -23,13 +23,13 @@ Phân Giáo Viên
                             <li class="item shadow" onclick="">
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2">
-                                        <div class="mini-box" style="">
+                                        <div id="pid" class="mini-box">
                                             {{ta.id}}
                                         </div>
                                     </div>
                                     <div class="col-lg-10 col-md-10">
                                         <div class="asm-Content ms-xxl-5 ms-md-2">
-                                            <h3>
+                                            <h3 id="pname">
                                                 {% if ta.ProjectName == "" %}
                                                 Tên đề tài chưa cập nhật
                                                 {% else %}
@@ -39,14 +39,12 @@ Phân Giáo Viên
                                             <div class="row assignment-info">
                                                 <div class="col-xl-6">
                                                     <span style="color: blue"> GVHD: </span>
-                                                    <span class="me-2">{{ta.Teacher}}</span>
+                                                    <span id="tname" class="me-2">{{ta.Teacher}}</span>
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <span style="color: blue"> Sinh Viên:</span>
-                                                    <span class="me-2">{{ta.Student}}</span>
+                                                    <span id="sname" class="me-2">{{ta.Student}}</span>
                                                 </div>
-                                                
-                                                
                                             </div>
                                         </div>
                                     </div>
@@ -85,6 +83,57 @@ Phân Giáo Viên
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editAssignmentItemBox" tabindex="-1" role="dialog" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-lg" role="document">
+            <div class="modal-content">
+                <!-- <a class="btn btn-danger">
+                    <i class="fas fa-times"></i>
+                </a> -->
+                <!-- <button type="button" id="closeEditBox" class="btn btn-danger" style="width: 40px;
+                                    height: 40px;
+                                    font-size: 18px;
+                                    line-height: 1.33;
+                                    border-radius: 25px;
+                                    align-items: center;
+                                    justify-content: center;
+                                    display: flex;
+                                    margin-left: 96%;
+                                    margin-top: -4%;">
+                    <i class="fas fa-times"></i>
+                </button> -->
+                <div class="modal-body">
+                    <form id="assignmentEditForm" action="." method="POST">
+                        {% csrf_token %}
+                        <input id="Pid" class="form-control" type="text" value="">
+                        <div class="row mb-3">
+                        <input id="oldPName" class="form-control" type="text" value="">
+                        <div class="row mb-3">
+                            <div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3">
+                                <input id="oldTeachName" class="form-control-plaintext" type="text" value="" aria-label="Disabled input example" disabled readonly>
+                            </div>
+                            <div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3">
+                                <input id="oldStudentName" class="form-control-plaintext" type="text" value="" aria-label="Disabled input example" disabled readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3 ">
+                                <div id="selNewTeach" class="form-group">
+                                    {{ assignment_form.Teacher }}
+                                </div>
+                            </div>
+                            <div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3">
+                                <div id="selNewStudent"  class="form-group">
+                                    {{ assignment_form.Student }}
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="closeEdit" class="btn btn-secondary">Close</button>
+                        <button type="button" id="confirmEdit" class="btn btn-primary">Save changes</button>
+                    </form>
                 </div>
             </div>
         </div>

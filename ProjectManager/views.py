@@ -152,7 +152,7 @@ class ConfirmProject(View):
             username = [u.username for u in p.Users.all()]
             fullname = [u for u in p.Users.all()]
         confirm_form = ConfirmProjectForm(initial={'Project_ID': pk, 'Project_Name': Project_Name,
-                                                   'Type': Type, 'schoolYear': schoolYear, 'description': description, 'Is_Confirm': Is_Confirm})
+        'Type': Type, 'schoolYear': schoolYear, 'description': description, 'Is_Confirm': Is_Confirm})
         context = {'projectid': pk,
                    'unconfirm_project_list_by_id': unconfirm_project_list_by_id, 'teacher': teacher, 'confirm_form': confirm_form, 'student_username': username, 'fullname': fullname}
         return render(request, 'Pages/confirmproject.html', context)
@@ -223,7 +223,7 @@ class UpdateTask(View):
 @method_decorator(login_required(login_url='/'), name='get')
 class TeacherAssignment(View):
     # region get
-    def get(self, request):
+    def get(self, request):     
         assignment_form = TeacherAssignmentForm()
         ta_dict = {}
         tName, sName, pName = "", "", ""
@@ -270,6 +270,24 @@ class TeacherAssignment(View):
                 assignment = TA.objects.get(pk=int(pk))
                 assignment.delete()
                 return JsonResponse({"message": 'success'})
+            elif request.POST['action'] == 'save_item':
+                id = request.POST['id']
+                cur_Assignment = TA.objects.get(id=id)
+                Teacher = User.objects.filter(
+                    id=request.POST.get('Teacher', None))
+                Student = User.objects.filter(
+                    id=request.POST.get('Student', None))
+                data = {
+                    'Teacher': Teacher,
+                    'Student': Student
+                }
+                confirmEdit_form = TeacherAssignmentForm(
+                    data, instance=cur_Assignment)
+                if confirmEdit_form.is_valid():
+                    confirmEdit_form.save()
+                    return JsonResponse({'message': 'save ajax success'}, status=200, safe=False)
+                else:
+                    return JsonResponse({'message': 'Save Fail'}, status=400, safe=False)
         return JsonResponse({"error": ""}, status=400)
 
 # endregion

@@ -101,4 +101,53 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on('click', '.list-wraper .item', function () {
+        item = $(this);
+        console.log('load detail success');
+        $('#editAssignmentItemBox').modal('show');
+        pid = $(item).find('#pid').text();
+        pname = $(item).find('#pname').text();
+        tname = $(item).find('#tname').text();
+        sname = $(item).find('#sname').text();
+        $('#Pid').val(parseInt(pid.trim()));
+        $('#oldPName').val(pname.trim());
+        $('#oldTeachName').val(tname.trim());
+        $('#oldStudentName').val(sname.trim());
+    });
+
+    $(document).on('click', '#confirmEdit', function (e) {
+        $.ajax({
+            type: 'POST',
+            url: '/assignment/',
+            data: {
+                action: 'save_item',
+                id: $('#Pid').val(),
+                Teacher: $('#selNewTeach select').val(),
+                Student: $('#selNewStudent select').val(),
+            },
+            success: function (response) {
+                console.log(response.message);
+            },
+            error: function (response) {
+                console.log(response.message);
+            },
+        });
+    });
+
+    $(document).on('change', '#selNewTeach select', function () {
+        $('#oldTeachName').val($('option:selected',this).text());
+    });
+    $(document).on('change', '#selNewStudent select', function () {
+        $('#oldStudentName').val($('option:selected',this).text());
+    });
+
+    $(document).on('click', '#closeEdit', function () {
+        $('#editAssignmentItemBox').modal('hide');
+    });
+    $(document).on('show.bs.modal', '#editAssignmentItemBox', function () {
+        $('#oldPName').val('');
+        $('#oldTeachName').val('');
+        $('#oldStudentName').val('');
+        $('#assignmentEditForm').trigger('reset');
+    });
 });

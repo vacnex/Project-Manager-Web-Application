@@ -299,3 +299,12 @@ button {
 .btn-login:hover{
     color:white;
 }
+.login-wraper{
+    padding-left: 90px;
+}
+@media (min-width: 320px) and (max-width: 992px){
+   .login-wraper{
+    padding: 0px;
+    margin-bottom: 20px;
+    } 
+}

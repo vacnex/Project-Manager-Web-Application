@@ -66,7 +66,7 @@
         </div>
         <div class="content-wraper pt-5 px-3">
             <div class="row">
-                <div class="col-lg-7">
+                <div class="col-lg-7 order-lg-first order-last">
                     <ul class="nav nav-pills mb-3 btnlist" id="pills-tab" role="tablist">
                         <li class="nav-item tabTitle" role="presentation">
                             <a class="nav-link active" id="pills-thongbao-tab" data-bs-toggle="pill" data-bs-target="#pills-thongbao" type="button" role="tab" aria-controls="pills-thongbao" aria-selected="false">Thông Báo</a>
@@ -306,7 +306,7 @@
                 <div class="col-lg-5">
                     {% if logged %}
                     <div class="logged-wraper">
-                        <div class="login-wraper" style="padding-left: 90px;">
+                        <div class="login-wraper">
                             <div class="login_form shadow">
                                 <h4 class="form-title mb-4">Chào {{request.user.get_full_name}}!</h4>
                                 <div class="login-box-body text-center p-3">

@@ -27,11 +27,11 @@ class MySchoolYearAdmin (admin.ModelAdmin):
 
 class MyProjectTypeAdmin (admin.ModelAdmin):
     model = ProjectType
-    list_display = ('ID', 'type_Name')
+    list_display = ('type_Name',)
 
 class MyProjectAdmin (admin.ModelAdmin):
     model = Project
-    list_display = ('Project_ID', 'Project_Name',
+    list_display = ('Project_Name',
                     'Type', 'schoolYear', 'Project_members', 'Is_Done', 'Is_Confirm', 'TeacherAssignment')
 
 class MySchoolClassAdmin (admin.ModelAdmin):

@@ -35,14 +35,12 @@ class SchoolYear(models.Model):
         return self.Year_ID
 
 class ProjectType(models.Model):
-    ID = models.CharField(max_length=10, primary_key=True)
     type_Name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.type_Name
 
 class Project(models.Model):
-    Project_ID = models.BigAutoField(primary_key=True)
     Project_Name = models.CharField(max_length=255)
     Type = models.ForeignKey(
         'ProjectType', on_delete=models.CASCADE, default=None,null=True)

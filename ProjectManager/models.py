@@ -41,7 +41,7 @@ class ProjectType(models.Model):
         return self.type_Name
 
 class Project(models.Model):
-    Project_Name = models.CharField(max_length=255)
+    Project_Name = models.CharField(max_length=255, null=True, blank=True)
     Type = models.ForeignKey(
         'ProjectType', on_delete=models.CASCADE, default=None,null=True)
     Project_Content = models.TextField(blank=True)
@@ -51,8 +51,6 @@ class Project(models.Model):
     description = models.TextField(blank=True)
     Is_Done = models.BooleanField(default=False)
     Is_Confirm = models.BooleanField(default=False)
-    TeacherAssignment = models.ForeignKey(
-        'TeacherAssignment', on_delete=models.CASCADE, default=None, null=True)
 
     def __str__(self):
         return self.Project_Name
@@ -61,12 +59,3 @@ class Project(models.Model):
         return "\n".join([u.username for u in self.Users.all()])
 
 
-class TeacherAssignment(models.Model):
-    Project = models.ForeignKey(
-        'Project', on_delete=models.CASCADE, default=None, null=True, blank=True)
-    Teacher = models.ForeignKey(
-        'User', on_delete=models.CASCADE, default=None, null=False, related_name='Teacher')
-    Student = models.ForeignKey(
-        'User', on_delete=models.CASCADE, default=None, null=False, related_name='Student')
-    def __str__(self):
-        return self.id

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User, Project, TeacherAssignment
+from .models import User, Project
 from django.core.exceptions import ValidationError
 import re
 
@@ -38,36 +38,9 @@ class LoginForm(AuthenticationForm):
         'inactive': ("Tài khoản này không hoạt động."),
     }
 
-class ProjectRegistersForm(forms.ModelForm):
+
+class AssignmentForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['Project_Name', 'Type', 'schoolYear', 'description']
-        widgets = {
-            'Project_Name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tên Đề Tài'}),
-            'Type': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Loại Đề Tài'}),
-            'schoolYear': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Khoá'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Mô Tả'}),
-        }
+        fields = ['Project_Name','Users', ]
 
-
-class ConfirmProjectForm(forms.ModelForm):
-    class Meta:
-        model = Project
-        fields = ['Project_Name', 'Type', 'schoolYear', 'description', 'Users','Is_Confirm']
-        widgets = {
-            'Project_Name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tên Đề Tài'}),
-            'Type': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Loại Đề Tài'}),
-            'schoolYear': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Khoá'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Mô Tả'}),
-            'Is_Confirm': forms.CheckboxInput(attrs={'class': 'form-check-input', 'placeholder': 'Xác nhận đề tài', 'required':''}),
-        }
-
-
-class TeacherAssignmentForm(forms.ModelForm):
-    Teacher = forms.ModelChoiceField(queryset=User.objects.filter(is_Teacher=True), empty_label=None, widget=forms.Select(
-        attrs={'class': 'selectpicker form-control', 'title': "Chọn giáo viên", 'data-live-search': "true",  'name': "teacher"}))
-    Student = forms.ModelChoiceField(queryset=User.objects.filter(is_Teacher=False, is_superuser=False, is_Reviewer=False, is_Manager=False), empty_label=None, widget=forms.Select(
-        attrs={'class': 'selectpicker form-control', 'title': "Chọn sinh viên", 'data-live-search': "true",  'name': "student"}))
-    class Meta:
-        model = TeacherAssignment
-        fields = ['Teacher', 'Student']

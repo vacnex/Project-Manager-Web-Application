@@ -49,13 +49,13 @@ $(document).ready(function () {
                 $('#assignmentForm').trigger('reset');
                 var asm_instance = JSON.parse(response);
                 var ass =
-                    '<li class="item shadow" onclick=""><div class="row"><div class="col-sm-2"><div class="mini-box" style="font-family: Roboto;font-size: 1.4em;font-style: normal; font-weight: 400;line-height: 21px;color: #EB5757;">' +
+                    '<li class="item shadow" onclick=""><div class="row"><div class="col-lg-2 col-md-2"><div id="pid" class="mini-box">' +
                     asm_instance['id'] +
-                    '</div ></div > <div class="col-sm-9"><div class="asm-Content"><h3>Tên đề tài chưa cập nhật</h3 > <div class="assignment-info"><span style="color: blue"> GVHD: </span><span class="me-2">' +
+                    '</div></div><div class="col-lg-10 col-md-10"> <div class="asm-Content ms-xxl-5 ms-md-2"> <h3 id="pname">Tên đề tài chưa cập nhật</h3> <div class="row assignment-info"> <div class="col-xl-6"> <span style="color: blue"> GVHD: </span> <span id="tname" class="me-2">' +
                     asm_instance['teacher'] +
-                    '</span><span style="color: blue"> Sinh Viên:</span><span class="me-2">' +
+                    '</span> </div> <div class="col-xl-6"> <span style="color: blue"> Sinh Viên:</span> <span id="sname" class="me-2">' +
                     asm_instance['student'] +
-                    '</span></div></div></div ><div class="col-sm-1"> <a id="btn-asdel" class="btn btn-danger btn-circle d-none"><i class="fas fa-times"></i></a></div></div ></li > ';
+                    '</span> </div> </div> </div> </div> <a id="btn-asdel" class="btn btn-danger btn-circle d-none"> <i class="fas fa-times"></i> </a> </div></li>';
                 ass = $(ass).addClass('new-item');;
                 $('.list-wraper').append(ass);
                 $('.list-wraper').scrollTop($('.list-wraper')[0].scrollHeight);
@@ -67,13 +67,11 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#btn-asdel', function (e) {
+        e.stopPropagation();
         cur_record = $(this).parent().parent();
-        record_id = parseInt($(this)
-            .parent()
-            .parent()
-            .find('.col-sm-2')
-            .text()
-            .replace(/\s/g, ''));
+        record_id = parseInt(
+            $(this).parent().parent().find('#pid').text().replace(/\s/g, '')
+        );
         e.preventDefault();
         $.ajax({
             type: 'POST',
@@ -116,17 +114,34 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#confirmEdit', function (e) {
+        console.log($('#Pid').val())
+        item_list = $('.list-wraper .item');
         $.ajax({
             type: 'POST',
             url: '/assignment/',
             data: {
                 action: 'save_item',
                 id: $('#Pid').val(),
+                pName: $('#oldPName').val(),
                 Teacher: $('#selNewTeach select').val(),
                 Student: $('#selNewStudent select').val(),
             },
             success: function (response) {
                 console.log(response.message);
+                newpn = $('#oldPName').val();
+                newt = $('#selNewTeach select option:selected').text();
+                news = $('#selNewStudent select option:selected').text();
+                $.each(item_list, function (indexInArray, valueOfElement) {
+                    if (
+                        parseInt($('#Pid').val()) ==
+                        parseInt($('#pid', valueOfElement).text())
+                    ) {
+                        $('#pname', valueOfElement).text(newpn);
+                        $('#tname', valueOfElement).text(newt);
+                        $('#sname', valueOfElement).text(news);
+                    }
+                });
+                $('#editAssignmentItemBox').modal('hide');
             },
             error: function (response) {
                 console.log(response.message);

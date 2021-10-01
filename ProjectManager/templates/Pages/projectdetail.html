@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/projectdetail.css' %}" type="text/css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" type="text/css" />
+{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="{% static 'js/projectdetail.js' %}"></script>
+{% endblock %}
+{% block title %}
+Cập Nhật Công Việc
+{% endblock %}
+
+{% block content %}
+<div id="projecttask-content" class="pt-4">
+  <div class="box mx-xxl-5 mx-lg-4 mx-3 p-3 mb-4 task-header">
+    <div class="row">
+      {% if not tasks %}
+      <div class="col-12">
+        <form id="changeProjectNameForm" name="changeProjectNameForm" method="post" action=".">
+          {% csrf_token %}
+          <input id="pjid" type="hidden" name="pjid" value="{{pk}}" />
+          <input id="pname" class="form-control input-custom input-no-focus fs-3 title" name="pname"
+          value='{{Project_Name|default_if_none:"Tên đề tài chưa cập nhật"}}' />
+        </form>
+      </div>
+      {% else %}
+      <div class="col-lg-10">
+        <form id="changeProjectNameForm" name="changeProjectNameForm" method="post" action=".">
+          {% csrf_token %}
+          <input id="pjid" type="hidden" name="pjid" value="{{pk}}" />
+          <input id="pname" class="form-control input-custom input-no-focus fs-3 title" name="pname"
+            value='{{Project_Name|default_if_none:"Tên đề tài chưa cập nhật"}}' />
+        </form>
+      </div>
+      <div class="col-lg-2 mt-lg-0 mt-md-3 mt-sm-2 mt-1 d-flex align-items-center justify-content-center">
+        <form name="task-update-form" method="post" action=".">
+          {% csrf_token %}
+          <input id="taskcontent" type="hidden" name="taskcontent" value="" />
+          <input id="pjid" type="hidden" name="pjid" value="{{pk}}" />
+          <div class="btn btn-custom scale-hover px-xxl-1 px-xl-2 px-lg-0 px-md-5 px-4" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@addtask">
+            <span>+</span> Thêm công việc
+          </div>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+    <!-- {% for task in tasks%}
+            <div class="task-container">
+                <div class="todoElement py-3 mb-5 container justify-content-between">
+                    <input class="chkb" type="checkbox" />
+                    <div class="height p-2 w-100">
+                        <div class="line"></div>
+                        <div class="todoDetails w-100 p-3">
+                            <p class="todoTitle mb-3">{{task.taskName}}</p>
+                            <div class="todoDecs">{{task.taskDesc}}</div>
+                            <p class="todoPrio">Ưu tiên: {{task.priority}}</p>
+                            <div class="ft d-flex justify-content-between">
+                                <div class="todoDate">{{ task.deadline}}</div>
+                                <div class="todoDeadline"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="deleteX"></div>
+                </div>
+            </div>
+            {%endfor%} -->
+  <div class="task-wrapper">
+    <div class="row pb-5">
+      <div class="col-lg-7 mb-lg-0 mb-4 task_list">
+        {% if not tasks %}
+        <div class="d-flex justify-content-center">
+          <div class="box px-4 py-5 mx-xxl-5 mx-lg-4 mx-md-0 mx-3 text-center emptylist">
+            <h1 class="display-5 fw-bold">Danh sách công việc trống</h1>
+            <p class="lead mb-4">Hãy nhấn thêm công việc để tạo danh sách công việc.</p>
+            <div class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@addtask">
+              <span>+</span>Thêm công việc
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <ul class="box-scroll list-unstyled py-0 mb-0 p-xxl-0 p-md-4 p-3">
+          {% for task in tasks %}
+          <li id={{task.id}} class="box box-item position-relative scale-hover mt-4 mx-xxl-5 mx-xl-0 mx-sm-3 mx-4">
+            <a id='btn-tdel' class="btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim">
+              <i class="fas fa-times"></i>
+            </a>
+            <div class="row p-xxl-2 p-3" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@edittask">
+              <div class="col-sm-2 d-flex">
+                <div id="tprio" class="box box-label w-100 h-100 p-2">
+                  {{task.priority}}
+                </div>
+              </div>
+              <div class="col-sm-10 d-flex align-items-center">
+                <div class="line mx-xxl-3 mx-xl-2 mx-lg-2 mx-md-2"></div>
+                <div class="task-Content flex-fill ps-xxl-1 ps-3 mt-sm-0 mt-3">
+                  <h3 id="tname">{{task.taskName}}
+                  </h3>
+                  <p id="tdesc">{{task.taskDesc}}</p>
+                  <div class="row assignment-info">
+                    <div class="col-md-6">
+                      <div class="todoDate">{{ task.deadline}}</div>
+                    </div>
+                    <div id="daysleft" class="col-md-6">
+                      {{ task.daysleft }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {%endif%}
+      </div>
+      <div class="col-lg-5">
+        <div class="d-flex align-items-stretch h-100">
+          <div class="box px-4 py-5 mx-xxl-5 mx-lg-4 mx-3 flex-fill">
+            chat box
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+  <!-- <div class="row g-0">
+      <div class="col-12 mt-lg-0 mt-md-5 mt-5">
+          <nav aria-label="breadcrumb" class="box">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'home' %}">Dashboard</a></li>
+              <li class="breadcrumb-item">Đồ án</li>
+              <li class="breadcrumb-item active" aria-current="page">
+                <a class="text-decoration-none" id="br_pname" href="/projectdetail/{{pk}}/">{{Project_Name}}</a>
+              </li>
+            </ol>
+          </nav>
+      </div>
+        
+        <div class="Project-Manager-Content">
+            <section class="Project-Manager-wrapper">
+                <div class="Project-header d-flex mb-4 justify-content-between">
+                    <div class="Project-Tittle">
+                        <h1 class="display-5 fw-bold">{{Project_Name}}</h1>
+                    </div>
+                    {%if not tasks%}
+                    <div class="toolbar hide">
+                        <form name="task-update-form" method="post" action=".">
+                                {% csrf_token %}
+                            <input id="taskcontent" type="hidden" name="taskcontent" value="" />
+                            <input id="pjid" type="hidden" name="pjid" value="{{pk}}" />
+                            <div class="submitButtonBlue" data-bs-toggle="modal" data-bs-target="#AddTask">
+                                <span>+</span>
+                                <p class="addSubmitBlue">Thêm công việc</p>
+                            </div>
+                        </form>
+                    </div>
+                    {%else%}
+                    <div class="toolbar">
+                        <form name="task-update-form" method="post" action=".">
+                            {% csrf_token %}
+                            <input id="taskcontent" type="hidden" name="taskcontent" value="" />
+                            <input id="pjid" type="hidden" name="pjid" value="{{pk}}" />
+                            <div class="submitButtonBlue" data-bs-toggle="modal" data-bs-target="#AddTask">
+                                <span>+</span>
+                                <p class="addSubmitBlue">Thêm công việc</p>
+                            </div>
+                        </form>
+                    </div>
+                    {%endif%}
+                </div>
+
+            </section>
+        </div>
+  </div> -->
+    <div class="modal fade" id="TaskModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="AddTaskLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg modal-fullscreen-lg-down ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="TaskModalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="TaskControl">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="taskname" placeholder="" required>
+                            <label id="tasknamelabel" for="taskname"></label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="" id="taskdesc" style="height: 100px"></textarea>
+                            <label id="taskdesclabel" for="taskdesc"></label>
+                        </div>
+                        <p>Mức độ ưu tiên</p>
+                        <div class="d-flex prio-sel justify-content-center align-content-center mb-3">
+                            <div class="btn-group" role="group" >
+                                <input type="radio" class="btn-check" name="prio" value="Rất cao" id="veryhighprio" autocomplete="off">
+                                <label class="btn btn-outline-primary" name="prio" for="veryhighprio">Rất cao</label>
+                                <input type="radio" class="btn-check"  name="prio" value="Cao" id="highprio" autocomplete="off">
+                                <label class="btn btn-outline-primary" name="prio" for="highprio">Cao</label>
+                                <input type="radio" class="btn-check" name="prio" value="Vừa" id="medprio" autocomplete="off" >
+                                <label class="btn btn-outline-primary" name="prio" for="medprio">Vừa</label>
+                                <input type="radio" class="btn-check" name="prio" value="Thấp" id="lowprio" autocomplete="off">
+                                <label class="btn btn-outline-primary" name="prio" for="lowprio">Thấp</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" >Ngày bắt đầu và kết thúc</span>
+                            <input id="deadline" name="dates" type="text" class="form-control" aria-describedby="date-sel" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="" type="button" class="btn-TaskModalSubmit btn btn-primary mt-3 btn-lg">Thêm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

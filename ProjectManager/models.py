@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
+from django.db.models.fields import DateTimeField
+import datetime
 # Create your models here.
 
 class User(AbstractUser):
@@ -59,3 +61,35 @@ class Project(models.Model):
         return "\n".join([u.username for u in self.Users.all()])
 
 
+class Task(models.Model):
+    taskName = models.CharField(max_length=255)
+    Project = models.ForeignKey('Project', on_delete=models.CASCADE)
+    taskDesc = models.TextField()
+    taskChhild = models.ForeignKey(
+        'self', null=True, blank=True, on_delete=models.CASCADE)
+    createdTaskDate = DateTimeField(auto_now_add=True)
+    editedTaskDate = DateTimeField(auto_now_add=True)
+    deadline = models.CharField(max_length=255, null=True)
+    priority = models.CharField(max_length=255, null=True)
+    complete = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.taskName
+    def daysleft(seft):
+      rawenddate = ((seft.deadline.strip().split('n')[1]).strip()).split('/')
+      today = datetime.date.today()
+      initenddate = datetime.date(int(rawenddate[2]), int(
+          rawenddate[1]), int(rawenddate[0]))
+      diff = today - initenddate
+      diff.days
+      return diff.days
+
+
+class ProjectDiscus(models.Model):
+    Users = models.ForeignKey('User', on_delete=models.CASCADE)
+    Project = models.ForeignKey('Project', on_delete=models.CASCADE)
+    timeStamp = DateTimeField(auto_now_add=True)
+    message = models.TextField(blank=False,unique=False)
+
+    def __str__(self):
+        return self.message

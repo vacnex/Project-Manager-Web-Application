@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/component.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'font/css/all.min.css' %}" type="text/css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row mb-5">
+            <div class="col">
+                <h3>Tiêu đề</h3>
+                <p>dùng title</p>
+            </div>
+            <div class="col">
+                <p class="mb-2 title">Tiêu đề bình thường</p>
+                <p class="mb-2 title fs-1">Tiêu đề fs-1</p>
+                <p class="mb-2 title fs-2">Tiêu đề fs-2</p>
+                <p class="mb-2 title fs-3">Tiêu đề fs-3</p>
+                <p class="mb-2 title fs-4">Tiêu đề fs-4</p>
+                <p class="mb-2 title fs-5">Tiêu đề fs-5</p>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col">
+                <h4>Nút</h4>
+                <p>dùng btn-custom</p>
+            </div>
+            <div class="col">
+                <div class="mb-5">
+                    <a class="btn-custom">Nút chung dạng link</a>
+                </div>
+                <div class="mb-5">
+                <div class="row">
+                    <div class="col">
+                        <a class="btn btn-danger btn-circle"></a>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-danger btn-circle btn-circle-icon">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col">
+                <h3>khối nổi</h3>
+                <p>bình thường dùng box</p>
+                <p>nhẹ dùng box-s</p>
+                <p>rõ dùng box-l</p>
+            </div>
+            <div class="col">
+                <div class="box mb-2">Khối bình thường</div>
+                <div class="box-s mb-2">Khối nổi nhẹ</div>
+                <div class="box-l mb-2">Khối nổi rõ</div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col">
+                <h3>khối cuộn chứa item</h3>
+                <p>dùng class box-scroll</p>
+            </div>
+            <div class="col">
+                <div class="box mb-2">
+                    <p class="mb-2 title fs-3">Khối cha</p>
+                    <ul class="box-scroll">
+                        <li class="mb-4 box box-item scale-hover">
+                            <p class="title fs-5">Khối item #1</p>
+                        </li>
+                        <li class="mb-4 box box-item scale-hover">
+                            <p class="title fs-5">Khối item #2</p>
+                        </li>
+                        <li class="mb-4 box box-item scale-hover">
+                            <p class="title fs-5">Khối item #3</p>
+                        </li>
+                        <li class="mb-4 box box-item scale-hover">
+                            <p class="title fs-5">Khối item #4</p>
+                        </li>
+                        <li class="mb-4 box box-item scale-hover">
+                            <p class="title fs-5">Khối item #5</p>
+                        </li>
+                        <li class="mb-4 box box-item scale-hover">
+                            <p class="title fs-5">Khối item #6</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col">
+                <h3>khối item có box label</h3>
+                <p>dùng class box-scroll</p>
+            </div>
+            <div class="col">
+                <div class="box mb-2">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2">
+                            <div class="box box-label">
+                                <span class="title fs-5">6</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-10 col-md-10">
+                            <p class="title fs-5">Khối item có box label</p>
+                            <p class="title fs-5">Khối item có box label</p>
+                            <p class="title fs-5">Khối item có box label</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col">
+                <h4>Nhập liệu</h4>
+                <p>dùng</p>
+            </div>
+            <div class="col">
+                <div class="mb-2">
+                    <input type="text" class="form-control input-custom input-no-focus" placeholder="input bình thường">
+                </div>
+                <div class="mb-2 form-floating">
+                    <input type="text" class="form-control input-custom" placeholder="input bình thường">
+                    <label>input float label bình thường</label>
+                </div>
+                <div class="mb-2 form-floating">
+                    <input type="text" class="form-control input-custom input-no-focus" placeholder="input bình thường không có khung khi forcus">
+                    <label>input float label bình thường không khung khi forcus</label>
+                </div>
+                <div class="mb-2 form-floating">
+                    <input type="text" class="form-control input-custom input-no-focus input-bottom-border" placeholder="input bình thường không có khung khi forcus">
+                    <label>input float label bình thường có thanh phía dưới</label>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col">
+                <h4>Thanh tìm kiếm</h4>
+                <p>dùng search-box chung với box và input-group</p>
+                <p>dùng search-label cho label</p>
+                <p>dùng input-search cho input</p>
+            </div>
+            <div class="col">
+                <div class="mb-2 input-group box search-box">
+                    <label class="search-label">tìm kiếm</label>
+                    <input type="text" class="input-search" placeholder="nhập gì đó">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col">
+                <h4>DropDown</h4>
+                <!-- <p>dùng search-box chung với box và input-group</p>
+                <p>dùng search-label cho label</p>
+                <p>dùng input-search cho input</p> -->
+            </div>
+            <div class="col">
+                <div class="mb-2 box-dropdown box">
+                    <a class="btn btn-dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#component-collapse" aria-expanded="true">Dropdown</a>
+                    <div class="collapse show" id="component-collapse">
+                        <ul class="list-unstyled">
+                            <li tabindex="0" class="dropdown-custom-item rounded" data-filtertarget="ALL">
+                                <a class="dropdown-link">
+                                    Tất cả
+                                </a>
+                            </li>
+                            <li tabindex="0" class="dropdown-custom-item rounded" data-filtertarget="">
+                                <a class="dropdown-link">
+                                    Trống
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

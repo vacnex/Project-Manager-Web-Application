@@ -1,185 +1,160 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/assignment.css' %}" type="text/css">
+{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'js/defaults-vi_VN.min.js' %}"></script>
+<script src="{% static 'js/assignment.js' %}"></script>
+{% endblock %}
 {% block title %}
 Phân Giáo Viên
 {% endblock %}
 
 {% block content %}
-<div id="page-content">
-    <div class="row g-0">
-        <div class="col-lg-7 order-lg-first order-last">
-            <div class="assignment_list shadow">
-                <h4 class="box-title mb-4">DANH SÁCH PHÂN GIÁO VIÊN HƯỚNG DẪN</h4>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="input-group input--large">
-                            <label class="label">Tìm kiếm</label>
-                            <input id="myInput" class="input--style-1" type="text" placeholder="Tên đề tài, giáo viên, sinh viên...." name="search">
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <ul class="list-wraper list-unstyled">
-                            {% for p in projects %}
-                            <li class="item shadow" onclick="">
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-2">
-                                        <div id="pid" class="mini-box">
-                                            {{p.id}}
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-10 col-md-10">
-                                        <div class="asm-Content ms-xxl-5 ms-md-2">
-                                            <h3 id="pname">
-                                                {% if p.Project_Name|cut:" " == "None" %}
-                                                    Tên đề tài chưa cập nhật
-                                                {% else %}
-                                                    {{p.Project_Name}}
-                                                {% endif %}
-                                            </h3>
-                                            <div class="row assignment-info">
-                                                <div class="col-xl-6">
-                                                    <span style="color: blue"> GVHD: </span>
-                                                    <span id="tname" class="me-2">
-                                                        {% for u in p.Users.all%}
-                                                            {% if u.is_Teacher %}
-                                                                {{u.get_full_name}}
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </span>
-                                                </div>
-                                                <div class="col-xl-6">
-                                                    <span style="color: blue"> Sinh Viên:</span>
-                                                    <span id="sname" class="me-2">
-                                                        {% for u in p.Users.all%}
-                                                            {% if not u.is_Teacher and not u.is_superuser and not u.is_Reviewer and not u.is_Manager %}
-                                                                {{u.get_full_name}}
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a id='btn-asdel' class="btn btn-danger btn-circle d-none">
-                                        <i class="fas fa-times"></i>
-                                    </a>
-                                </div>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-5 ">
-            <div class="assignment-wraper">
-                <div class="assignment_box shadow">
-                    <h4 class="box-title mb-4">PHÂN GIÁO VIÊN</h4>
-                    <div class="assignment_box-body text-center p-3">
-                        <form id="assignmentForm" action="." method="POST">
-                            {% csrf_token %}
-                            <!-- <div class="row mb-3">
-                                <div class="sel_teach col-xl-6 mb-xl-0 mb-md-3 mb-sm-3 ">
-                                    <div class="form-group">
-                                        {{ assignment_form.Teacher }}
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3">
-                                    <div class="form-group">
-                                        {{ assignment_form.Student }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <button type="submit" class="btn-assignment btn-dashboard w-100 mt-3 btn-lg nav-link">Phân Giáo Viên</button>
-                            </div> -->
-                            <div class="row mb-3">
-                                <div class="sel_teach col-xl-6 mb-xl-0 mb-md-3 mb-sm-3 ">
-                                    <div class="form-group">
-                                    <select class="selectpicker form-control" title="Chọn Giáo Viên" data-live-search="true" name="teacher" id="id_Teacher">
-                                        {%for t in teacher%}
-                                            <option value={{t.id}}>{{t.get_full_name}}</option>
-                                        {%endfor%}
-                                    </select>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3">
-                                    <div class="form-group">
-                                    <select class="selectpicker form-control" title="Chọn Giáo Viên" data-live-search="true" name="teacher" id="id_Student">
-                                        {%for s in student%}
-                                        <option value={{s.id}}>{{s.get_full_name}}</option>
-                                        {%endfor%}
-                                    </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <button type="submit" class="btn-assignment btn-dashboard w-100 mt-3 btn-lg nav-link">Phân Giáo Viên</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="editAssignmentItemBox" tabindex="-1" role="dialog" data-bs-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-lg" role="document">
-            <div class="modal-content">
-                <!-- <a class="btn btn-danger">
-                    <i class="fas fa-times"></i>
-                </a> -->
-                <!-- <button type="button" id="closeEditBox" class="btn btn-danger" style="width: 40px;
-                                    height: 40px;
-                                    font-size: 18px;
-                                    line-height: 1.33;
-                                    border-radius: 25px;
-                                    align-items: center;
-                                    justify-content: center;
-                                    display: flex;
-                                    margin-left: 96%;
-                                    margin-top: -4%;">
-                    <i class="fas fa-times"></i>
-                </button> -->
-                <div class="modal-body">
-                    <form id="assignmentEditForm" action="." method="POST">
-                        {% csrf_token %}
-                        <input id="Pid" class="form-control" type="text" value="">
-                        <div class="row mb-3">
-                        <input id="oldPName" class="form-control" type="text" value="">
-                        <div class="row mb-3">
-                            <div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3">
-                                <input id="oldTeachName" class="form-control-plaintext" type="text" value="" aria-label="Disabled input example" disabled readonly>
-                            </div>
-                            <div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3">
-                                <input id="oldStudentName" class="form-control-plaintext" type="text" value="" aria-label="Disabled input example" disabled readonly>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3 ">
-                                <div id="selNewTeach" class="form-group">
-                                    <select class="selectpicker form-control" title="Chọn Giáo Viên" data-live-search="true" name="teacher" id="id_Teacher">
-                                        {%for t in teacher%}
-                                        <option value={{t.id}}>{{t.get_full_name}}</option>
-                                        {%endfor%}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3">
-                                <div id="selNewStudent"  class="form-group">
-                                    <select class="selectpicker form-control" title="Chọn Giáo Viên" data-live-search="true" name="teacher" id="id_Student">
-                                        {%for s in student%}
-                                        <option value={{s.id}}>{{s.get_full_name}}</option>
-                                        {%endfor%}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="button" id="closeEdit" class="btn btn-secondary">Close</button>
-                        <button type="button" id="confirmEdit" class="btn btn-primary">Save changes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+<div id="assignment-content" class="pt-4">
+	<div class="row g-0">
+		<div class="col-lg-7 order-lg-first order-last mt-lg-0 mt-md-5 mt-5">
+			<div class="box bg-color ms-xxl-5 ms-xl-4 ms-lg-4 mx-lg-0 mx-md-3 mx-2 p-3 assignment_list">
+				<p class="title fs-4 mb-4">DANH SÁCH PHÂN GIÁO VIÊN HƯỚNG DẪN</p>
+				<div class="mb-4 input-group box search-box">
+					<label class="search-label">Tìm kiếm</label>
+					<input id="myInput" type="text" class="input-search" placeholder="Tên đề tài, giáo viên, sinh viên....">
+				</div>
+				<ul class="box-scroll p-xxl-3 p-xl-3 p-lg-3 p-md-3 p-sm-2 p-3 pt-4">
+					{% for p in projects %}
+					<li class="box box-item scale-hover position-relative m-xxl-4 m-xl-3 m-lg-3 m-md-4 m-sm-4 m-3 mb-xl-4 mb-lg-4 mb-4" onclick="">
+						<a id='btn-asdel' class="btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim">
+							<i class="fas fa-times"></i>
+						</a>
+						<div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
+							<div class="col-sm-2 mb-4 mb-md-0">
+								<div id="pid" class="box-label w-100 h-100 p-md-0 p-1">
+									{{p.id}}
+								</div>
+							</div>
+							<div class="col-sm-10">
+								<div class="asm-Content ms-xxl-5 ms-md-2">
+									<h3 class="pname">
+										{% if not p.Project_Name %}
+										Tên đề tài chưa cập nhật
+										{% else %}
+										{{p.Project_Name}}
+										{% endif %}
+									</h3>
+									<div class="row assignment-info">
+										<div class="col-xl-6">
+											<span style="color: blue"> GVHD: </span>
+											{% for u in p.Users.all%}
+											{% if u.is_Teacher %}
+											<span id="{{u.id}}" class="me-2 tname">
+											{{u.get_full_name}}
+                      </span>
+											{% endif %}
+											{% endfor %}
+										</div>
+										<div class="col-xl-6">
+											<span style="color: blue"> Sinh Viên:</span>
+											{% for u in p.Users.all%}
+											{% if not u.is_Teacher and not u.is_superuser and not u.is_Reviewer and not u.is_Manager %}
+											<span id="{{u.id}}" class="me-2 sname">
+												{{u.get_full_name}}
+											</span>
+											{% endif %}
+											{% endfor %}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		<div class="col-lg-5 ">
+			<div class="box mx-xxl-5 mx-xl-4 mx-lg-4 mx-md-3 mx-2 p-3 p-sm-3 p-md-3 p-lg-4 p-xl-3 p-xxl-5">
+				<h4 class="title mb-4">PHÂN GIÁO VIÊN</h4>
+				<div class="text-center p-3">
+					<form id="assignmentForm" action="." method="POST">
+						{% csrf_token %}
+						<div class="row mb-3">
+							<div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3 mb-3">
+								<div class="form-group">
+									<select class="selectpicker form-control" title="Giáo Viên" data-live-search="true" name="teacher"
+										id="id_Teacher">
+										{%for t in teacher%}
+										<option value={{t.id}}>{{t.get_full_name}}</option>
+										{%endfor%}
+									</select>
+								</div>
+							</div>
+							<div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3">
+								<div class="form-group">
+									<select class="selectpicker form-control" title="Sinh Viên" data-live-search="true" name="teacher"
+										id="id_Student">
+										{%for s in student%}
+										<option value={{s.id}}>{{s.get_full_name}}</option>
+										{%endfor%}
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<button type="submit" class="btn-custom w-100 mt-3 btn-lg nav-link scale-hover">Phân Giáo
+								Viên</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="editAssignmentItemBox" tabindex="-1" role="dialog" data-bs-backdrop="static">
+		<div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-lg" role="document">
+			<div class="modal-content box-l">
+				<div class="modal-header">
+					<p class="modal-title title fs-5">Chỉnh sửa phân công</p>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<input id="Pid" type="text" readonly class="form-control-plaintext" value="">
+					<form id="assignmentEditForm" action="." method="POST">
+						{% csrf_token %}
+						<div class="row mb-4">
+							<div class="mb-2 form-floating">
+								<input id="oldPName" type="text" class="form-control input-custom input-no-focus">
+								<label>Tên Đồ Án</label>
+							</div>
+							<div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3 mb-3">
+								<div class="form-group">
+									<select id="selNewTeach" class="selectpicker asdasd form-control" title="Chọn Giáo Viên"
+										data-live-search="true" name="teacher" id="id_Teacher">
+										{%for t in teacher%}
+										<option value={{t.id}}>{{t.get_full_name}}</option>
+										{%endfor%}
+									</select>
+								</div>
+							</div>
+							<div class="col-xl-6 mb-xl-0 mb-md-3 mb-sm-3">
+								<div class="form-group">
+									<select id="selNewStudent" class="selectpicker form-control" title="Chọn Sinh Viên"
+										data-live-search="true" name="teacher" id="id_Student">
+										{%for s in student%}
+										<option value={{s.id}}>{{s.get_full_name}}</option>
+										{%endfor%}
+									</select>
+								</div>
+							</div>
+						</div>
+					</form>
+					<a id="confirmEdit" class="btn btn-custom">Lưu thay đổi</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 {% endblock %}

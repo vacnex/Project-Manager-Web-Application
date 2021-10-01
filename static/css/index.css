@@ -1,310 +1,116 @@
 * {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
-
+html, body {
+	font-family: 'Roboto Slab', sans-serif;
+  height:100%;
+}
 .logo {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: end;
+	-ms-flex-align: end;
+	align-items: flex-end;
 }
 @media only screen and (max-width: 991px) {
-  .logo {
-      margin-top: 50px;
-  }
+	.logo {
+		margin-top: 50px;
+	}
 }
 @media only screen and (max-width: 1366px) {
-  .logo {
-      flex-wrap: wrap-reverse;
-  }
-}
-.logo .logo_img {
-    margin-right: 30px;
-}
-.logo .logo_text {
-    text-align: center;
-    color: #2F80ED;
-}
-.logo .logo_text h3 {
-    font-size: 1.2em;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 34px;
-    margin: 0;
-    color: #f78b00;
-    font-family: 'Roboto Slab', serif;
-    font-size: 26px;
-    letter-spacing: 1.2px;
-}
-.logo .logo_text h4 {
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 24px;
-    margin: 0;
-    color: #2b89fe;
-    padding-top: 8px;
-    font-family: 'Roboto Slab', serif;
-    letter-spacing: 1.2px;
-}
-.hotline_support {
-    text-align: right;
-}
-.hotline p, .hotline a, .hotline_support p, .hotline_support a {
-    font-size: 0.8em;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 0.8em;
-    color: #2F80ED;
-    white-space: nowrap;
-}
-.tabTitle:hover {
-    font-size: 1.1em;
-    text-shadow: 5px 5px 5px #8080808f;
-}
-.btnlist .nav-item .nav-link {
-    width: 200px;
-    height: 40px;
-    margin: auto;
-    border: none;
-    border-radius: 20px;
-    font-size: 1em;
-    font-style: normal;
-    font-weight: 500;
-    text-align: center;
-    color: #828282;
-}
-.btnlist .nav-item .nav-link.active {
-    background-color: #2F58E2;
-    box-shadow: 0px 0px 16px #2f58e250, 0px 0px 24px #2f58e250, 0px 8px 56px #2f58e250!important;
-    color: #ffffff;
+	.logo {
+		-ms-flex-wrap: wrap-reverse;
+		flex-wrap: wrap-reverse;
+	}
 }
 
-.btnlist .nav-item {
-    width: 50%;
-    border-right: 1px solid #E4E4E4;
+.logo .logo_text {
+	text-align: center;
+	color: #2f80ed;
 }
-.btnlist .nav-item:last-child {
+.logo .logo_text h2 {
+	font-style: normal;
+	font-weight: 700;
+	line-height: 34px;
+	margin: 0;
+	color: #f78b00;
+	font-family: 'Roboto Slab', serif;
+	letter-spacing: 1.2px;
+}
+.logo .logo_text h3 {
+	font-style: normal;
+	font-weight: 600;
+	line-height: 24px;
+	margin: 0;
+	color: #2b89fe;
+	padding-top: 16px;
+	font-family: 'Roboto Slab', serif;
+	letter-spacing: 1.2px;
+}
+.hotline_support {
+	text-align: right;
+}
+.hotline p,
+.hotline a,
+.hotline_support p,
+.hotline_support a {
+	font-size: 0.8em;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 0.8em;
+	color: #2f80ed;
+	white-space: nowrap;
+}
+
+.controlls-list .nav-item .nav-link {
+	height: 40px;
+	margin: auto;
+	border: none;
+	border-radius: 20px;
+	background: white;
+}
+.controlls-list .nav-item .nav-link:hover {
+	cursor: pointer;
+}
+
+.controlls-list .nav-item {
+	width: 50%;
+	border-right: 1px solid #e4e4e4;
+}
+.controlls-list .nav-item:last-child {
 	border-right: 0;
 }
 
-.list_news .item {
-    margin-bottom: 2rem;
-    padding: 1.1rem;
-    border-radius: 10px;
-    background: #fff;
+.box-scroll .box-item .box-label div:nth-child(1) {
+	font-size: 1.4em;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 28px;
+	color: #2f80ed;
 }
-.list_news {
-    height: 550px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding: 2rem;
-
-}
-.list_news::-webkit-scrollbar {
-	width: 0px;
-}
-.list_results .item {
-    margin-bottom: 2rem;
-    padding: 1.1rem;
-    border-radius: 10px;
-    background: #fff;
-}
-.list_results {
-    height: 550px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding: 2rem;
-
-}
-.list_results::-webkit-scrollbar {
-	width: 0px;
-}
-.item {
-  margin-right: .25rem!important;
-  margin-left: .25rem!important;
-}
-.item:hover {
-    transform: scale(1.03, 1.03);
-    cursor: pointer;
-}
-.list_news .item .date {
-    height: 82px;
-    width: 90px;
-    border-radius: 10px;
-    background: rgb(200 225 255 / 50%)!important;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    float: left;
-}
-.list_news .item .date div:nth-child(1) {
-    font-size: 1.4em;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 28px;
-    color: #2F80ED;
-}
-.list_news .item .date div:nth-child(2) {
-    font-family: Roboto;
-    font-size: 1.4em;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 21px;
-    color: #EB5757;
+.box-scroll .box-item .box-label div:nth-child(2) {
+	font-family: Roboto;
+	font-size: 1.4em;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 21px;
+	color: #eb5757;
 }
 
-.list_results .item .date {
-    height: 82px;
-    width: 90px;
-    border-radius: 10px;
-    background: rgb(200 225 255 / 50%)!important;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    float: left;
-}
-.list_results .item .date div:nth-child(1) {
-    font-size: 1.4em;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 28px;
-    color: #2F80ED;
-}
-.list_results .item .date div:nth-child(2) {
-    font-family: Roboto;
-    font-size: 1.4em;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 21px;
-    color: #EB5757;
-}
-
-.input-group {
-    position: relative;
-    margin-bottom: 23px;
-    -webkit-box-shadow: 0 8px 20px 0 rgb(0 0 0 / 15%);
-    -moz-box-shadow: 0 8px 20px 0 rgba(0,0,0,.15);
-    box-shadow: 0 8px 20px 0 rgb(0 0 0 / 15%);
-    padding: 16px 20px;
-    padding-bottom: 10px;
-    background: #fff;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-}
-.input--large {
-    width: 85%;
-}
-.label {
-    font-size: 12px;
-    color: #999;
-    text-transform: uppercase;
-    display: block;
-    font-weight: 700;
-}
-.input--style-1 {
-    font-size: 18px;
-    padding: 9px 0;
-    color: #666;
-}
-input {
-    margin: 0;
-    font-family: inherit;
-    line-height: inherit;
-    outline: none;
-    border: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    width: 100%;
-    font-size: 18px;
-}
-.btn-submit {
-    display: inline-block;
-    line-height: 90px;
-    font-size: 1em;
-    font-style: normal;
-    font-weight: 500;
-    background: #ffe151;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    text-transform: capitalize;
-    color: #333;
-    -webkit-transition: all .4s ease;
-    -o-transition: all .4s ease;
-    -moz-transition: all .4s ease;
-    transition: all .4s ease;
-    padding: 0 30px;
-    -webkit-box-shadow: 0 8px 20px 0 rgb(0 0 0 / 15%);
-    -moz-box-shadow: 0 8px 20px 0 rgba(0,0,0,.15);
-    box-shadow: 0 8px 20px 0 rgb(0 0 0 / 15%);
-    margin-left: 10px;
-}
-button {
-    outline: none;
-    border: none;
-}
-.btn-submit:hover,.btn-login:hover {
-    transform: scale(1.03, 1.03);
-    cursor: pointer;
-}
-.search-wraper{
-  padding: 2rem;
-}
-.login_form {
-    border-radius: 10px;
-    padding: 20px 20px 20px 20px;
-}
 .form-title {
-    text-align: center;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 24px;
-    margin: 0;
-    color: #2F80ED;
-    padding-top: 8px;
-    font-family: 'Roboto Slab', serif;
-    letter-spacing: 1.2px;
-}
-.login-box-body .form-control{
-  border: none;
-}
-.login-box-body .form-control:focus{
-  box-shadow: none;
-}
-.login-box-body input{
-  border-bottom: 3px solid !important;
-  border-image-slice: 1!important;
-  border-image-source: linear-gradient(to left, #8CF8FF, #5096E9)!important;
-}
-.btn-login{
-    background-color: #2F58E2;
-    box-shadow: 0px 4px 16px #2f58e250, 0px 8px 24px #2f58e250, 0px 16px 56px #2f58e250;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 20px;
-    font-size: 1.5em;
-    font-style: normal;
-    font-weight: 500;
-    text-align: center;
-}
-.btn-login:hover{
-    color:white;
-}
-.login-wraper{
-    padding-left: 90px;
-}
-@media (min-width: 320px) and (max-width: 992px){
-   .login-wraper{
-    padding: 0px;
-    margin-bottom: 20px;
-    } 
+	text-align: center;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 24px;
+	margin: 0;
+	color: #2f80ed;
+	padding-top: 8px;
+	font-family: 'Roboto Slab', serif;
+	letter-spacing: 1.2px;
 }

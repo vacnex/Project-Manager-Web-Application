@@ -1,0 +1,155 @@
+.todoScroll {
+	max-height: 100%;
+	padding-bottom: 200px;
+}
+
+.task-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+}
+.todoElement {
+	display: flex;
+	color: #0a0d47;
+	align-items: center;
+	border-radius: 20px;
+	min-height: 110px;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+		rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+	/* box-shadow: rgb(0 0 0 / 5%) 0 0.5px 0, rgb(0 0 0 / 3%) 0 0 0 1px, rgb(0 0 0 / 5%) 0 2px 4px; */
+}
+.chkb {
+	display: flex;
+	cursor: pointer;
+	width: 21px;
+	min-width: 21px;
+	height: 21px;
+	margin: 15px;
+	border-radius: 22% / 26%;
+	background-color: rgb(255, 255, 255);
+	border: 2px solid rgb(215, 219, 230);
+	background-image: url(./imageAssets/bif.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	-webkit-appearance: none;
+	transition: 0.5s;
+	position: relative;
+	margin-left: 25px;
+}
+
+.chkb:focus {
+	outline: none;
+}
+
+.done {
+	background-color: #1aff00;
+	border: none;
+}
+
+.height {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+.line {
+	background-color: #ff006f; /*#1AFF00*/
+	box-shadow: 0px 0px 10px 2.5px #ff006f50; /*#1AFF0050*/
+	min-width: 3px;
+	width: 3px;
+	height: 70px;
+	border-radius: 66% / 9%;
+}
+
+.linedone {
+	background-color: rgb(26, 255, 0) !important;
+	box-shadow: rgb(26 255 0 / 31%) 0px 0px 10px 2.5px !important;
+}
+
+.todoDetails .todoTitle {
+	display: flex;
+	justify-self: center;
+	align-self: center;
+	flex-direction: column;
+	font-size: 18px;
+	line-height: 1.4;
+	padding: 0px !important;
+	color: #0a0d47;
+	font-weight: 500;
+	text-decoration: none;
+}
+.titledone {
+	text-decoration: line-through !important;
+}
+.todoDetails .todoPrio {
+	display: flex;
+	justify-self: center;
+	align-self: center;
+	font-size: 15px;
+	margin: 0;
+	flex-direction: column;
+	color: #a2a3b9;
+	font-weight: 400;
+}
+
+.deleteX {
+	cursor: pointer;
+	background-image: url('./imageAssets/delete.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	margin: 20px;
+	margin-left: auto;
+	margin-right: 22px;
+	height: 14px;
+	width: 14px;
+	min-width: 14px;
+	transition: 0.2s all ease-in-out;
+	float: right;
+}
+
+.submitButtonBlue {
+	cursor: pointer;
+	background-color: #2f58e2;
+	box-shadow: 0px 4px 16px #2f58e250, 0px 8px 24px #2f58e250,
+		0px 16px 56px #2f58e250;
+	color: #ffffff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 56px;
+	width: 170px;
+	padding: 15px;
+	padding-right: 8px;
+	border: none;
+	border-radius: 20px;
+	font-size: 15px;
+
+	font-weight: 400;
+}
+
+.submitButtonBlue span {
+	cursor: pointer;
+	font-size: 25px;
+	line-height: 1;
+	font-family: Roboto;
+	font-weight: 300;
+}
+
+.addSubmitBlue {
+	cursor: pointer;
+	font-size: 15px;
+	background-color: transparent;
+	color: #ffffff;
+	margin: 0 auto;
+	border: none;
+	border-radius: 10% / 40%;
+
+	padding-top: 4px;
+	margin: 0 5px;
+}
+
+.addSubmitBlue:focus {
+	outline: none;
+}

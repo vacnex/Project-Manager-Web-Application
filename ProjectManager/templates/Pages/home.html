@@ -1,33 +1,42 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block css %}
+{{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'slick/slick.css' %}" type="text/css">
+{% endblock %}
+{% block scripts %}
+{{ block.super }}
+    <script src="{% static 'slick/slick.min.js' %}"></script>
+    <script src="{% static 'js/home.js' %}"></script>
+{% endblock %}
 {% block title %}
 Home
 {% endblock %}
 
 {% block content %}
-<div id="page-content">
-    <div class="row g-0">
-        <section class="page-wrapper">
-            {% if user.is_Manager%}
-            <!-- #region Giáo Viên quản lý-->
-            <div class="row">
-                <div class="col-lg-6">
-                    <ul class="nav nav-pills mb-3 btnlist" id="pills-tab" role="tablist">
-                        <li class="nav-item tabTitle" role="presentation">
-                            <a class="nav-link" id="pills-dsgv-tab" data-bs-toggle="pill" data-bs-target="#pills-dsgv" type="button" role="tab" aria-controls="pills-dsgv" aria-selected="false">DANH SÁCH GIÁO VIÊN</a>
+<div id="home-content" class="pt-4">
+    <!-- #region Giáo Viên quản lý-->
+    {% if user.is_Manager%}
+        <div class="row g-0">
+            <div class="col-lg-6">
+                <div class="box-l bg-color mx-xxl-5 mx-xl-4 mx-lg-4 mx-md-3 mx-2 p-3 p-sm-3 p-md-3 p-lg-4 p-xl-3 p-xxl-5">
+                    <ul class="row nav nav-pills mb-3 controlls-list" id="pills-tab" role="tablist">
+                        <li class="col-lg-0 col-6 nav-item" role="presentation">
+                            <a class="nav-link btn-custom title btn-sm" id="pills-gv-tab" data-bs-toggle="pill" data-bs-target="#pills-gv" role="tab" aria-controls="pills-gv" aria-selected="true">Giáo Viên</a>
                         </li>
-                        <li class="nav-item tabTitle" role="presentation">
-                            <a class="nav-link active" id="pills-dssv-tab" data-bs-toggle="pill" data-bs-target="#pills-dssv" type="button" role="tab" aria-controls="pills-dssv" aria-selected="true">DANH SÁCH SINH VIÊN</a>
+                        <li class="col-lg-0 col-6 nav-item " role="presentation">
+                            <a class="nav-link title btn-sm" id="pills-sv-tab" data-bs-toggle="pill" data-bs-target="#pills-sv" role="tab" aria-controls="pills-sv" aria-selected="false">Sinh Viên</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade rounded-3 shadow-sm w-100 show active" id="pills-dssv" role="tabpanel" aria-labelledby="pills-dssv-tab">
-                            <div class="list-student">
+                        <div class="tab-pane fade w-100  mb-4" id="pills-sv" role="tabpanel" aria-labelledby="pills-sv-tab">
+                            <div class="box-scroll p-xl-4 p-lg-4 p-md-3 p-sm-3 p-3 pt-4">
                                 {% for s in list_student_user%}
-                                <div class="item shadow" onclick="">
-                                    <div class="row">
-                                        <div class="col-sm-2">
-                                            <div class="student-pic">
+                                <div class="box box-item scale-hover mb-4" onclick="">
+                                    <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
+                                        <div class="col-sm-2 mb-4 mb-md-0">
+                                            <div class="student-pic w-100 h-100 p-md-0 p-1">
                                             </div>
                                         </div>
                                         <div class="col-sm-10">
@@ -45,19 +54,19 @@ Home
                                 {%endfor%}
                             </div>
                         </div>
-                        <div class="tab-pane fade rounded-3 shadow-sm w-100" id="pills-dsgv" role="tabpanel" aria-labelledby="pills-profile-tab">
-                            <div class="list-teacher">
+                        <div class="tab-pane fade w-100 show active mb-4" id="pills-gv" role="tabpanel" aria-labelledby="pills-gv-tab">
+                            <div class="box-scroll p-xl-4 p-lg-4 p-md-3 p-sm-3 p-3 pt-4">
                                 {% for t in list_teacher_user%}
-                                <div class="item shadow" onclick="">
-                                    <div class="row">
-                                        <div class="col-sm-2">
-                                            <div class="teacher-pic">
+                                <div class="box box-item scale-hover mb-4" onclick="">
+                                    <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
+                                        <div class="col-sm-2 mb-4 mb-md-0">
+                                            <div class="teacher-pic w-100 h-100 p-md-0 p-1">
                                             </div>
                                         </div>
                                         <div class="col-sm-10">
                                             <div class="desc-teacher content">
                                                 <h5 class="teacher-name">
-                                                        {{t.get_full_name}}
+                                                    {{t.get_full_name}}
                                                 </h5>
                                                 <div class="teacher-infor">
                                                     <p class="desc">thông tin giáo viên.</p>
@@ -71,136 +80,91 @@ Home
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3"></div>
-                <div class="col-lg-3"></div>
             </div>
-            <!-- <div class="row mb-3">
-                <div class="title col-lg-auto col-md-auto col-sm-auto ">
-                    <h4>PHÂN CÔNG</h4>
-                    <div class="list-btn">
-
-                    </div>
-                </div>
-                <div class="slick-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button id="btn-prev" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-left fa-fw " aria-hidden="true" aria-label=""></i></span></button>
-                        <button id="btn-next" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-right fa-fw " aria-hidden="true" aria-label=""></i></span></button>
-                    </div>
-                </div>
-            </div> -->
-            <div class="list-content">
-                {% for p in Manager_project_list%}
-                <div>
-                    <a href="/confirm/{{ p.Project_ID }}/" class="card text-decoration-none">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <rect width="100%" height="100%" fill="#868e96"></rect>
-                        </svg>
-                        <div class="card-body">
-                            <p class="card-text"><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
-                            <h5 class="card-title">{{p.Project_Name}}</h5>
-                            {% for u in p.Users.all%}
-                            {% if u.is_Teacher %}
-                            <p class="card-text"><small class="text-muted">Giáo viên mong muốn: <strong>{{u.get_full_name}}</strong></small></p>
-                            {%else%}
-                            <p class="card-text"><small class="text-muted">Sinh viên đăng kí: <strong>{{u.get_full_name}}</strong></small></p>
-                            {%endif%}
-                            {%endfor%}
-                        </div>
-                        <div class="card-footer">
-                            <span class="text-muted">Khoá: {{p.schoolYear}}</span>
-                        </div>
-                    </a>
-                </div>
-                {%endfor%}
+            <div class="col-lg-3"></div>
+            <div class="col-lg-3"></div>
+        </div>
+    <!-- #endregion -->
+    <!--#region Giáo Viên phản Biện -->
+    {% elif user.is_Reviewer %}
+    <!-- #endregion -->
+    <!-- #region Giáo viên -->
+    {% elif user.is_Teacher %}
+    <div class="box-l bg-color mx-xxl-5 mx-xl-4 mx-lg-4 mx-md-3 mx-2 p-3">
+        {% if Teacher_project_list%}
+        <p class="title fs-2">Danh sách được phân công</p>
+        <div class="mb-2 input-group box search-box">
+            <label class="search-label">tìm kiếm</label>
+            <input id="ProjectSearchBox" type="text" class="input-search" placeholder="nhập gì đó">
+        </div>
+        <div id="ListTeacherProject" class="c-item">
+            {%for p in Teacher_project_list%}
+            <div id="{{p.id}}" class="box box-item bg-white me-5 p-3 scale-hover">
+                <a href="/projectdetail/{{ p.id }}/" class="text-decoration-none">
+                    <p><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
+                    <p class="title fs-5 text-center">
+                        {% if not p.Project_Name %}
+                        Tên đề tài chưa cập nhật
+                        {% else %}
+                        {{p.Project_Name}}
+                        {%endif%}
+                    </p>
+                    {% for u in p.Users.all%}
+                    {% if not u.is_Teacher %}
+                    <p class="card-text"><small class="text-muted">Sinh viên: <strong>{{u.get_full_name}}</strong></small></p>
+                    {%endif%}
+                    {%endfor%}
+                    <span class="text-muted"><small>Khoá: {{p.schoolYear}}</small></span>
+                </a>
             </div>
-            <!-- #endregion -->
-            {% elif user.is_Reviewer %}
-            <!--#region Giáo Viên phản Biện -->
-            <!-- #endregion -->
-            {% elif user.is_Teacher %}
-            <!-- #region Giáo viên -->
-            {% if Is_Confirm%}
-            <div class="row mb-3">
-                <div class="t-tittle col-lg-auto col-md-auto col-sm-auto ">
-                    <h4>Danh Sách Đề Tài</h4>
-                </div>
-                <div class="slick-btn-group col-lg-auto col-md-auto col-sm-auto ms-auto">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button id="btn-prev" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-left fa-fw " aria-hidden="true" aria-label=""></i></span></button>
-                        <button id="btn-next" type="button" class="btn btn-outline-dark "><span><i class="fas fa-arrow-right fa-fw " aria-hidden="true" aria-label=""></i></span></button>
-                    </div>
-                </div>
-            </div>
-            <div class="list-content c-item">
-                {%for p in Teacher_project_list%}
-                <div id="{{p.Project_ID}}">
-                    <a href="/updatetask/{{ p.Project_ID }}/" class="card text-decoration-none">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <rect width="100%" height="100%" fill="#868e96"></rect>
-                        </svg>
-                        <div class="card-body">
-                            <p class="card-text"><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
-                            <h5 class="card-title">{{p.Project_Name}}</h5>
-                            {% for u in p.Users.all%}
-                            {% if not u.is_Teacher %}
-                            <p class="card-text"><small class="text-muted">Sinh viên: <strong>{{u.get_full_name}}</strong></small></p>
-                            {%endif%}
-                            {%endfor%}
-                        </div>
-                        <div class="card-footer">
-                            <span class="text-muted">Khoá: {{p.schoolYear}}</span>
-                        </div>
-                    </a>
-                </div>
-                {%endfor%}
-            </div>
-            {% else %}
-            <div class="Waiting">
-                <h1>Chưa có sinh viên đăng kí đề tài</h1>
-            </div>
-            {% endif %}
-            <!-- #endregion -->
-            {% else %}
-            <!-- #region Sinh viên -->
-            {% if request_pj%}
-            <div class="Request">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ProjectRegister">Đăng kí đề tài</button>
-            </div>
-            {% else %}
-            {% if Is_Confirm%}
-            <div class="row mb-3">
-                <div class="Process-list-content">
-                    <section class="Project-Manager-wrapper">
-                        <div class="Project-header d-flex mb-4 justify-content-between">
-                            <div class="Project-Tittle">
-                                <h1 class="display-5 fw-bold">{{student_project_data.1}}</h1>
-                            </div>
-                            <div class="toolbar hide">
-                                <form name="task-update-form" method="post" action=".">
-                                    {% csrf_token %}
-                                    <input id="taskcontent" type="hidden" name="taskcontent" value="" />
-                                    <input id="pjid" type="hidden" name="pjid" value="{{pk}}" />
-                                </form>
-                            </div>
-                        </div>
-                        <div class="task-wrapper">
-                            <div class="todoScroll p-4">
-                                {{student_project_data.2|safe}}
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-            {% else %}
-            <div class="Waiting">
-                <h1>Đang đợi Xác nhận</h1>
-            </div>
-            {% endif %}
-            {% endif %}
-            {% endif %}
-            <!-- #endregion -->
-        </section>
+            {%endfor%}
+        </div>
+        {% else %}
+        <div class="Waiting">
+            <h1>Chưa có sinh viên nào được phân cho bạn! liên lạc người quản lý để phân sinh viên</h1>
+        </div>
+        {% endif %}
     </div>
+    <!-- #endregion -->
+    <!-- #region Sinh viên -->
+    {% else %}
+    {% if request_pj%}
+    <div class="Request">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ProjectRegister">Đăng kí đề tài</button>
+    </div>
+    {% else %}
+    {% if Is_Confirm%}
+    <div class="row mb-3">
+        <div class="Process-list-content">
+            <section class="Project-Manager-wrapper">
+                <div class="Project-header d-flex mb-4 justify-content-between">
+                    <div class="Project-Tittle">
+                        <h1 class="display-5 fw-bold">{{student_project_data.1}}</h1>
+                    </div>
+                    <div class="toolbar hide">
+                        <form name="task-update-form" method="post" action=".">
+                            {% csrf_token %}
+                            <input id="taskcontent" type="hidden" name="taskcontent" value="" />
+                            <input id="pjid" type="hidden" name="pjid" value="{{pk}}" />
+                        </form>
+                    </div>
+                </div>
+                <div class="task-wrapper">
+                    <div class="todoScroll p-4">
+                        {{student_project_data.2|safe}}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    {% else %}
+    <div class="Waiting">
+        <h1>Đang đợi Xác nhận</h1>
+    </div>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    <!-- #endregion -->
     <!-- #region project register modal-->
     <div class="modal fade regprojectmodal" id="ProjectRegister" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ProjectRegisterLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg modal-fullscreen-lg-down ">

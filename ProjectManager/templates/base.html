@@ -3,65 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>{% block title %}{% endblock %}</title>
     {% load static %}
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/homecontent.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/assignment.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/task.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'font/css/all.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'slick/slick.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"  type="text/css"/>
+    {% block css %}
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'font/css/all.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/component.css' %}" type="text/css">
+    {% endblock %}
 </head>
 <body>
+    <div class="fixed-img"></div>
     <div id="page-container" class="l-with-sidebar">
         <div class="top-Menu shadow-sm justify-content-center">
-            <div class="d-flex">
-                <div class="d-sm-inline d-md-none">
-                    <button type="button" class="btn sidebar-btn">
-                        <i class="fas fa-list-ul" id="sidebarBtn"></i>
-                    </button>
-                </div>
-                <div class="d-sm-inline d-md-none ms-auto">
-                    <button type="button" class="mobile-topbar-btn navbar-toggler" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
-                        <i class="far fa-user-circle" id="mobileTopBarBtn"></i>
-                    </button>
-                </div>
+          <div class="d-flex">
+            <div class="d-sm-inline d-md-none">
+              <button type="button" class="btn sidebar-btn">
+                <i class="fas fa-list-ul" id="sidebarBtn"></i>
+              </button>
             </div>
-            <nav class="navbar navbar-expand-md ">
-                <div class="container-fluid justify-content-start align-items-center">
-                    <div class="navbar-collapse collapse" id="collapseNavbar">
-                        <div class="d-none d-sm-none d-md-inline ms-md-0 me-md-3">
-                            <button class="btn sidebar-btn">
-                                <i class="fas fa-equals" id="sidebarBtn"></i>
-                            </button>
-                        </div>
-                        <div class="top-menu-text">
-                            <i class="fas fa-phone"></i><strong>Trợ giúp ? </strong> +84 251 3951 344
-                        </div>
-                        <div class="navbar-nav ms-auto align-items-center justify-content-center">
-                                <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false" rel="nofollow noopener noreferrer">
-                                    <img src="https://secure.gravatar.com/avatar/c34d9a4e2a08b7af82778396b8c01ca1?s=105&d=mm" alt="mdo" width="32" height="32" class="rounded-circle me-2">
-                                    <strong>{{user.username}}</strong>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="dropdownUser">
-                                    <li><a class="dropdown-item" href="#" rel="nofollow noopener noreferrer">Profile</a></li>
-                                    <li><a class="dropdown-item" href="#" rel="nofollow noopener noreferrer">Settings</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="{% url 'logout' %}" rel="nofollow noopener noreferrer">Sign out</a></li>
-                                </ul>
-                        </div>
-                    </div>
+            <div class="d-sm-inline d-md-none ms-auto">
+              <button type="button" class="mobile-topbar-btn navbar-toggler" data-bs-toggle="collapse"
+                data-bs-target="#collapseNavbar">
+                <i class="far fa-user-circle" id="mobileTopBarBtn"></i>
+              </button>
+            </div>
+          </div>
+          <nav class="navbar navbar-expand-md ">
+            <div class="container-fluid justify-content-start align-items-center">
+              <div class="navbar-collapse collapse" id="collapseNavbar">
+                <div class="d-none d-sm-none d-md-inline ms-md-0 me-md-3">
+                  <button class="btn sidebar-btn">
+                    <i class="fas fa-equals" id="sidebarBtn"></i>
+                  </button>
                 </div>
-            </nav>
+                <div class="top-menu-text">
+                  <i class="fas fa-phone"></i><strong>Trợ giúp ? </strong> +84 251 3951 344
+                </div>
+                <div class="navbar-nav ms-auto align-items-center justify-content-center">
+                  <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://secure.gravatar.com/avatar/c34d9a4e2a08b7af82778396b8c01ca1?s=105&d=mm" alt="mdo"
+                      width="32" height="32" class="rounded-circle me-2">
+                    <strong>{{user.username}}</strong>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="dropdownUser">
+                    <li><a class="dropdown-item" href="#">Trang cá nhân</a></li>
+                    <li><a class="dropdown-item" href="#">Cài đặt</a></li>
+                    <li>
+                      <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Đăng xuất</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </nav>
         </div>
-        <div id="page" class="container-fluid">{% block content %}{% endblock %}</div>
+        <div class="content pb-xxl-3 pb-5">
+          {% block content %}{% endblock %}
+        </div>
         <div id="nav-drawer">
             <button type="button" class="sidebar-btn-close">
                 <i class="fas fa-times"></i>
@@ -72,104 +75,150 @@
                 </div>
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto list-nav-item flex-nowrap">
-                    <li class="mb-1 rounded">
-                        <a href="{% url 'index' %}" class="nav-link link-dark" >
+                    <li class="mb-2">
+                        <a href="{% url 'index' %}" class="sidebar-item" >
                             <i class="fas fa-columns"></i>
                             Trang chủ
                         </a>
                     </li>
                     {%if user.is_Manager%}
-                    <li class="mb-1 rounded">
-                        <a href="{% url 'home' %}" class="nav-link link-dark">
+                    <li class="mb-2">
+                        <a href="{% url 'home' %}" class="sidebar-item">
                             <i class="fas fa-columns"></i>
                             Dashboard
                         </a>
                     </li>
-                    <li class="mb-1 rounded">
-                        <a href="{% url 'assignment' %}" class="nav-link link-dark">
+                    <li class="mb-2">
+                        <a href="{% url 'assignment' %}" class="sidebar-item">
                             <i class="fas fa-columns"></i>
                             Phân giáo viên
                         </a>
                     </li>
-                    <li class="mb-1 rounded">
-                        <a href="" class="nav-link link-dark">
+                    <li class="mb-2">
+                        <a href="" class="sidebar-item">
                             <i class="fas fa-columns"></i>
                             Đặt mốc thời gian
                         </a>
                     </li>
-                    <li class="mb-1 rounded">
-                        <a href="" class="nav-link link-dark">
+                    <li class="mb-2">
+                        <a href="" class="sidebar-item">
                             <i class="fas fa-columns"></i>
                             Đăng thông báo
                         </a>
                     </li>
                     {%endif%}
                     {%if user.is_Teacher%}
-                    {%if details %}
-                    <li class="mb-1 nav-list">
-                        <a class="w-100 btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Khoá</a>
-                        <div class="collapse show p-1 m-0" id="home-collapse">
-                            <ul class="yearlist btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                {%for p in Teacher_project_list%}
-                                <li tabindex="0" class="rounded year" data-filtertarget="{{p.Project_ID}}">
-                                    <a class="link-dark w-85">
-                                        <span style="width:30px">
-                                            <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                        </span>{{p.schoolYear}}
-                                    </a>
-                                </li>
-                                {%endfor%}
-                            </ul>
-                        </div>
+                    <li class="mb-2">
+                      <a href="{% url 'home' %}" class="sidebar-item">
+                        <i class="fas fa-columns"></i>
+                        Dashboard
+                      </a>
                     </li>
-                    {%endif%}
+                      <div class="mb-2 box-dropdown box scale-hover">
+                          <a class="btn btn-dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#year-collapse" aria-expanded="true">Khoá</a>
+                          <div class="collapse show" id="year-collapse">
+                              <ul id="year-list" class="list-unstyled p-2">
+                                  {%if Teacher_project_list%}
+                                  {%for p in Teacher_project_list%}
+                                  <li tabindex="0" class="dropdown-custom-item rounded mb-1" data-filtertarget="{{p.schoolYear}}">
+                                      <a class="dropdown-link">
+                                          <span style="width:30px">
+                                              <i class="icon fas fa-graduation-cap fa-fw"></i>
+                                          </span>{{p.schoolYear}}
+                                      </a>
+                                  </li>
+                                  {%endfor%}
+                                  {% else %}
+                                  <li tabindex="0" class="dropdown-custom-item rounded mb-1" data-filtertarget="">
+                                      <a class="dropdown-link">
+                                          Trống
+                                      </a>
+                                  </li>
+                                  {% endif %}
+                              </ul>
+                          </div>
+                      </div>
                     {%endif%}
                 </ul>
                 <hr>
             </div>
         </div>
-    </div>
-    <footer id="footer-container" class="footer">
-        <div id="footer-wrapper" class="l-with-sidebar">
-            <div class="row g-0">
-                <div class="col-12 contact p-0">
-                    <ul class="list-inline">
-                        <li class="d-sm-block d-lg-inline mb-3 mb-sm-3 mb-lg-0 me-sm-0 me-lg-4"><i class="me-2 fas fa-globe-africa"></i><a href="https://learn.lhu.edu.vn" rel="nofollow noopener noreferrer">Lac Hong University Project Manager System</a></li>
-                        <li class="d-sm-block d-lg-inline mb-3 mb-sm-3 mb-lg-0 me-sm-0 me-lg-4"><i class="me-2 fas fa-mobile-alt"></i>+84 251 3951 344</li>
-                        <li class="d-sm-block d-lg-inline"><i class="me-2 far fa-envelope-open"></i>project@lhu.edu.vn</li>
-                    </ul>
-                </div>
-    
-                <div class="col-12 mt-2 mb-1 p-0">
-                    <ul class="list-social list-inline m-b-1 mx-0">
-                        <li class="list-inline-item">
-                            <a href="https://www.facebook.com/lhuniversity" target="_blank" class="facebook" rel="nofollow noopener noreferrer">
-                                <i class="me-2 fab fa-facebook"></i>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://www.youtube.com/user/lachongtelevision" target="_blank" class="youtube" rel="nofollow noopener noreferrer">
-                                <i class="me-2 fab fa-youtube"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-12 mt-4 mb-5 p-0">
-                    <span class="copyright">© LHES</span><span>All rights reserved</span>
-                </div>
+        <footer id="footer-container" class="footer w-100">
+          <div class="row g-0 p-5 bg-white">
+            <div class="col-12 contact">
+              <ul class="list-inline">
+                <li class="d-sm-block d-lg-inline mb-3 mb-sm-3 mb-lg-0 me-sm-0 me-lg-4"><i class="me-2 fas fa-globe-africa"></i><a
+                    href="/">HỆ THỐNG QUẢN LÝ ĐỒ ÁN ĐẠI HỌC LẠC HỒNG</a></li>
+                <li class="d-sm-block d-lg-inline mb-3 mb-sm-3 mb-lg-0 me-sm-0 me-lg-4"><i class="me-2 fas fa-mobile-alt"></i>+84
+                  251 3951 344</li>
+                <li class="d-sm-block d-lg-inline"><i class="me-2 far fa-envelope-open"></i>project@lhu.edu.vn</li>
+              </ul>
             </div>
-        </div>
-    </footer>
+            <div class="col-12 mt-2 mb-1">
+              <ul class="list-social mb-1">
+                <li class="list-inline-item">
+                  <a href="https://www.facebook.com/lhuniversity" target="_blank" class="facebook">
+                    <i class="me-2 fab fa-facebook"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="https://www.youtube.com/user/lachongtelevision" target="_blank" class="youtube">
+                    <i class="me-2 fab fa-youtube"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-12 mt-4 mb-5 p-0">
+              <span class="copyright">© LHES</span><span>All rights reserved</span>
+            </div>
+          </div>
+        </footer>
+
+        <!-- <footer id="footer-container" class="footer">
+          <div id="footer-wrapper" class="l-with-sidebar">
+            <div class="row g-0">
+              <div class="col-12 contact p-0">
+                <ul class="list-inline">
+                  <li class="d-sm-block d-lg-inline mb-3 mb-sm-3 mb-lg-0 me-sm-0 me-lg-4"><i
+                      class="me-2 fas fa-globe-africa"></i><a href="/">HỆ THỐNG QUẢN LÝ ĐỒ ÁN ĐẠI HỌC LẠC HỒNG</a></li>
+                  <li class="d-sm-block d-lg-inline mb-3 mb-sm-3 mb-lg-0 me-sm-0 me-lg-4"><i
+                      class="me-2 fas fa-mobile-alt"></i>+84 251 3951 344</li>
+                  <li class="d-sm-block d-lg-inline"><i class="me-2 far fa-envelope-open"></i>project@lhu.edu.vn</li>
+                </ul>
+              </div>
+              <div class="col-12 mt-2 mb-1 p-0">
+                <ul class="list-social list-inline m-b-1 mx-0">
+                  <li class="list-inline-item">
+                    <a href="https://www.facebook.com/lhuniversity" target="_blank" class="facebook">
+                      <i class="me-2 fab fa-facebook"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="https://www.youtube.com/user/lachongtelevision" target="_blank" class="youtube">
+                      <i class="me-2 fab fa-youtube"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 mt-4 mb-5 p-0">
+                <span class="copyright">© LHES</span><span>All rights reserved</span>
+              </div>
+            </div>
+          </div>
+        </footer> -->
+    </div>
+
+    {% block scripts %}
     <script src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/base.js' %}"></script>
-    <script src="{% static 'js/assignment.js' %}"></script>
+    <!-- <script src="{% static 'js/assignment.js' %}"></script>
     <script src="{% static 'js/task.js' %}"></script>
     <script src="{% static 'js/course.js' %}"></script>
-    <script src="{% static 'slick/slick.min.js' %}"></script>
+
     <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
     <script src="{% static 'js/defaults-vi_VN.min.js' %}"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+ -->
+    {% endblock %}
 </body>
 </html>

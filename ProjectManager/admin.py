@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, SchoolYear, ProjectType, Project, SchoolClass
+from .models import User, SchoolYear, ProjectType, Project, SchoolClass, ProjectDiscus, Task
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm
 
@@ -34,14 +34,25 @@ class MyProjectAdmin (admin.ModelAdmin):
     model = Project
     list_display = ('Project_Name', 'Project_members')
 
+
+class MyProjectDiscussAdmin (admin.ModelAdmin):
+    model = ProjectDiscus
+    list_display = ('Project', 'Users', 'timeStamp','message',)
+
 class MySchoolClassAdmin (admin.ModelAdmin):
     model = SchoolClass
     list_display = ('ClassID',)
 
 
+class MyTaskAdmin (admin.ModelAdmin):
+    model = Task
+    list_display = ('taskName','taskDesc','taskChhild','createdTaskDate','editedTaskDate','deadline','priority','complete')
+
 admin.site.register(User, MyUserAdmin)
 admin.site.register(SchoolYear, MySchoolYearAdmin)
 admin.site.register(Project, MyProjectAdmin)
+admin.site.register(ProjectDiscus, MyProjectDiscussAdmin)
 admin.site.register(SchoolClass, MySchoolClassAdmin)
 admin.site.register(ProjectType, MyProjectTypeAdmin)
+admin.site.register(Task, MyTaskAdmin)
 

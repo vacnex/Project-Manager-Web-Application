@@ -2,18 +2,25 @@ from ProjectManager.forms import LoginForm, RegistionForm, AssignmentForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
 from django.views import View
-from ProjectManager.models import Project, User
+from ProjectManager.models import Project, User, Task
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.http import JsonResponse
-
+from django.core.exceptions import PermissionDenied
 import json
 
 
+
+class ComponentView(View):
+    def get(self, request):
+        return render(request, 'Pages/component.html')
+
 # region index
+
+
 def index(request):
     if request.user.is_superuser:
         return HttpResponseRedirect(reverse('admin:index'))
@@ -35,11 +42,15 @@ def index(request):
                         next_url = request.POST.get('next')
                         if request.user.is_superuser:
                             return HttpResponseRedirect(reverse('admin:index'))
+                        if next_url:
+                          if next_url == "/assignment/" and request.user.is_Manager:
+                            return HttpResponseRedirect(next_url)
+                          elif "projectdetail" in next_url and request.user.is_Teacher:
+                            return HttpResponseRedirect(next_url)
+                          else:
+                            return redirect('home')
                         else:
-                            if next_url:
-                                return HttpResponseRedirect(next_url)
-                            else:
-                                return redirect('home')
+                            return redirect('home')
             else:
                 form = LoginForm()
         context = {'form': form}
@@ -47,12 +58,14 @@ def index(request):
 # endregion
 
 # region home
+
+
 @method_decorator(login_required(login_url='/'), name='get')
 class HomeIndex(View):
     def get(self, request):
         current_user = request.user.id
         cur_Project = Project.objects.filter(Users=current_user)
-        Manager_project_list, student_project_data, Teacher_project_list, teacher = [], [], [], []
+        student_project_data, Teacher_project_list, teacher = [], [], []
         list_teacher_user, list_student_user = [], []
         request_pj, Is_Confirm = False, False
         register_form = None
@@ -69,7 +82,6 @@ class HomeIndex(View):
             pass
         elif request.user.is_Teacher:
             for project in cur_Project:
-                Is_Confirm = True
                 Teacher_project_list.append(project)
         else:
             if not len(cur_Project) > 0:
@@ -88,7 +100,7 @@ class HomeIndex(View):
             if user.is_Teacher:
                 teacher.append(user)
         context = {'request_pj': request_pj,
-                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Manager_project_list': Manager_project_list, 'Teacher_project_list': Teacher_project_list, 'register_form': register_form, 'teacher': teacher, 'details': True, 'list_student_user': list_student_user, 'list_teacher_user': list_teacher_user}
+                   'Is_Confirm': Is_Confirm, 'student_project_data': student_project_data, 'Teacher_project_list': Teacher_project_list, 'register_form': register_form, 'teacher': teacher, 'details': True, 'list_student_user': list_student_user, 'list_teacher_user': list_teacher_user}
         return render(request, 'Pages/home.html', context)
 
 # region POST request
@@ -126,8 +138,6 @@ class HomeIndex(View):
 # endregion
 
 # region confirm
-
-
 # @method_decorator(login_required(login_url='/login'), name='get')
 # class ConfirmProject(View):
 #     def get(self, request, pk):
@@ -183,31 +193,98 @@ class HomeIndex(View):
 #         return render(request, 'Pages/confirmproject.html', {'confirm_form': confirm_form})
 # endregion
 
-# region
-# @method_decorator(login_required(login_url='/login'), name='get')
-# class UpdateTask(View):
-#     def get(self, request, pk):
-#         cur_Project = Project.objects.filter(Project_ID=pk)
-#         null = False
-#         for p in cur_Project:
-#             if not p.Project_Content:
-#                 null = True
+# region ProjectDetail
 
-#         context = {'cur_Project': cur_Project,
-#                    'null': null, 'details': False, 'pk': pk}
-#         return render(request, 'Pages/updatetask.html', context)
 
-#     def post(self, request, pk):
-#         cur_project = Project.objects.filter(Project_ID=pk)
-#         for project in cur_project:
-#             project.Project_Content = request.POST.get('taskcontent', None)
-#             project.save()
-#         null = False
-#         for p in cur_project:
-#             if not p.Project_Content:
-#                 null = True
-#         context = {'cur_Project': cur_project, 'null': null, 'pk': pk}
-#         return render(request, 'Pages/updatetask.html', context)
+@method_decorator(login_required(login_url='/login'), name='get')
+class ProjectDetail(View):
+    def get(self, request, pk):
+        if not request.user.is_Teacher:
+          raise PermissionDenied
+        cur_Project = Project.objects.get(id=pk)
+        Project_Name = cur_Project.Project_Name
+        Project_Content = cur_Project.Project_Content
+        tasks = Task.objects.filter(Project=cur_Project)
+        context = {'pk': pk, 'Project_Name': Project_Name,
+                   'Project_Content': Project_Content, 'tasks': tasks, }
+        return render(request, 'Pages/projectdetail.html', context)
+
+    def post(self, request, pk):
+        if request.is_ajax:
+            if request.POST['action'] == 'edit_pname':
+                new_name = request.POST['new_name']
+                t = Project.objects.get(id=pk)
+                t.Project_Name = new_name
+                t.save()
+                if t.Project_Name == new_name:
+                    print('doi ten thanh cong')
+                    return JsonResponse({"message": 'success'})
+            elif request.POST['action'] == 'add_task':
+                taskname = request.POST['taskname']
+                taskdesc = request.POST['taskdesc']
+                priority = request.POST['priority']
+                deadline = request.POST['deadline']
+                t = Project.objects.get(id=pk)
+                task = Task(taskName=taskname,
+                         taskDesc=taskdesc,
+                         deadline=deadline,
+                         priority=priority,
+                         Project=Project.objects.get(id=pk))
+                task.save()
+                newtask = {
+                    "pname": t.Project_Name,
+                    "id": task.id,
+                    "taskName": task.taskName,
+                    "taskDesc": task.taskDesc,
+                    "priority": task.priority,
+                    "deadline": task.deadline,
+                    "complete": task.complete,
+                }
+                return JsonResponse(json.dumps(newtask), status=200, safe=False)
+            elif request.POST['action'] == 'del':
+                tpk = request.POST['pk']
+                p = Project.objects.get(id=pk)
+                task = Task.objects.get(id=int(tpk))
+                task.delete()
+                deltakresponse={
+                    'pname': p.Project_Name,
+                    "message": 'success'
+                }
+                return JsonResponse(json.dumps(deltakresponse), status=200, safe=False)
+            elif request.POST['action'] == 'edit_task':
+                pjid = request.POST['pjid']
+                taskid = request.POST['taskid']
+                taskname = request.POST['taskname']
+                taskdesc = request.POST['taskdesc']
+                taskprio = request.POST['taskprio']
+                taskdeadline = request.POST['taskdeadline']
+                cur_Project = Project.objects.get(id=pjid)
+                task = Task.objects.get(id=taskid)
+                task.taskName = taskname
+                task.taskDesc = taskdesc
+                task.priority = taskprio
+                task.deadline = taskdeadline
+                task.save()
+                taskobj={
+                    'taskid': taskid,
+                    'taskname': taskname,
+                    'taskdesc': taskdesc,
+                    'taskprio': taskprio,
+                    'taskdeadline': taskdeadline,
+                    'message': 'Đã thêm công việc',
+                }
+                return JsonResponse(json.dumps(taskobj), status=200, safe=False)
+
+        # cur_project = Project.objects.filter(id=pk)
+        # for project in cur_project:
+        #     project.Project_Content = request.POST.get('taskcontent', None)
+        #     project.save()
+        # null = False
+        # for p in cur_project:
+        #     if not p.Project_Content:
+        #         null = True
+        # context = {'cur_Project': cur_project, 'null': null, 'pk': pk}
+        # return render(request, 'Pages/updatetask.html', context)
 # endregion
 
 # region TeacherAssignment
@@ -217,16 +294,20 @@ class HomeIndex(View):
 class TeacherAssignment(View):
     # region get
     def get(self, request):
-        teacher, student, pjid = [], [], []
-        projects = Project.objects.all()
-        for user in User.objects.all():
-            if user.is_Teacher:
-                teacher.append(user)
-            elif not user.is_Teacher and not user.is_superuser and not user.is_Reviewer and not user.is_Manager:
-                student.append(user)
+        if not request.user.is_Manager:
+            raise PermissionDenied
+        else:
+            teacher, student, pjid = [], [], []
+            projects = Project.objects.all()
+            for user in User.objects.all():
+                if user.is_Teacher:
+                    teacher.append(user)
+                elif not user.is_Teacher and not user.is_superuser and not user.is_Reviewer and not user.is_Manager:
+                    student.append(user)
 
-        context = {'teacher': teacher, 'student': student, 'projects': projects}
-        return render(request, 'Pages/assignment.html', context)
+            context = {'teacher': teacher,
+                       'student': student, 'projects': projects}
+            return render(request, 'Pages/assignment.html', context)
     # endregion
 
     def post(self, request):
@@ -248,15 +329,19 @@ class TeacherAssignment(View):
                     Users = cur_Project.Users.all()
                     for user in Users:
                         if user.is_Teacher:
-                            teachn = user.get_full_name()
+                            tid = user.id
+                            tname = user.get_full_name()
                         elif not user.is_Teacher and not user.is_superuser and not user.is_Reviewer and not user.is_Manager:
+                            sid = user.id
                             sname = user.get_full_name()
-                    a = {
+                    newassignment={
                         "id": newrecord.id,
-                        "teacher": teachn,
-                        "student": sname
+                        "tid": tid,
+                        "sid": sid,
+                        "tname": tname,
+                        "sname": sname
                     }
-                    return JsonResponse(json.dumps(a), status=200, safe=False)
+                    return JsonResponse(json.dumps(newassignment), status=200, safe=False)
                 else:
                     print(assignment_form.errors)
                     return JsonResponse({"error": assignment_form.errors}, status=400)

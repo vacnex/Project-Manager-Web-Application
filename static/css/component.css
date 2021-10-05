@@ -42,7 +42,7 @@
 }  
 .fixed-img{
     background-image: url(https://raw.githubusercontent.com/vacnex/C--WPF-Client-Server-chat-application/main/WPFChatClientServer/Resource/cloud.png);
-    background-color: #F4F9FB!important;
+    background-color: #e9f3fe!important;
     height: 100%;
     width: 100%;
     position: fixed;

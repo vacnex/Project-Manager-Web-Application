@@ -68,7 +68,7 @@ class Task(models.Model):
     taskChhild = models.ForeignKey(
         'self', null=True, blank=True, on_delete=models.CASCADE)
     createdTaskDate = DateTimeField(auto_now_add=True)
-    editedTaskDate = DateTimeField(auto_now_add=True)
+    editedTaskDate = DateTimeField(auto_now=True)
     deadline = models.CharField(max_length=255, null=True)
     priority = models.CharField(max_length=255, null=True)
     complete = models.BooleanField(default=False)

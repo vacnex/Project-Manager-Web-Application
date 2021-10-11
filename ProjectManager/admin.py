@@ -46,7 +46,8 @@ class MySchoolClassAdmin (admin.ModelAdmin):
 
 class MyTaskAdmin (admin.ModelAdmin):
     model = Task
-    list_display = ('taskName','taskDesc','taskChhild','createdTaskDate','editedTaskDate','deadline','priority','complete')
+    list_display = ('taskName', 'taskDesc', 'parentTask', 'createdTaskDate',
+                    'editedTaskDate', 'deadline', 'priority', 'complete')
 
 admin.site.register(User, MyUserAdmin)
 admin.site.register(SchoolYear, MySchoolYearAdmin)

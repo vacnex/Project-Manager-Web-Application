@@ -64,8 +64,8 @@ class Project(models.Model):
 class Task(models.Model):
     taskName = models.CharField(max_length=255)
     Project = models.ForeignKey('Project', on_delete=models.CASCADE)
-    taskDesc = models.TextField()
-    taskChhild = models.ForeignKey(
+    taskDesc = models.TextField(null=True)
+    parentTask = models.ForeignKey(
         'self', null=True, blank=True, on_delete=models.CASCADE)
     createdTaskDate = DateTimeField(auto_now_add=True)
     editedTaskDate = DateTimeField(auto_now=True)
@@ -76,13 +76,14 @@ class Task(models.Model):
     def __str__(self):
         return self.taskName
     def daysleft(seft):
-      rawenddate = ((seft.deadline.strip().split('n')[1]).strip()).split('/')
-      today = datetime.date.today()
-      initenddate = datetime.date(int(rawenddate[2]), int(
-          rawenddate[1]), int(rawenddate[0]))
-      diff = today - initenddate
-      diff.days
-      return diff.days
+      if seft.deadline is not None:
+        rawenddate = ((seft.deadline.strip().split('n')[1]).strip()).split('/')
+        today = datetime.date.today()
+        initenddate = datetime.date(int(rawenddate[2]), int(
+            rawenddate[1]), int(rawenddate[0]))
+        diff = today - initenddate
+        diff.days
+        return diff.days
 
 
 class ProjectDiscus(models.Model):

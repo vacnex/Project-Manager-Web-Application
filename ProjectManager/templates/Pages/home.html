@@ -32,50 +32,54 @@ Home
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade w-100  mb-4" id="pills-sv" role="tabpanel" aria-labelledby="pills-sv-tab">
                             <div class="box-scroll p-xl-4 p-lg-4 p-md-3 p-sm-3 p-3 pt-4">
-                                {% for s in list_student_user%}
-                                <div class="box box-item scale-hover mb-4" onclick="">
-                                    <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
-                                        <div class="col-sm-2 mb-4 mb-md-0">
+                                {% for u in Users_list_Manager %}
+                                  {% if not u.is_Teacher %}
+                                      <div class="box box-item scale-hover mb-4" onclick="">
+                                        <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
+                                          <div class="col-sm-2 mb-4 mb-md-0">
                                             <div class="student-pic w-100 h-100 p-md-0 p-1">
                                             </div>
-                                        </div>
-                                        <div class="col-sm-10">
+                                          </div>
+                                          <div class="col-sm-10">
                                             <div class="desc-student content">
-                                                <h5 class="student-name">
-                                                    {{s.get_full_name}}
-                                                </h5>
-                                                <div class="student-infor">
-                                                    <p class="desc">Khoá: {{s.Class_id}}</p>
-                                                </div>
+                                              <h5 class="student-name">
+                                                {{u.get_full_name}}
+                                              </h5>
+                                              <div class="student-infor">
+                                                <p class="desc">Khoá: {{u.Class_id}}</p>
+                                              </div>
                                             </div>
+                                          </div>
                                         </div>
-                                    </div>
-                                </div>
-                                {%endfor%}
+                                      </div>
+                                  {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="tab-pane fade w-100 show active mb-4" id="pills-gv" role="tabpanel" aria-labelledby="pills-gv-tab">
                             <div class="box-scroll p-xl-4 p-lg-4 p-md-3 p-sm-3 p-3 pt-4">
-                                {% for t in list_teacher_user%}
-                                <div class="box box-item scale-hover mb-4" onclick="">
-                                    <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
-                                        <div class="col-sm-2 mb-4 mb-md-0">
+                                {% for u in Users_list_Manager%}
+                                  {% if u.is_Teacher%}
+                                      <div class="box box-item scale-hover mb-4" onclick="">
+                                        <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
+                                          <div class="col-sm-2 mb-4 mb-md-0">
                                             <div class="teacher-pic w-100 h-100 p-md-0 p-1">
                                             </div>
-                                        </div>
-                                        <div class="col-sm-10">
+                                          </div>
+                                          <div class="col-sm-10">
                                             <div class="desc-teacher content">
-                                                <h5 class="teacher-name">
-                                                    {{t.get_full_name}}
-                                                </h5>
-                                                <div class="teacher-infor">
-                                                    <p class="desc">thông tin giáo viên.</p>
-                                                </div>
+                                              <h5 class="teacher-name">
+                                                {{u.get_full_name}}
+                                              </h5>
+                                              <div class="teacher-infor">
+                                                <p class="desc">thông tin giáo viên.</p>
+                                              </div>
                                             </div>
+                                          </div>
                                         </div>
-                                    </div>
-                                </div>
-                                {%endfor%}
+                                      </div>
+                                  {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -91,14 +95,14 @@ Home
     <!-- #region Giáo viên -->
     {% elif user.is_Teacher %}
     <div class="box-l bg-color mx-xxl-5 mx-xl-4 mx-lg-4 mx-md-3 mx-2 p-3">
-        {% if Teacher_project_list%}
+        {% if Projects_list_of_Teacher%}
         <p class="title fs-2">Danh sách được phân công</p>
         <div class="mb-2 input-group box search-box">
             <label class="search-label">tìm kiếm</label>
             <input id="ProjectSearchBox" type="text" class="input-search" placeholder="nhập gì đó">
         </div>
         <div id="ListTeacherProject" class="c-item">
-            {%for p in Teacher_project_list%}
+            {%for p in Projects_list_of_Teacher%}
             <div id="{{p.id}}" class="box box-item bg-white me-5 p-3 scale-hover">
                 <a href="/projectdetail/{{ p.id }}/" class="text-decoration-none">
                     <p><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
@@ -133,7 +137,49 @@ Home
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ProjectRegister">Đăng kí đề tài</button>
     </div>
     {% else %}
-    {% if Is_Confirm%}
+    <div class="student-task-wrapper">
+      <div class="row pb-5">
+        <div class="col-12">
+          <ul class="box-scroll list-unstyled py-0 mb-0 p-xxl-0 p-md-4 p-3">
+            {% for st in Student_task %}
+              <li id={{ st.id }} class="box box-item position-relative scale-hover mt-4 mx-xxl-5 mx-xl-0 mx-sm-3 mx-4">
+                <a id='btn-tdel'
+                  class="btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim">
+                  <i class="fas fa-times"></i>
+                </a>
+                <div class="row p-xxl-2 p-3" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@edittask">
+                  <div class="col-sm-2 d-flex">
+                    <div id="tprio" class="box box-label w-100 h-100 p-2">
+                      {{st.priority}}
+                    </div>
+                  </div>
+                  <div class="col-sm-10 d-flex align-items-center">
+                    <div class="line mx-xxl-3 mx-xl-2 mx-lg-2 mx-md-2"></div>
+                    <div class="task-Content flex-fill ps-xxl-1 ps-3 mt-sm-0 mt-3">
+                      <h3 id="tname">{{st.taskName}}
+                      </h3>
+                      <p id="tdesc">{{st.taskDesc}}</p>
+                      <div class="row assignment-info">
+                        <div class="col-md-6">
+                          <div class="todoDate">{{st.deadline}}</div>
+                        </div>
+                        <div id="daysleft" class="col-md-6">
+                          NaN
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+              
+            
+          </ul>
+        </div>
+        
+      </div>
+    </div>
+    <!-- {% if Is_Confirm%}
     <div class="row mb-3">
         <div class="Process-list-content">
             <section class="Project-Manager-wrapper">
@@ -161,7 +207,7 @@ Home
     <div class="Waiting">
         <h1>Đang đợi Xác nhận</h1>
     </div>
-    {% endif %}
+    {% endif %} -->
     {% endif %}
     {% endif %}
     <!-- #endregion -->

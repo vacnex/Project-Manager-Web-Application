@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register, name='register'),
     path('home/', views.HomeIndex.as_view(), name='home'),
+    # path('api/updatetask/', views.HomeStudentGet, name='updatetask'),
     path('assignment/', views.TeacherAssignment.as_view(), name='assignment'),
     # path('confirm/<slug:pk>/',
     #      views.ConfirmProject.as_view(), name='ConfirmProject'),

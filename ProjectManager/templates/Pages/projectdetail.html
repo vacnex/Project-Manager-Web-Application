@@ -45,6 +45,9 @@ Cập Nhật Công Việc
           <div class="btn btn-custom scale-hover px-xxl-1 px-xl-2 px-lg-0 px-md-5 px-4" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@addtask">
             <span>+</span> Thêm công việc
           </div>
+          <div class="btn btn-custom new-task">
+            <span>+</span>Thêm công việc 2
+          </div>
         </form>
       </div>
       {% endif %}
@@ -73,8 +76,8 @@ Cập Nhật Công Việc
             {%endfor%} -->
   <div class="task-wrapper">
     <div class="row pb-5">
-      <div class="col-lg-7 mb-lg-0 mb-4 task_list">
-        {% if not tasks %}
+      <div class="col mb-lg-0 mb-4 task_list">
+        {% if not parentTask %}
         <div class="d-flex justify-content-center">
           <div class="box px-4 py-5 mx-xxl-5 mx-lg-4 mx-md-0 mx-3 text-center emptylist">
             <h1 class="display-5 fw-bold">Danh sách công việc trống</h1>
@@ -82,13 +85,21 @@ Cập Nhật Công Việc
             <div class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@addtask">
               <span>+</span>Thêm công việc
             </div>
+            <div class="btn btn-custom new-task" >
+              <span>+</span>Thêm công việc 2
+            </div>
           </div>
         </div>
         {% else %}
         <ul class="box-scroll list-unstyled py-0 mb-0 p-xxl-0 p-md-4 p-3">
-          {% for task in tasks %}
+          {% for task in parentTask reversed %}
           <li id={{task.id}} class="box box-item position-relative scale-hover mt-4 mx-xxl-5 mx-xl-0 mx-sm-3 mx-4">
-            <a id='btn-tdel' class="btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim">
+            <!-- <a id='btn-tedit'
+                                    class="btn btn-info btn-circle btn-circle-icon position-absolute top-0 translate-middle btn-anim" style="left:97%"> 
+                                    <i class="fas fa-pen"></i>
+                                  </a> -->
+            <a id='btn-tdel'
+              class="btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim">
               <i class="fas fa-times"></i>
             </a>
             <div class="row p-xxl-2 p-3" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@edittask">
@@ -118,13 +129,6 @@ Cập Nhật Công Việc
           {% endfor %}
         </ul>
         {%endif%}
-      </div>
-      <div class="col-lg-5">
-        <div class="d-flex align-items-stretch h-100">
-          <div class="box px-4 py-5 mx-xxl-5 mx-lg-4 mx-3 flex-fill">
-            chat box
-          </div>
-        </div>
       </div>
     </div>
     
@@ -183,42 +187,81 @@ Cập Nhật Công Việc
     <div class="modal fade" id="TaskModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="AddTaskLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg modal-fullscreen-lg-down ">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="TaskModalTitle"></h5>
+                <div class="d-flex p-3 align-items-center">
+                  <i class="fas fa-edit"></i>
+                  <input id="taskname" class="form-control input-custom input-no-focus fs-3" name="tname"/>
+                    <!-- <h5 class="modal-title" id="TaskModalTitle"></h5> -->
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div id="TaskControl">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="taskname" placeholder="" required>
-                            <label id="tasknamelabel" for="taskname"></label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <textarea class="form-control" placeholder="" id="taskdesc" style="height: 100px"></textarea>
-                            <label id="taskdesclabel" for="taskdesc"></label>
-                        </div>
-                        <p>Mức độ ưu tiên</p>
-                        <div class="d-flex prio-sel justify-content-center align-content-center mb-3">
-                            <div class="btn-group" role="group" >
-                                <input type="radio" class="btn-check" name="prio" value="Rất cao" id="veryhighprio" autocomplete="off">
-                                <label class="btn btn-outline-primary" name="prio" for="veryhighprio">Rất cao</label>
-                                <input type="radio" class="btn-check"  name="prio" value="Cao" id="highprio" autocomplete="off">
-                                <label class="btn btn-outline-primary" name="prio" for="highprio">Cao</label>
-                                <input type="radio" class="btn-check" name="prio" value="Vừa" id="medprio" autocomplete="off" >
-                                <label class="btn btn-outline-primary" name="prio" for="medprio">Vừa</label>
-                                <input type="radio" class="btn-check" name="prio" value="Thấp" id="lowprio" autocomplete="off">
-                                <label class="btn btn-outline-primary" name="prio" for="lowprio">Thấp</label>
+                <div class="modal-body row">
+                    <div id="TaskControl" class="col-9">
+                        <div class="desc mb-3">
+                          <div class="mb-1">
+                              <i class="fas fa-info me-2"></i>
+                              Mô tả
+                          </div>
+                          <div class="p-3">
+                            <div class="form-floating mb-3">
+                              <textarea class="form-control" placeholder="" id="taskdesc" style="height: 100px"></textarea>
+                              <label class="" id="taskdesclabel" for="taskdesc"></label>
                             </div>
+                          </div>
                         </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" >Ngày bắt đầu và kết thúc</span>
+                        <div class="child-wrap mb-3">
+                          <!-- <div class="child-task mb-3">
+                            <div class="mb-2 d-flex">
+                              <div class="d-flex align-items-center flex-grow-1">
+                                <i class="fas fa-tasks me-2"></i>
+                                <input id="taskchildname" class="form-control input-custom" name="taskchildname" oninput="editChildTask(this)"/>
+                              </div>
+                              <div id="del-child-task" class="btn btn-danger mx-3">Xoá công việc phụ</div>
+                            </div>
+                            <ul class="ps-0 child-item">
+                              <li class="box-s input-group mb-3 ">
+                                <div class="d-flex align-items-center p-2">
+                                  <input class="form-check-input mt-0" type="checkbox" value="">
+                                </div>
+                                <input type="text" class="form-control input-custom">
+                                <div id="del-child-task-item" class="btn"><i class="p-1 fas fa-times"></i></div>
+                              </li>
+                            </ul>
+                            <div id="add-child-task-item" class="btn btn-primary">thêm mục</div>
+                          </div> -->
+                        </div>
+                        <div class="prio">
+                          <div class="mb-1">
+                            <i class="fas fa-level-up-alt me-2"></i>
+                            Mức độ ưu tiên
+                          </div>
+                          <div class="d-flex prio-sel justify-content-center align-content-center mb-3">
+                            <div class="btn-group" role="group">
+                              <input type="radio" class="btn-check" name="prio" value="Rất cao" id="veryhighprio" autocomplete="off">
+                              <label class="btn btn-outline-primary" name="prio" for="veryhighprio">Rất cao</label>
+                              <input type="radio" class="btn-check" name="prio" value="Cao" id="highprio" autocomplete="off">
+                              <label class="btn btn-outline-primary" name="prio" for="highprio">Cao</label>
+                              <input type="radio" class="btn-check" name="prio" value="Vừa" id="medprio" autocomplete="off">
+                              <label class="btn btn-outline-primary" name="prio" for="medprio">Vừa</label>
+                              <input type="radio" class="btn-check" name="prio" value="Thấp" id="lowprio" autocomplete="off">
+                              <label class="btn btn-outline-primary" name="prio" for="lowprio">Thấp</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="deadline p-3">
+                          <div class="input-group mb-3">
+                            <span class="input-group-text">Thời hạn</span>
                             <input id="deadline" name="dates" type="text" class="form-control" aria-describedby="date-sel" required>
+                          </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button id="" type="button" class="btn-TaskModalSubmit btn btn-primary mt-3 btn-lg">Thêm</button>
+                    <div class="col-3">
+                      <div id="add-child-task" class="btn btn-primary">Thêm task phụ</div>
+                      
                     </div>
+                    
                 </div>
+                <!-- <div class="modal-footer">
+                  <button id="" type="button" class="btn-TaskModalSubmit btn btn-primary mt-3 btn-lg">Thêm</button>
+                </div> -->
             </div>
         </div>
     </div>

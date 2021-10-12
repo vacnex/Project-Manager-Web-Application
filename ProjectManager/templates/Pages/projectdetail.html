@@ -19,7 +19,7 @@ Cập Nhật Công Việc
 <div id="projecttask-content" class="pt-4">
   <div class="box mx-xxl-5 mx-lg-4 mx-3 p-3 mb-4 task-header">
     <div class="row">
-      {% if not tasks %}
+      {% if not mainTasks %}
       <div class="col-12">
         <form id="changeProjectNameForm" name="changeProjectNameForm" method="post" action=".">
           {% csrf_token %}
@@ -42,11 +42,11 @@ Cập Nhật Công Việc
           {% csrf_token %}
           <input id="taskcontent" type="hidden" name="taskcontent" value="" />
           <input id="pjid" type="hidden" name="pjid" value="{{pk}}" />
-          <div class="btn btn-custom scale-hover px-xxl-1 px-xl-2 px-lg-0 px-md-5 px-4" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@addtask">
+          <!-- <div class="btn btn-custom scale-hover px-xxl-1 px-xl-2 px-lg-0 px-md-5 px-4" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@addtask">
             <span>+</span> Thêm công việc
-          </div>
-          <div class="btn btn-custom new-task">
-            <span>+</span>Thêm công việc 2
+          </div> -->
+          <div id="AddNewMainTask" class="btn btn-custom">
+            <span>+</span>Thêm công việc
           </div>
         </form>
       </div>
@@ -77,22 +77,22 @@ Cập Nhật Công Việc
   <div class="task-wrapper">
     <div class="row pb-5">
       <div class="col mb-lg-0 mb-4 task_list">
-        {% if not parentTask %}
+        {% if not mainTasks %}
         <div class="d-flex justify-content-center">
           <div class="box px-4 py-5 mx-xxl-5 mx-lg-4 mx-md-0 mx-3 text-center emptylist">
             <h1 class="display-5 fw-bold">Danh sách công việc trống</h1>
             <p class="lead mb-4">Hãy nhấn thêm công việc để tạo danh sách công việc.</p>
-            <div class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@addtask">
+            <!-- <div class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@addtask">
               <span>+</span>Thêm công việc
-            </div>
-            <div class="btn btn-custom new-task" >
-              <span>+</span>Thêm công việc 2
+            </div> -->
+            <div id="AddNewMainTask" class="btn btn-custom new-task" >
+              <span>+</span>Thêm công việc
             </div>
           </div>
         </div>
         {% else %}
         <ul class="box-scroll list-unstyled py-0 mb-0 p-xxl-0 p-md-4 p-3">
-          {% for task in parentTask reversed %}
+          {% for task in mainTasks reversed %}
           <li id={{task.id}} class="box box-item position-relative scale-hover mt-4 mx-xxl-5 mx-xl-0 mx-sm-3 mx-4">
             <!-- <a id='btn-tedit'
                                     class="btn btn-info btn-circle btn-circle-icon position-absolute top-0 translate-middle btn-anim" style="left:97%"> 
@@ -116,7 +116,7 @@ Cập Nhật Công Việc
                   <p id="tdesc">{{task.taskDesc}}</p>
                   <div class="row assignment-info">
                     <div class="col-md-6">
-                      <div class="todoDate">{{ task.deadline}}</div>
+                      <div id="tdeadline" class="todoDate">{{ task.deadline}}</div>
                     </div>
                     <div id="daysleft" class="col-md-6">
                       {{ task.daysleft }}
@@ -249,8 +249,12 @@ Cập Nhật Công Việc
                         <div class="deadline p-3">
                           <div class="input-group mb-3">
                             <span class="input-group-text">Thời hạn</span>
-                            <input id="deadline" name="dates" type="text" class="form-control" aria-describedby="date-sel" required>
+                            <input id="deadline" name="dates" type="text" class="form-control" aria-describedby="date-sel" required readonly>
                           </div>
+                          <div class="mb-input-group">
+<input class="d-none" type="date" name="test" id="">
+                          </div>
+                          
                         </div>
                     </div>
                     <div class="col-3">

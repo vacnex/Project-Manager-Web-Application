@@ -72,7 +72,7 @@ class Task(models.Model):
     deadline = models.CharField(max_length=255, null=True)
     priority = models.CharField(max_length=255, null=True)
     complete = models.BooleanField(default=False)
-
+    tempComplete = models.BooleanField(default=False)
     def __str__(self):
         return self.taskName
     def daysleft(seft):
@@ -81,7 +81,7 @@ class Task(models.Model):
         today = datetime.date.today()
         initenddate = datetime.date(int(rawenddate[2]), int(
             rawenddate[1]), int(rawenddate[0]))
-        diff = today - initenddate
+        diff = initenddate -  today
         diff.days
         return diff.days
 

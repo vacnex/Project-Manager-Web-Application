@@ -73,6 +73,21 @@ $(document).ready(function () {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
     });
   });
+  $(document).on('click', '#year-list > li', function () {
+    var year = $(this).attr('data-filtertarget');
+    $("#ListTeacherProject").slick('slickUnfilter');
+    $('.year').each(function (index, element) {
+      if (year == $(this).text()) {
+        $("#ListTeacherProject").slick('slickFilter', function () {
+          return $(this).find('.year').text() == year;
+        })
+      }
+      if (year == 'all') {
+        $("#ListTeacherProject").slick('slickUnfilter')
+      }
+    });
+    $(this).toggleClass('choosed').siblings().removeClass('choosed');
+  });
   /* #endregion */
   /* #region  Manager View */
   $(document).on('click', '#pills-gv-tab', function () {

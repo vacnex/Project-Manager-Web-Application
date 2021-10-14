@@ -29,20 +29,5 @@ $(document).ready(function () {
         $('#year-list').prepend('<li tabindex="0" id="allyear" class="dropdown-custom-item rounded choosed mb-1" data-filtertarget="ALL"><a class="dropdown-link">Tất cả</a></li>');
     }
 
-    $(document).on('click', '#allyear', function () {
-        let target = $(this).attr('data-filtertarget');
-        let year = $(this).text();
-        $('.list-content').slick('slickUnfilter');
-        if (target != 'ALL') {
-            $('.list-content').slick('slickFilter', `#${target}`);
-            $('.t-tittle h4').html(`Danh Sách Đề Tài Khoá ${year}`);
-            $('#allyear').removeClass('choosed');
-            $(this).toggleClass('choosed');
-        } else {
-            $('#allyear').removeClass('choosed');
-            $(this).toggleClass('choosed');
-            $('.t-tittle h4').html('Danh Sách Đề Tài');
-        }
-    });
-    $('#ConfirmProjectForm #id_Project_Name, #ConfirmProjectForm #id_Type, #ConfirmProjectForm #id_schoolYear, #ConfirmProjectForm #id_description').attr('disabled', 'disabled');
+
 });

@@ -114,30 +114,34 @@
                         Dashboard
                       </a>
                     </li>
+                    
+                    {% if not ProjectView%}
                       <div class="mb-2 box-dropdown box scale-hover">
-                          <a class="btn btn-dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#year-collapse" aria-expanded="true">Khoá</a>
-                          <div class="collapse show" id="year-collapse">
-                              <ul id="year-list" class="list-unstyled p-2">
-                                  {%if Teacher_project_list%}
-                                  {%for p in Teacher_project_list%}
-                                  <li tabindex="0" class="dropdown-custom-item rounded mb-1" data-filtertarget="{{p.schoolYear}}">
-                                      <a class="dropdown-link">
-                                          <span style="width:30px">
-                                              <i class="icon fas fa-graduation-cap fa-fw"></i>
-                                          </span>{{p.schoolYear}}
-                                      </a>
-                                  </li>
-                                  {%endfor%}
-                                  {% else %}
-                                  <li tabindex="0" class="dropdown-custom-item rounded mb-1" data-filtertarget="">
-                                      <a class="dropdown-link">
-                                          Trống
-                                      </a>
-                                  </li>
-                                  {% endif %}
-                              </ul>
-                          </div>
+                        <a class="btn btn-dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#year-collapse"
+                          aria-expanded="true">Khoá</a>
+                        <div class="collapse show" id="year-collapse">
+                          <ul id="year-list" class="list-unstyled p-2">
+                            {%if Projects_list_of_Teacher%}
+                            {%for p in Projects_list_of_Teacher%}
+                            <li tabindex="0" class="dropdown-custom-item rounded mb-1" data-filtertarget="{{p.schoolYear}}">
+                              <a class="dropdown-link">
+                                <span style="width:30px">
+                                  <i class="icon fas fa-graduation-cap fa-fw"></i>
+                                </span>{{p.schoolYear}}
+                              </a>
+                            </li>
+                            {%endfor%}
+                            {% else %}
+                            <li tabindex="0" class="dropdown-custom-item rounded mb-1" data-filtertarget="">
+                              <a class="dropdown-link">
+                                Trống
+                              </a>
+                            </li>
+                            {% endif %}
+                          </ul>
+                        </div>
                       </div>
+                    {% endif %}
                     {%endif%}
                 </ul>
                 <hr>

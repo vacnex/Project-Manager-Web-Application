@@ -45,12 +45,12 @@ def index(request):
                         if request.user.is_superuser:
                             return HttpResponseRedirect(reverse('admin:index'))
                         if next_url:
-                          if next_url == "/assignment/" and request.user.is_Manager:
-                            return HttpResponseRedirect(next_url)
-                          elif "projectdetail" in next_url and request.user.is_Teacher:
-                            return HttpResponseRedirect(next_url)
-                          else:
-                            return redirect('home')
+                            if next_url == "/assignment/" and request.user.is_Manager:
+                                return HttpResponseRedirect(next_url)
+                            elif "projectdetail" in next_url and request.user.is_Teacher:
+                                return HttpResponseRedirect(next_url)
+                            else:
+                                return redirect('home')
                         else:
                             return redirect('home')
             else:
@@ -72,144 +72,25 @@ class HomeIndex(View):
         if request.user.is_superuser:
             return HttpResponseRedirect(reverse('admin:index'))
         if request.user.is_Manager:
-            Users_list_Manager = User.objects.filter(is_Manager=False,is_superuser=False)
+            Users_list_Manager = User.objects.filter(
+                is_Manager=False, is_superuser=False)
         elif request.user.is_Reviewer:
             pass
         elif request.user.is_Teacher:
             Projects_list_of_Teacher = cur_Project
         else:
-          StudentProject = Project.objects.get(Users=request.user)
-          
-          if len(cur_Project) > 0:
-            Student_task = Task.objects.filter(Project=Project.objects.get(
-                Users=request.user))
-            print("HomeView",Student_task)
-              # "Bạn chưa được phân giáo viên hướng dẫn!! hãy liên lạc giáo viên quản lý để phân giáo viên."
-                # register_form = ProjectRegistersForm()
-            # else:
-            #     for project in cur_Project:
-            #         studenttask = project.Project_Content.replace(
-            #             '<div class="deleteX"></div>', '')
-            #         if project.Is_Confirm:
-            #             Is_Confirm = True
-            #             student_project_data.append(project.Project_ID)
-            #             student_project_data.append(project.Project_Name)
-            #             student_project_data.append(studenttask)
+            StudentProject = Project.objects.get(Users=request.user)
+
+            if len(cur_Project) > 0:
+                Student_task = Task.objects.filter(Project=Project.objects.get(
+                    Users=request.user))
+                print("HomeView", Student_task)
         context = {'Users_list_Manager': Users_list_Manager,
-                   'Projects_list_of_Teacher': Projects_list_of_Teacher, 'Student_task': Student_task}
+                  'Projects_list_of_Teacher': Projects_list_of_Teacher, 'Student_task': Student_task}
         return TemplateResponse(request, 'Pages/home.html', context)
-
-#region POST request
-    # def post(self, request):
-    #     Is_Confirm, teacher_id, register_form = None, None, None
-    #     student_project_data = []
-    #     if request.POST.get('teacher', None) != None:
-    #         teacher = User.objects.filter(
-    #             username=request.POST.get('teacher', None))
-    #         for t in teacher:
-    #             teacher_id = t.id
-    #         register_form = ProjectRegistersForm(request.POST)
-    #         if register_form.is_valid():
-    #             obj = register_form.save()
-    #             obj.Users.add(request.user)
-    #             obj.Users.add(teacher_id)
-    #             obj.save()
-    #         else:
-    #             print(register_form.errors)
-    #     elif request.POST.get('pjid', None) != None:
-    #         cur_project = Project.objects.filter(
-    #             Project_ID=request.POST.get('pjid', None))
-    #         for project in cur_project:
-    #             project.Project_Content = request.POST.get('taskcontent', None)
-    #             project.save()
-    #             Is_Confirm = True
-    #             student_project_data.append(project.Project_ID)
-    #             student_project_data.append(project.Project_Name)
-    #             student_project_data.append(project.Project_Content)
-
-    #     context = {'register_form': register_form, 'Is_Confirm': Is_Confirm,
-    #                'student_project_data': student_project_data}
-    #     return render(request, 'Pages/home.html', context)
-# endregion
 # endregion
 
-# def HomeStudentGet(request):
-#   if request.user.is_Manager:
-#     return JsonResponse('Manager', safe=False)
-#   elif request.user.is_Teacher:
-#     return JsonResponse('Teacher', safe=False)
-#   elif request.user.is_Reviewer:
-#     return JsonResponse('Reviewer', safe=False)
-#   else:
-#     Student_task = Task.objects.filter(
-#         Project=Project.objects.get(Users=request.user)).order_by('-createdTaskDate')[:1]
-#     a = serializers.serialize('json', Student_task)
-#     print(a)
-#     # task = {
-#     #   "id": Student_task.id,
-#     #   "taskName": Student_task.taskName,
-#     #   "taskDesc": Student_task.taskDesc,
-#     #   "priority": Student_task.priority,
-#     #   "deadline": Student_task.deadline,
-#     #   "complete": Student_task.complete,
-#     #   }
-#     return JsonResponse(a, status=200, safe=False)
 
-# region confirm
-# @method_decorator(login_required(login_url='/login'), name='get')
-# class ConfirmProject(View):
-#     def get(self, request, pk):
-#         confirm_form, Project_Name, Type, schoolYear, description, Is_Confirm = None, None, None, None, None, None
-#         teacher, username, fullname = [], [], []
-#         unconfirm_project_list_by_id = Project.objects.filter(
-#             id=pk)
-#         all_users = User.objects.all()
-#         for user in all_users:
-#             if user.is_Teacher:
-#                 teacher.append(user)
-#         for p in unconfirm_project_list_by_id:
-#             Project_Name = p.Project_Name
-#             Type = p.Type
-#             schoolYear = p.schoolYear
-#             description = p.description
-#             Is_Confirm = p.Is_Confirm
-#             username = [u.username for u in p.Users.all()]
-#             fullname = [u for u in p.Users.all()]
-#         confirm_form = ConfirmProjectForm(initial={'Project_ID': pk, 'Project_Name': Project_Name, 'Type': Type, 'schoolYear': schoolYear, 'description': description, 'Is_Confirm': Is_Confirm})
-#         context = {'projectid': pk,
-#                    'unconfirm_project_list_by_id': unconfirm_project_list_by_id, 'teacher': teacher, 'confirm_form': confirm_form, 'student_username': username, 'fullname': fullname}
-#         return render(request, 'Pages/confirmproject.html', context)
-
-#     def post(self, request, pk):
-#         confirm_form, cur_student = None, None
-#         cur_Project = Project.objects.get(pk=pk)
-#         reviewer = User.objects.filter(
-#             username=request.POST.get('reviewer', None))
-#         teacher = User.objects.filter(
-#             username=request.POST.get('teacher', None))
-#         Is_Confirm = True if request.POST.get(
-#             'Is_Confirm', None) == "on" else False
-#         username_student = [
-#             p.username for p in cur_Project.Users.all() if not p.is_Teacher]
-#         cur_student = User.objects.filter(username=username_student[0])
-#         if request.method == "POST":
-#             data = {
-#                 'Project_Name': cur_Project.Project_Name,
-#                 'Type': cur_Project.Type,
-#                 'schoolYear': cur_Project.schoolYear,
-#                 'Users': teacher | reviewer | cur_student,
-#                 'Is_Confirm': Is_Confirm
-#             }
-#             confirm_form = ConfirmProjectForm(
-#                 data, instance=cur_Project)
-#             if confirm_form.is_valid():
-#                 confirm_form.save()
-#                 return redirect('home')
-#         else:
-#             confirm_form = ConfirmProjectForm()
-
-#         return render(request, 'Pages/confirmproject.html', {'confirm_form': confirm_form})
-# endregion
 
 # region ProjectDetail
 
@@ -218,171 +99,164 @@ class HomeIndex(View):
 class ProjectDetail(View):
     def get(self, request, pk):
         if not request.user.is_Teacher:
-          raise PermissionDenied
+            raise PermissionDenied
         cur_Project = Project.objects.get(id=pk)
         Project_Name = cur_Project.Project_Name
-        Project_Content = cur_Project.Project_Content
         mainTasks = Task.objects.filter(Project=cur_Project, parentTask=None)
         if request.is_ajax:
-          if request.method == 'GET' and 'action' in request.GET:
-            if request.GET['action'] == 'GET_CHILD_TASK_DATA':
-              parenttaskid = request.GET['parenttaskid']
-              childTasks = Task.objects.filter(parentTask=parenttaskid)
-              childTasks = serializers.serialize('json', childTasks)
-              return JsonResponse(childTasks, status=200, safe=False)
-            if request.GET['action'] == 'GET_CHILD_TASK_ITEM_DATA':
-              childTasksItem = Task.objects.filter(
-                  parentTask=request.GET['parenttaskitemid'])
-              childTasks = serializers.serialize('json', childTasksItem)
-              # print(childTasksItem)
-              return JsonResponse(childTasks, status=200, safe=False)
+            if request.method == 'GET' and 'action' in request.GET:
+                if request.GET['action'] == 'GET_CHILD_TASK_DATA':
+                    parenttaskid = request.GET['parenttaskid']
+                    childTasks = Task.objects.filter(parentTask=parenttaskid)
+                    childTasks = serializers.serialize('json', childTasks)
+                    return JsonResponse(childTasks, status=200, safe=False)
+                if request.GET['action'] == 'GET_CHILD_TASK_ITEM_DATA':
+                    childTasksItem = Task.objects.filter(
+                        parentTask=request.GET['parenttaskitemid'])
+                    childTasks = serializers.serialize('json', childTasksItem)
+                    return JsonResponse(childTasks, status=200, safe=False)
         context = {'pk': pk, 'Project_Name': Project_Name,
-                   'Project_Content': Project_Content, 'mainTasks': mainTasks, }
+                   'ProjectView': True, 'mainTasks': mainTasks, }
         return render(request, 'Pages/projectdetail.html', context)
 
     def post(self, request, pk):
         if request.is_ajax:
+            # region Sửa tên project
             if request.POST['action'] == 'EDIT_PROJECT_NAME':
-                new_name = request.POST['new_name']
+                newPName = request.POST['newPName']
                 t = Project.objects.get(id=pk)
-                t.Project_Name = new_name
+                t.Project_Name = newPName
                 t.save()
-                if t.Project_Name == new_name:
+                if t.Project_Name == newPName:
                     print('doi ten thanh cong')
                     return JsonResponse({"message": 'success'})
-            elif request.POST['action'] == 'ADD_NEW_MAIN_TASK':
-              taskname = request.POST['taskname']
-              t = Project.objects.get(id=pk)
-              task = Task(taskName=taskname,
-                          Project=Project.objects.get(id=pk))
-              task.save()
-              return JsonResponse({"message": 'addtask success'})
-            # elif request.POST['action'] == 'add_task':
-            #     taskname = request.POST['taskname']
-            #     taskdesc = request.POST['taskdesc']
-            #     priority = request.POST['priority']
-            #     deadline = request.POST['deadline']
-            #     t = Project.objects.get(id=pk)
-            #     task = Task(taskName=taskname,
-            #              taskDesc=taskdesc,
-            #              deadline=deadline,
-            #              priority=priority,
-            #              Project=Project.objects.get(id=pk))
-            #     task.save()
-            #     newtask = {
-            #         "pname": t.Project_Name,
-            #         "id": task.id,
-            #         "taskName": task.taskName,
-            #         "taskDesc": task.taskDesc,
-            #         "priority": task.priority,
-            #         "deadline": task.deadline,
-            #         "complete": task.complete,
-            #     }
-            #     return JsonResponse(json.dumps(newtask), status=200, safe=False)
-            elif request.POST['action'] == 'DELETE_MAIN_TASK':
-                tpk = request.POST['pk']
+            # endregion
+            # region thêm hoặc sửa tên task chính
+            elif request.POST['action'] == 'ADD_EDIT_MAIN_TASK_NAME':
                 p = Project.objects.get(id=pk)
-                task = Task.objects.get(id=int(tpk))
+                if request.POST['mainTaskId'] == 'null' and request.POST['mainTaskName']:
+                    task = Task(
+                        taskName=request.POST['mainTaskName'], Project=p)
+                    task.save()
+                    taskObj = {
+                        'mainTaskId': task.id,
+                        'message': 'A'
+                    }
+                    return JsonResponse(json.dumps(taskObj), status=200, safe=False)
+                if request.POST['mainTaskId'] and request.POST['mainTaskName']:
+                    task = Task.objects.get(id=request.POST['mainTaskId'])
+                    task.taskName = request.POST['mainTaskName']
+                    task.save()
+                    taskObj = {
+                        'message': 'E'
+                    }
+                    return JsonResponse(json.dumps(taskObj), status=200, safe=False)
+            # endregion
+            # region xoá task chính
+            elif request.POST['action'] == 'DELETE_MAIN_TASK':
+                currentTaskID = request.POST['currentTaskID']
+                p = Project.objects.get(id=pk)
+                task = Task.objects.get(id=int(currentTaskID))
                 task.delete()
-                deltakresponse={
+                deltakresponse = {
                     'pname': p.Project_Name,
                     "message": 'success'
                 }
                 return JsonResponse(json.dumps(deltakresponse), status=200, safe=False)
-            # elif request.POST['action'] == 'edit_task':
-            #     pjid = request.POST['pjid']
-            #     taskid = request.POST['taskid']
-            #     taskname = request.POST['taskname']
-            #     taskdesc = request.POST['taskdesc']
-            #     taskprio = request.POST['taskprio']
-            #     taskdeadline = request.POST['taskdeadline']
-            #     cur_Project = Project.objects.get(id=pjid)
-            #     task = Task.objects.get(id=taskid)
-            #     task.taskName = taskname
-            #     task.taskDesc = taskdesc
-            #     task.priority = taskprio
-            #     task.deadline = taskdeadline
-            #     task.save()
-            #     taskobj={
-            #         'taskid': taskid,
-            #         'taskname': taskname,
-            #         'taskdesc': taskdesc,
-            #         'taskprio': taskprio,
-            #         'taskdeadline': taskdeadline,
-            #         'message': 'Đã thêm công việc',
-            #     }
-            #     return JsonResponse(json.dumps(taskobj), status=200, safe=False)
-            elif request.POST['action'] == 'ADD_CHILD_TASK':
-              p = Project.objects.get(id=pk)
-              childtask = Task(taskName=request.POST['childtaskname'],
-                          Project=Project.objects.get(id=pk))
-              childtask.save()
-              parentTask = Task.objects.get(id=request.POST['parenttaskid'])
-              childtask.parentTask = parentTask
-              childtask.save()
-              childtaskobj={
-                  'childtaskid': childtask.id,
-                  'message': 'addchildtask success'
-                }
-              return JsonResponse(json.dumps(childtaskobj), status=200, safe=False)
-            elif request.POST['action'] == 'ADD_CHILD_TASK_ITEM':
-              childtask = Task(taskName=request.POST['childtaskitemname'],
-                               Project=Project.objects.get(id=pk))
-              childtask.save()
-              parenttask = Task(id=request.POST['parenttaskid'])
-              childtask.parentTask = parenttask
-              childtask.save()
-              return JsonResponse({"message": 'addchildtaskitem success'})
-            elif request.POST['action'] == 'EDIT_MAIN_TASK_NAME':
-              mainTaskId = request.POST['mainTaskId']
-              mainTaskName = request.POST['mainTaskName']
-              task = Task.objects.get(id=mainTaskId)
-              task.taskName = mainTaskName
-              task.save()
-              return JsonResponse({"message": 'success'}, status=200, safe=False)
+            # endregion
+            # region thêm hoặc sửa task child
+            elif request.POST['action'] == 'ADD_EDIT_CHILD_TASK':
+                p = Project.objects.get(id=pk)
+                if request.POST['mainTaskId'] and request.POST['childTaskId'] == 'null' and request.POST['childTaskName']:
+                    childtask = Task(
+                        taskName=request.POST['childTaskName'], Project=p)
+                    childtask.save()
+                    parentTask = Task.objects.get(
+                        id=request.POST['mainTaskId'])
+                    childtask.parentTask = parentTask
+                    childtask.save()
+                    childTaskobj = {
+                        'childtaskid': childtask.id,
+                        'message': 'A'
+                    }
+                    return JsonResponse(json.dumps(childTaskobj), status=200, safe=False)
+                if request.POST['mainTaskId'] and request.POST['childTaskId'] and request.POST['childTaskName']:
+                    childTaskId = request.POST['childTaskId']
+                    childTaskName = request.POST['childTaskName']
+                    task = Task.objects.get(id=childTaskId)
+                    task.taskName = childTaskName
+                    task.save()
+                    childTaskobj = {
+                        'message': 'E'
+                    }
+                    return JsonResponse(json.dumps(childTaskobj), status=200, safe=False)
+            # endregion
+            # region thêm hoặc sửa task child item
+            elif request.POST['action'] == 'ADD_EDIT_CHILD_TASK_ITEM':
+                p = Project.objects.get(id=pk)
+                if request.POST['childTaskId'] and request.POST['childTaskItemId'] == 'null' and request.POST['childTaskItemName']:
+                    childTaskItem = Task(
+                        taskName=request.POST['childTaskItemName'], Project=p)
+                    childTaskItem.save()
+                    parentTask = Task.objects.get(
+                        id=request.POST['childTaskId'])
+                    childTaskItem.parentTask = parentTask
+                    childTaskItem.save()
+                    childTaskItemobj = {
+                        'childTaskItemId': childTaskItem.id,
+                        'message': 'A'
+                    }
+                    return JsonResponse(json.dumps(childTaskItemobj), status=200, safe=False)
+                if request.POST['childTaskId'] and request.POST['childTaskItemId'] and request.POST['childTaskItemName']:
+                    childTaskItemId = request.POST['childTaskItemId']
+                    childTaskItemName = request.POST['childTaskItemName']
+                    task = Task.objects.get(id=childTaskItemId)
+                    task.taskName = childTaskItemName
+                    task.save()
+                    childTaskItemobj = {
+                        'message': 'E'
+                    }
+                    return JsonResponse(json.dumps(childTaskItemobj), status=200, safe=False)
+            # endregion
+            # region sửa mô tả task chính
             elif request.POST['action'] == 'EDIT_MAIN_TASK_DESC':
-              mainTaskId = request.POST['mainTaskId']
-              mainTaskDesc = request.POST['mainTaskDesc']
-              task = Task.objects.get(id=mainTaskId)
-              task.taskDesc = mainTaskDesc
-              task.save()
-              return JsonResponse({"message": 'success'}, status=200, safe=False)
+                mainTaskId = request.POST['mainTaskId']
+                mainTaskDesc = request.POST['mainTaskDesc']
+                if mainTaskDesc == "null":
+                    mainTaskDesc = None
+                task = Task.objects.get(id=mainTaskId)
+                task.taskDesc = mainTaskDesc
+                task.save()
+                return JsonResponse({"message": 'success'}, status=200, safe=False)
+           # endregion
+            # region sửa ưu tiên task chính
             elif request.POST['action'] == 'EDIT_MAIN_TASK_PRIO':
-              mainTaskId = request.POST['mainTaskId']
-              mainTaskPriority = request.POST['mainTaskPriority']
-              task = Task.objects.get(id=mainTaskId)
-              task.priority = mainTaskPriority
-              task.save()
-              return JsonResponse({"message": 'success'}, status=200, safe=False)
+                mainTaskId = request.POST['mainTaskId']
+                mainTaskPriority = request.POST['mainTaskPriority']
+                task = Task.objects.get(id=mainTaskId)
+                task.priority = mainTaskPriority
+                task.save()
+                return JsonResponse({"message": 'success'}, status=200, safe=False)
+            # endregion
+            # region sửa thời hạn task chính
             elif request.POST['action'] == 'EDIT_MAIN_TASK_DEADLINE':
-              mainTaskId = request.POST['mainTaskId']
-              mainTaskDeadline = request.POST['mainTaskDeadline']
-              task = Task.objects.get(id=mainTaskId)
-              task.deadline = mainTaskDeadline
-              task.save()
-              return JsonResponse({"message": 'success'}, status=200, safe=False)
-            elif request.POST['action'] == 'EDIT_CHILD_TASK':
-              childTaskId = request.POST['childTaskId']
-              childTaskName = request.POST['childTaskName']
-              task = Task.objects.get(id=childTaskId)
-              task.taskName = childTaskName
-              task.save()
-              return JsonResponse({"message": 'success'}, status=200, safe=False)
-            elif request.POST['action'] == 'EDIT_CHILD_TASK_ITEM':
-              childTaskItemId = request.POST['childTaskItemId']
-              childTaskItemName = request.POST['childTaskItemName']
-              task = Task.objects.get(id=childTaskItemId)
-              task.taskName = childTaskItemName
-              task.save()
-              return JsonResponse({"message": 'success'}, status=200, safe=False)
+                mainTaskId = request.POST['mainTaskId']
+                mainTaskDeadline = request.POST['mainTaskDeadline']
+                task = Task.objects.get(id=mainTaskId)
+                task.deadline = mainTaskDeadline
+                task.save()
+                return JsonResponse({"message": 'success'}, status=200, safe=False)
+            # endregion
+            # region kiểm tra hoàn thành task child item
             elif request.POST['action'] == 'COMPLETE_CHILD_TASK_ITEM':
-              taskID = request.POST['taskID']
-              isComplete = request.POST['isComplete']
-              print(taskID,isComplete)
-              # task = Task.objects.get(id=taskID)
-              # task.taskName = childTaskItemName
-              # task.save()
-              return JsonResponse({"message": 'success'}, status=200, safe=False)
+                taskID = request.POST['taskID']
+                isComplete = request.POST['isComplete']
+                print(taskID, isComplete)
+                # task = Task.objects.get(id=taskID)
+                # task.taskName = childTaskItemName
+                # task.save()
+                return JsonResponse({"message": 'success'}, status=200, safe=False)
+            # endregion
 # endregion
 
 # region TeacherAssignment
@@ -432,7 +306,7 @@ class TeacherAssignment(View):
                         elif not user.is_Teacher and not user.is_superuser and not user.is_Reviewer and not user.is_Manager:
                             sid = user.id
                             sname = user.get_full_name()
-                    newassignment={
+                    newassignment = {
                         "id": newrecord.id,
                         "tid": tid,
                         "sid": sid,
@@ -472,7 +346,6 @@ class TeacherAssignment(View):
         return JsonResponse({"error": ""}, status=400)
 
 # endregion
-
 
 # region logout_view
 

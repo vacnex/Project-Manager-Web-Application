@@ -33,21 +33,7 @@ $(document).ready(function () {
     );
     return dateleft;
   }
-  function AddNewTask(TaskName) {
-    $('.box-scroll').prepend('<li class="box box-item position-relative scale-hover mt-4 mx-xxl-5 mx-xl-0 mx-sm-3 mx-4"> <a id="btn-tdel" class="d-none btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim"> <i class="fas fa-times"></i> </a> <div class="row p-xxl-2 p-3" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@edittask"> <div class="col-sm-2 d-flex d-none"> <div id="tprio" class="box box-label w-100 h-100 p-2"> </div></div><div class="col-sm-10 d-flex align-items-center"> <div class="line mx-xxl-3 mx-xl-2 mx-lg-2 mx-md-2 d-none"></div><div class="task-Content flex-fill ps-xxl-1 ps-3 mt-sm-0 mt-3"> <h3 id="tname">' + TaskName + '</h3><p id="tdesc"></p><div class="row assignment-info"> <div class="col-md-6"> <div id="tdeadline" class="todoDate"></div></div><div id="daysleft" class="col-md-6"> </div></div></div></div></div></li>');
-    var id = $('.task-header .row #pjid').val();
-    $.ajax({
-      type: 'POST',
-      url: '/projectdetail/' + id + '/',
-      data: {
-        taskname: TaskName,
-        action: 'ADD_NEW_MAIN_TASK',
-      },
-      success: function (response) {
-        console.log(response.message);
-      },
-    });
-  }
+
   if (!isTouchDevice()) {
     console.log(isTouchDevice());
     $('.task_list .box-scroll .box-item').each(function () {
@@ -76,10 +62,6 @@ $(document).ready(function () {
     locale: {
       format: 'DD/MM/YYYY',
       separator: ' đến ',
-      applyLabel: 'Xác nhận',
-      cancelLabel: 'Huỷ',
-      fromLabel: 'Từ',
-      toLabel: 'Đến',
       customRangeLabel: 'Tuỳ chọn',
       daysOfWeek: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
       monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
@@ -90,7 +72,8 @@ $(document).ready(function () {
     autoApply: true,
   });
 
-
+  var projectID = $('.task-header .row').attr('id');
+  var projectDetailPostUrl = '/projectdetail/' + projectID + '/'
   $(document).on('show.bs.modal', '#TaskModal', function (e) {
     btn = $(e.relatedTarget).parent();
     action = $('div[data-bs-whatever]', btn).attr('data-bs-whatever');
@@ -110,9 +93,13 @@ $(document).ready(function () {
           $(this).attr('checked', true);
         }
       });
-      $('#TaskModal .deadline #deadline').data('daterangepicker').setStartDate((deadline.trim().split('đ')[0]).trim());
-      $('#TaskModal .deadline #deadline').data('daterangepicker').setEndDate((deadline.trim().split('n')[1]).trim());
-      var id = $('.task-header .row #pjid').val();
+      if (deadline) {
+        $('#TaskModal .deadline #deadline').data('daterangepicker').setStartDate((deadline.trim().split('đ')[0]).trim());
+        $('#TaskModal .deadline #deadline').data('daterangepicker').setEndDate((deadline.trim().split('n')[1]).trim());
+      } else {
+        $('#TaskModal .deadline #deadline').val('');
+      }
+
       $('.child-wrap').empty();
       $.ajax({
         type: "GET",
@@ -120,7 +107,7 @@ $(document).ready(function () {
           parenttaskid: taskid,
           action: 'GET_CHILD_TASK_DATA'
         },
-        url: '/projectdetail/' + id + '/',
+        url: projectDetailPostUrl,
         success: function (response) {
           data = JSON.parse(response);
           if (data.length) {
@@ -132,7 +119,7 @@ $(document).ready(function () {
                   parenttaskitemid: valueOfElement["pk"],
                   action: 'GET_CHILD_TASK_ITEM_DATA'
                 },
-                url: '/projectdetail/' + id + '/',
+                url: projectDetailPostUrl,
                 success: function (response) {
                   data = JSON.parse(response);
                   if (data.length) {
@@ -158,7 +145,6 @@ $(document).ready(function () {
           }
         }
       });
-
     }
   });
 
@@ -219,76 +205,17 @@ $(document).ready(function () {
 
   /* #endregion */
 
-  /* #region  old add task */
-  // $(document).on('click', '#btn-task-add', function (e) {
-  //   e.preventDefault();
-  //   var id = $('.task-header .row #pjid').val();
-  //   taskname = $('#taskname').val();
-  //   taskdesc = $('#taskdesc').val();
-  //   priority = $('input[name = prio]:checked').val();
-  //   startDate = $('#deadline')
-  //     .data('daterangepicker')
-  //     .startDate.format('DD/MM/YYYY');
-  //   endDate = $('#deadline')
-  //     .data('daterangepicker')
-  //     .endDate.format('DD/MM/YYYY');
-  //   deadline = 'Bắt Đầu từ: ' + startDate + ' đến ' + endDate;
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: '/projectdetail/' + id + '/',
-  //     data: {
-  //       taskname: taskname,
-  //       taskdesc: taskdesc,
-  //       priority: priority,
-  //       deadline: deadline,
-  //       action: 'add_task',
-  //     },
-  //     success: function (response) {
-  //       console.log(JSON.parse(response));
-  //       var task_instance = JSON.parse(response);
-  //       date = task_instance['deadline'];
-  //       var task = '<li id="' + task_instance['id'] + '" class="box box-item position-relative scale-hover mt-4 mx-xxl-5 mx-xl-0 mx-sm-3 mx-4" onclick=""> <a id="btn-tdel" class="btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim"> <i class="fas fa-times"></i> </a><div class="row p-xxl-2 p-3" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@edittask"><div class="col-sm-2 d-flex"><div id="tprio" class="box box-label w-100 h-100 p-2">' + task_instance['priority'] + '</div></div><div class="col-sm-10 d-flex align-items-center"><div class="line mx-xxl-3 mx-xl-2 mx-lg-2 mx-md-2"></div><div class="asm-Content flex-fill ps-xxl-1 ps-3 mt-sm-0 mt-3"><h3 id="tname">' + task_instance['taskName'] + '</h3><p id="tdesc">' + task_instance['taskDesc'] + '</p><div class="row assignment-info"><div class="col-md-6"><div class="todoDate">' + task_instance['deadline'] + '</div></div><div id="daysleft" class="col-md-6">' + dayleft(date) + '</div></div></div></div></div></li>';
-
-  //       console.log('add task sucess');
-  //       console.log($('.task_list .box-scroll').length);
-  //       pname = task_instance['pname'];
-  //       if (!pname) {
-  //         pname = "Tên đề tài chưa cập nhật";
-  //       }
-  //       if ($('.task_list .box-scroll').length == 0) {
-  //         $('.task_list').html('<ul class="box-scroll list-unstyled py-0 mb-0 p-xxl-0 p-md-4 p-3"></ul>');
-  //         task = $(task).addClass('new-item');
-  //         $('.task_list .box-scroll').append(task);
-  //         $('.task-header .row').html('<div class="col-lg-10"><form id="changeProjectNameForm" name="changeProjectNameForm" method="post" action="."><input type="hidden" name="csrfmiddlewaretoken"> <input id="pjid" type="hidden" name="pjid" value=' + id + '> <input id="pname" class="form-control input-custom input-no-focus fs-3 title" name="pname" value="' + pname + '"></form></div><div class="col-lg-2 mt-lg-0 mt-md-3 mt-sm-2 mt-1 d-flex align-items-center justify-content-center"><form name="task-update-form" method="post" action="."><input type="hidden" name="csrfmiddlewaretoken"> <input id="taskcontent" type="hidden" name="taskcontent" value=""> <input id="pjid" type="hidden" name="pjid" value=' + id + '><div class="btn btn-custom scale-hover px-xxl-1 px-xl-2 px-lg-0 px-md-5 px-4" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@addtask"><span>+</span>Thêm công việc</div></form></div>');
-  //         $('.task-header .row input[name="csrfmiddlewaretoken"]').val(getCookie('csrftoken'));
-  //       } else if ($('.task_list .box-scroll').length == 1) {
-  //         task = $(task).addClass('new-item');
-  //         $('.task_list .box-scroll').append(task);
-  //       }
-  //       $('.task_list .box-scroll').scrollTop(
-  //         $('.task_list .box-scroll')[0].scrollHeight
-  //       );
-  //       if (!isTouchDevice()) {
-  //         task = $(task).find('#btn-tdel').addClass('d-none');
-  //       }
-  //       $('#TaskModal').modal('hide');
-  //     },
-  //   });
-  // });
-  /* #endregion */
-
+  // xoá task chính
   $(document).on('click', '#btn-tdel', function (e) {
     e.stopPropagation(); //ngăn modal hiện
     e.preventDefault();
-    cur_record = $(this).parent();
-    record_id = parseInt($(cur_record).attr('id'));
-    console.log(record_id);
-    var id = $('.task-header .row #pjid').val();
+    currentTask = $(this).parent();
+    currentTaskID = $(currentTask).attr('id');
     $.ajax({
       type: 'POST',
-      url: '/projectdetail/' + id + '/',
+      url: projectDetailPostUrl,
       data: {
-        pk: record_id,
+        currentTaskID: currentTaskID,
         action: 'DELETE_MAIN_TASK',
       },
       success: function (response) {
@@ -300,19 +227,19 @@ $(document).ready(function () {
         }
         if (message === 'success') {
           console.log($('.task_list .box-scroll').children().length);
-          if ($('.task_list .box-scroll').children().length == 1 && $('.task-header .row').children().length != 1) {
-            $(cur_record).removeClass('new-item').addClass('removed-item').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
-              $(cur_record).remove();
+          // 1 task duy nhất
+          if ($('.task_list .box-scroll').children().length == 1) {
+            $(currentTask).removeClass('new-item').addClass('removed-item').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
+              $(currentTask).remove();
+              $('.task_list div.d-none').removeClass('d-none')
             });
-            $('.task_list').html('<div class="d-flex justify-content-center"><div class="box px-4 py-5 mx-xxl-5 mx-lg-4 mx-md-0 mx-3 text-center emptylist"><h1 class="display-5 fw-bold">Danh sách công việc trống</h1><p class="lead mb-4">Hãy nhấn thêm công việc để tạo danh sách công việc.</p><div class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@addtask"> <span>+</span>Thêm công việc</div></div></div>');
-            $('.task-header .row').html('<div class="col-12"><form id="changeProjectNameForm" name="changeProjectNameForm" method="post" action="."> <input type="hidden" name="csrfmiddlewaretoken"> <input id="pjid" type="hidden" name="pjid" value=' + id + ' /> <input id="pname" class="form-control input-custom input-no-focus fs-3 title" name="pname" value="' + pname + '" /></form></div>');
-            $('.task-header .row input[name="csrfmiddlewaretoken"]').val(getCookie('csrftoken'));
+          
+            $('.task-header .row').html('<div class="col-12"><input id="pname" class="form-control input-custom input-no-focus fs-3 title" name="pname" value="' + pname + '" /></div>');
           } else {
-            $(cur_record).removeClass('new-item').addClass('removed-item').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
-              $(cur_record).remove();
+            $(currentTask).removeClass('new-item').addClass('removed-item').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
+              $(currentTask).remove();
             });
-            $('.task-header .row').html('<div class="col-lg-10"><form id="changeProjectNameForm" name="changeProjectNameForm" method="post" action="."> <input type="hidden" name="csrfmiddlewaretoken"> <input id="pjid" type="hidden" name="pjid" value=' + id + ' /> <input id="pname" class="form-control input-custom input-no-focus fs-3 title" name="pname" value="' + pname + '" /></form></div><div class="col-lg-2 mt-lg-0 mt-md-3 mt-sm-2 mt-1 d-flex align-items-center justify-content-center"><form name="task-update-form" method="post" action="."> <input type="hidden" name="csrfmiddlewaretoken"> <input id="taskcontent" type="hidden" name="taskcontent" value="" /> <input id="pjid" type="hidden" name="pjid" value=' + id + ' /><div class="btn btn-custom scale-hover px-xxl-1 px-xl-2 px-lg-0 px-md-5 px-4" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@addtask"> <span>+</span> Thêm công việc</div></form></div>');
-            $('.task-header .row input[name="csrfmiddlewaretoken"]').val(getCookie('csrftoken'));
+            $('.task-header .row').html('<div class="col-lg-10"> <input id="pname" class="form-control input-custom input-no-focus fs-3 title" name="pname" value="' + pname + '" /></div><div class="col-lg-2 mt-lg-0 mt-md-3 mt-sm-2 mt-1 d-flex align-items-center justify-content-center"><div id="AddNewMainTask" class="btn btn-custom"> <span>+</span>Thêm công việc</div></div>');
           }
 
         }
@@ -323,196 +250,140 @@ $(document).ready(function () {
     });
   });
 
-  /* #region  old edit task */
-  // $(document).on('click', '#btn-task-edit', function () {
-  //   pjid = $('.task-header #pjid').val();
-  //   taskid = $('#TaskModal .modal-content').attr('id');
-  //   taskname = $('#TaskModal #taskname').val();
-  //   taskdesc = $('#TaskModal #taskdesc').val();
-  //   taskprio = $('#TaskModal .prio-sel .btn-group input:checked').val()
-  //   startDate = $('#TaskModal #deadline')
-  //     .data('daterangepicker')
-  //     .startDate.format('DD/MM/YYYY');
-  //   endDate = $('#deadline')
-  //     .data('daterangepicker')
-  //     .endDate.format('DD/MM/YYYY');
-  //   taskdeadline = 'Bắt Đầu từ: ' + startDate + ' đến ' + endDate;
-
-  //   $.ajax({
-  //     type: "POST",
-  //     url: '/projectdetail/' + pjid + '/',
-  //     data: {
-  //       'pjid': pjid,
-  //       'taskid': taskid,
-  //       'taskname': taskname,
-  //       'taskdesc': taskdesc,
-  //       'taskprio': taskprio,
-  //       'taskdeadline': taskdeadline,
-  //       'action':'edit_task'
-  //     },
-  //     success: function (response) {
-  //       var edittask_instance = JSON.parse(response);
-  //       taskid = edittask_instance['taskid']
-  //       taskname = edittask_instance['taskname']
-  //       taskdesc = edittask_instance['taskdesc']
-  //       taskprio = edittask_instance['taskprio']
-  //       taskdeadline = edittask_instance['taskdeadline']
-
-  //       $.each($('.task_list .box-scroll li'), function (indexInArray, valueOfElement) {
-  //         if ($(this).attr('id') == taskid) {
-  //           $(this).find('#tname').text(taskname);
-  //           $(this).find('#tdesc').text(taskdesc);
-  //           $(this).find('#tprio').text(taskprio);
-  //           $(this).find('#todoDate').text(taskdeadline);
-  //           $(this).find('#daysleft').text(dayleft(taskdeadline));
-  //         }
-  //       });
-
-  //       $('#TaskModal').modal('hide');
-  //     }
-  //   });
-  //   // taskprio = 
-  // });
-  /* #endregion */
-
+  // chỉnh sửa tên project
+  $(document).on('click', '#pname', function () {
+    $(this).select();
+    $(this).val('')
+    $(this).attr('placeholder', 'Nhập tên đồ án');
+    $(this).focusout(function (e) { 
+      e.preventDefault();
+      if (!$(this).val()) {
+        $(this).val('Tên đồ án chưa cập nhật')
+      } else {
+        var newPName = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: projectDetailPostUrl,
+          data: {
+            newPName: newPName,
+            action: 'EDIT_PROJECT_NAME',
+          },
+          success: function (response) {
+            console.log(response.message);
+          },
+        });
+      }
+    });
+  });
   $(document).on('keyup', '#pname', function (e) {
     e.preventDefault();
-    console.log('test');
-    var id = $('.task-header .row #pjid').val();
-    var new_name = $('#pname').val();
+    tempName = $(this).val();
+    var newPName = $(this).val();
     $.ajax({
       type: 'POST',
-      url: '/projectdetail/' + id + '/',
+      url: projectDetailPostUrl,
       data: {
-        new_name: new_name,
+        newPName: newPName,
         action: 'EDIT_PROJECT_NAME',
       },
       success: function (response) {
-        $('#br_pname').text(new_name);
         console.log(response.message);
       },
     });
   });
 
+  // thêm task chính
   $(document).on('click', '#AddNewMainTask', function () {
-    var input_task = '<li class="box box-item position-relative scale-hover mt-4 mx-xxl-5 mx-xl-0 mx-sm-3 mx-4"> <a id="btn-tdel" class="d-none btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim"> <i class="fas fa-times"></i> </a> <div class="row p-xxl-2 p-3" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@edittask"> <div class="col-sm-2 d-flex d-none"> <div id="tprio" class="box box-label w-100 h-100 p-2"> </div></div><div class="col-sm-10 d-flex align-items-center"> <div class="line mx-xxl-3 mx-xl-2 mx-lg-2 mx-md-2 d-none"></div><div class="task-Content flex-fill ps-xxl-1 ps-3 mt-sm-0 mt-3"> <input id="tname" class="form-control input-custom input-no-focus fs-3" name="tname" placeholder="Nhập tên công việc"/> <p id="tdesc"></p><div class="row assignment-info"> <div class="col-md-6"> <div id="tdeadline" class="todoDate"></div></div><div id="daysleft" class="col-md-6"> </div></div></div></div></div></li>';
-    if ($('.task_list .box-scroll').length) {
-      $('.box-scroll').prepend(input_task);
-      $('#tname').focus();
-      $('#tname').focusout(function (e) {
-        e.preventDefault();
-        var new_item = $('#tname').parent().parent().parent().parent();
-        tname = $('#tname').val();
-        if (tname) {
-          $(new_item).children().remove();
-          AddNewTask(tname);
+    function newMainTaskHTML(toggleModal,viewAsTitle, titleName='') {
+      return '<li class="box box-item position-relative scale-hover mt-4 mx-xxl-5 mx-xl-0 mx-sm-3 mx-4"> <a id="btn-tdel" class="d-none btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim"> <i class="fas fa-times"></i> </a> <div class="row p-xxl-2 p-3"' + (toggleModal ? 'data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@edittask"' : '') + '> <div class="col-sm-2 d-flex d-none"> <div id="tprio" class="box box-label w-100 h-100 p-2"> </div></div><div class="col-sm-10 d-flex align-items-center"> <div class="line mx-xxl-3 mx-xl-2 mx-lg-2 mx-md-2 d-none"></div><div class="task-Content flex-fill ps-xxl-1 ps-3 mt-sm-0 mt-3"> ' + (viewAsTitle ? '<h1 id="tname">' + titleName +'</h1>' : '<input id="tname" class="form-control input-custom input-no-focus fs-3" name="tname" placeholder="Nhập tên công việc">') + '<p id="tdesc" class="d-none"></p><div class="row assignment-info"> <div class="col-md-6"> <div id="tdeadline" class="todoDate"></div></div><div id="daysleft" class="col-md-6"> </div></div></div></div></div></li>'
+    }
+    if ($('.task_list .box-scroll').children().length) {
+      var newItem =  $('.box-scroll').prepend(newMainTaskHTML(false, false));
+      $('#tname').focus().focusout(function (e) {
+        if (!$(this).val()) {
+          $(this).parents('li.box-item').remove();
         } else {
-          $(new_item).remove();
-        }
+          editTask(null, this)
+          $(this).parents('li.box-item').replaceWith(newMainTaskHTML(true, true, $(this).val()))
+        } 
       });
     } else {
-      $('.task_list').html('<ul class="box-scroll list-unstyled py-0 mb-0 p-xxl-0 p-md-4 p-3"></ul>');
-      var new_item = $('.box-scroll').prepend(input_task);
-      $('#tname').focus();
-      $('#tname').focusout(function (e) {
-        e.preventDefault();
-        if ($('#tname').val()) {
-          var tname = $('#tname').val();
-          $(new_item).children().remove();
-          AddNewTask(tname);
-        } else { $('.task_list').html('<div class="d-flex justify-content-center"> <div class="box px-4 py-5 mx-xxl-5 mx-lg-4 mx-md-0 mx-3 text-center emptylist"> <h1 class="display-5 fw-bold">Danh sách công việc trống</h1> <p class="lead mb-4">Hãy nhấn thêm công việc để tạo danh sách công việc.</p><div id="AddNewMainTask" class="btn btn-custom"> <span>+</span>Thêm công việc</div></div></div>'); }
+      $('.task_list .emptylist').parent().addClass('d-none').after('<ul class="box-scroll list-unstyled py-0 mb-0 p-xxl-0 p-md-4 p-3"></ul>');
+      var newItem = $('.box-scroll').prepend(newMainTaskHTML(false, false));
+      $('.task-header .row .col-12').removeClass('col-12').addClass('col-lg-10').after('<div class="col-lg-2 mt-lg-0 mt-md-3 mt-sm-2 mt-1 d-flex align-items-center justify-content-center"><div id="AddNewMainTask" class="btn btn-custom"><span>+</span>Thêm công việc</div></div>');
+      $('#tname').focus().focusout(function (e) {
+        if (!$(this).val()) {
+          $('.task_list .emptylist').parent().removeClass('d-none');
+          $(this).parents('.box-scroll').remove();
+          $('.task-header .row .col-lg-2').addClass('d-none')
+          $('.task-header .row .col-lg-10').removeClass('col-lg-10').addClass('col-12')
+        } else {
+          newTaskName = $(this).val();
+          $(newItem).children().remove();
+          $('.box-scroll').prepend(newMainTaskHTML(true, true, newTaskName));
+          editTask(null, $('.box-scroll #tname'))
+        }
       });
-    }
-  });
-  $(document).on('keypress', '#tname', function (e) {
-    if (e.which == 13) {
-      new_task_input = $(this).parent().parent().parent().parent();
-      var tname = $('#tname').val();
-      $(new_task_input).remove();
-      AddNewTask(tname);
+      $('#tname').keypress(function (e) {
+        if (e.which == 13 || e.keyCode == 13) {
+          newTaskName = $(this).val();
+          $(this).parents('li').remove()
+          console.log();
+          $('.box-scroll').prepend(newMainTaskHTML(true, true, newTaskName));
+        }
+      });
     }
   });
 
+  // thêm task child trong modal task chính
   $(document).on('click', '#add-child-task', function () {
     var new_child_task = $('.child-wrap').append('<div class="child-task mb-3"> <div class="mb-2 d-flex"> <div class="flex-grow-1 d-flex align-items-center"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom " name="taskchildname"/> </div><div id="del-child-task" class="btn btn-danger mx-3">Xoá công việc phụ</div></div><ul class="ps-0 child-item"> </ul> <div id="add-child-task-item" class="btn btn-primary">thêm mục</div></div>');
+    var mainTaskId = $('#TaskModal .modal-dialog .modal-content').attr('id');
     $(new_child_task).children().last().find('#taskchildname').focus();
     $(new_child_task).children().last().find('#taskchildname').focusout(function (e) {
       e.preventDefault();
-      if ($(this).val()) {
-        addChildTask(this);
-      }
-      else {
+      if (!$(this).val()) {
         $(this).parent().parent().parent().remove();
       }
     });
   });
-  function addChildTask(e) {
-    var id = $('.task-header .row #pjid').val();
-    var parenttaskid = $('#TaskModal .modal-dialog .modal-content').attr('id');
-    console.log(parenttaskid);
-    $.ajax({
-      type: 'POST',
-      url: '/projectdetail/' + id + '/',
-      data: {
-        parenttaskid: parenttaskid,
-        childtaskname: e.value,
-        action: 'ADD_CHILD_TASK',
-      },
-      success: function (response) {
-        var childtask_instance = JSON.parse(response);
-        childtaskid = childtask_instance['childtaskid'];
-        $(e).parent().parent().parent().attr('id', childtaskid);
-      },
-    });
-  }
 
+  // thêm task item vào task child trong modal task chính
   $(document).on('click', "#add-child-task-item", function () {
     var new_child_task_item = $(this).parent().find('.child-item').append('<li class="box-s input-group mb-3 "> <div class="d-flex align-items-center p-2"> <input class="form-check-input mt-0" type="checkbox"> </div><input id="taskchilditemname" type="text" class="form-control input-custom" > <div id="del-child-task-item" class="btn"><i class="p-1 fas fa-times"></i></div></li>');
     $(new_child_task_item).children().last().find('input[type=text]').focus();
 
     $(new_child_task_item).children().last().find('input[type=text]').focusout(function (e) {
       e.preventDefault();
-      if ($(this).val()) {
-        addChildTaskItem(this);
-      }
-      else {
+      if (!$(this).val()) {
         $(this).parent().remove();
       }
+      $(this).replaceWith('<div id="taskchilditemname" class="fs-5 flex-grow-1 ps-2">' + $(this).val() + '</div>');
+    }).keypress(function (e) {
+      if (e.which == 13 || e.keyCode == 13) {
+        e.preventDefault();
+        $(this).replaceWith('<div id="taskchilditemname" class="fs-5 flex-grow-1 ps-2">' + $(this).val() + '</div>');
+      }
     });
   });
-  function addChildTaskItem(e) {
-    var id = $('.task-header .row #pjid').val();
-    var parenttaskid = $(e).parent().parent().parent().attr('id');
-    console.log(parenttaskid);
-    $.ajax({
-      type: 'POST',
-      url: '/projectdetail/' + id + '/',
-      data: {
-        parenttaskid: parenttaskid,
-        childtaskitemname: e.value,
-        action: 'ADD_CHILD_TASK_ITEM',
-      },
-      success: function (response) {
-        console.log(response.message);
-        // var childtask_instance = JSON.parse(response);
-        // childtaskid = childtask_instance['childtaskid'];
-        // $(e).parent().parent().parent().attr('id', childtaskid);
-      },
-    });
-  }
 
+  // sửa tên task chính trong modal
   $(document).on('keyup', '#TaskModal #taskname', function () {
     mainTaskId = $(this).parent().parent().attr('id');
-    mainTaskName = $(this).val();
-    editTask(mainTaskId, mainTaskName);
-  });
-  $(document).on('keyup', '#TaskModal #taskchildname', function () {
-    childTaskId = $(this).parent().parent().parent().attr('id');
-    childTaskName = $(this).val();
-    editTask(null, null, null, null, null, childTaskId, childTaskName);
+    editTask(mainTaskId, this);
   });
 
-  /* #region  Xử lý giao diện taskchilditemname */
+  // Thêm hoặc sửa tên task child
+  $(document).on('keyup', '#TaskModal #taskchildname', function () {
+    mainTaskId = $('#TaskModal .modal-dialog .modal-content').attr('id');
+    childTaskId = $(this).parent().parent().parent().attr('id');
+    childTaskName = $(this).val();
+    console.log(mainTaskId, childTaskId, this);
+    editTask(mainTaskId, null, null, null, null, childTaskId, this);
+  });
+
+  /* #region  Xử lý task item */
+  // nhấn vào tên task item để nhập tên task item 
   $(document).on('click', '#taskchilditemname', function () {
     val = $(this).text();
     if (!$(this).is('input')) {
@@ -530,33 +401,42 @@ $(document).ready(function () {
       });
     }
   });
+
+  // lưu lại khi sửa tên task item của task child
   $(document).on('keyup', '#TaskModal #taskchilditemname', function () {
     childTaskItemId = $(this).parent().attr('id');
     childTaskItemName = $(this).val();
-    editTask(null, null, null, null, null, null, null, childTaskItemId, childTaskItemName);
+    childTaskId = $(this).parent().parent().parent().attr('id');
+    editTask(null, null, null, null, null, childTaskId, null, childTaskItemId, this);
   });
   /* #endregion */
 
+  // sửa mô tả của task chính trong modal
   $(document).on('keyup', '#TaskModal #taskdesc', function () {
     mainTaskId = $(this).parent().parent().parent().parent().parent().parent().attr('id');
     mainTaskDesc = $(this).val();
+    if (!$(this).val()) {
+      mainTaskDesc = "null";
+    }
     editTask(mainTaskId, null, mainTaskDesc);
   });
 
+  // chọn ưu tiên task chính
   $(document).on('change', '#TaskModal .prio input[type=radio]', function () {
     mainTaskId = $(this).parent().parent().parent().parent().parent().parent().attr('id');
     mainTaskPriority = $(this).val();
     editTask(mainTaskId, null, null, mainTaskPriority);
   });
 
+  // chọn thời hạn task chính
   $(document).on('change', '#TaskModal .deadline #deadline', function () {
     mainTaskId = $(this).parent().parent().parent().parent().parent().attr('id');
     mainTaskDeadline = $(this).val();
     editTask(mainTaskId, null, null, null, mainTaskDeadline);
   });
 
+
   function editTask() {
-    var id = $('.task-header .row #pjid').val();
     mainTaskId = arguments[0];
     mainTaskName = arguments[1];
     mainTaskDesc = arguments[2];
@@ -569,17 +449,30 @@ $(document).ready(function () {
 
     // sửa tên task chính
     if (mainTaskId, mainTaskName) {
+      var mainTaskNameText
+      if (!mainTaskId) mainTaskId = 'null';
+      if ($(mainTaskName).is('h1')) {
+        mainTaskNameText = $(mainTaskName).text();
+      } else if ($(mainTaskName).is('input')){
+        mainTaskNameText = mainTaskName.value;
+      } else if (typeof(mainTaskName) == 'string') {
+        mainTaskNameText = mainTaskName;
+      }
       $.ajax({
         type: 'POST',
-        url: '/projectdetail/' + id + '/',
+        url: projectDetailPostUrl,
         data: {
           mainTaskId: mainTaskId,
-          mainTaskName: mainTaskName,
-          action: 'EDIT_MAIN_TASK_NAME',
+          mainTaskName: mainTaskNameText,
+          action: 'ADD_EDIT_MAIN_TASK_NAME',
         },
         success: function (response) {
-          if (response.message == 'success') {
-            $('.box-scroll').find('li[id=' + mainTaskId + '] #tname').text(mainTaskName);
+          var mainTask_instance = JSON.parse(response);
+          if (mainTask_instance['message'] == 'A') {
+            $('.box-scroll li').first().attr('id', mainTask_instance['mainTaskId'])
+          }
+          if (mainTask_instance['message'] == 'E') {
+            $('.box-scroll').find('li[id=' + mainTaskId + '] #tname').text(mainTaskNameText);
           }
         }
       });
@@ -588,7 +481,7 @@ $(document).ready(function () {
     else if (mainTaskId, mainTaskDesc) {
       $.ajax({
         type: 'POST',
-        url: '/projectdetail/' + id + '/',
+        url: projectDetailPostUrl,
         data: {
           mainTaskId: mainTaskId,
           mainTaskDesc: mainTaskDesc,
@@ -597,6 +490,16 @@ $(document).ready(function () {
         success: function (response) {
           if (response.message == 'success') {
             $('.box-scroll').find('li[id=' + mainTaskId + '] #tdesc').text(mainTaskDesc);
+            if ($('.box-scroll').find('li[id=' + mainTaskId + '] #tdesc').hasClass('d-none')) {
+              $('.box-scroll').find('li[id=' + mainTaskId + '] #tdesc').removeClass('d-none');
+            }
+            if ($('.box-scroll').find('li[id = ' + mainTaskId + '] #tdeadline').text()) {
+              var oldTName = $('.box-scroll').find('li[id=' + mainTaskId + '] #tname').text();
+              $('.box-scroll').find('li[id=' + mainTaskId + '] #tname').replaceWith('<h3 id="tname">' + oldTName + '</h3 >');
+            }
+            if (mainTaskDesc == "null") {
+              $('.box-scroll').find('li[id=' + mainTaskId + '] #tdesc').addClass("d-none");
+            }
           }
         }
       });
@@ -605,7 +508,7 @@ $(document).ready(function () {
     else if (mainTaskId, mainTaskPriority) {
       $.ajax({
         type: 'POST',
-        url: '/projectdetail/' + id + '/',
+        url: projectDetailPostUrl,
         data: {
           mainTaskId: mainTaskId,
           mainTaskPriority: mainTaskPriority,
@@ -614,6 +517,10 @@ $(document).ready(function () {
         success: function (response) {
           if (response.message == 'success') {
             $('.box-scroll').find('li[id=' + mainTaskId + '] #tprio').text(mainTaskPriority);
+            if ($('.box-scroll').find('li[id=' + mainTaskId + '] #tprio').parent().hasClass('d-none')) {
+              $('.box-scroll').find('li[id=' + mainTaskId + '] #tprio').parent().removeClass('d-none');
+              $('.box-scroll').find('li[id=' + mainTaskId + '] .line').removeClass('d-none');
+            }
           }
         }
       });
@@ -622,7 +529,7 @@ $(document).ready(function () {
     else if (mainTaskId, mainTaskDeadline) {
       $.ajax({
         type: 'POST',
-        url: '/projectdetail/' + id + '/',
+        url: projectDetailPostUrl,
         data: {
           mainTaskId: mainTaskId,
           mainTaskDeadline: mainTaskDeadline,
@@ -632,39 +539,56 @@ $(document).ready(function () {
           if (response.message == 'success') {
             $('.box-scroll').find('li[id = ' + mainTaskId + '] #tdeadline').text(mainTaskDeadline);
             $('.box-scroll').find('li[id = ' + mainTaskId + '] #daysleft').text(dayleft(mainTaskDeadline));
+
+            if ($('.box-scroll').find('li[id = ' + mainTaskId + '] #tdesc').text()) {
+              var oldTName = $('.box-scroll').find('li[id=' + mainTaskId + '] #tname').text();
+              $('.box-scroll').find('li[id=' + mainTaskId + '] #tname').replaceWith('<h3 id="tname">' + oldTName + '</h3 >');
+            }
           }
         }
       });
     }
-    // sửa tên task phụ
-    else if (childTaskId, childTaskName) {
+    // Thêm hoặc sửa task child
+    else if (mainTaskId, childTaskId, childTaskName) {
+      if (!childTaskId) childTaskId = 'null';
       $.ajax({
         type: 'POST',
-        url: '/projectdetail/' + id + '/',
+        url: projectDetailPostUrl,
+        data: {
+          mainTaskId: mainTaskId,
+          childTaskId: childTaskId,
+          childTaskName: childTaskName.value,
+          action: 'ADD_EDIT_CHILD_TASK',
+        },
+        success: function (response) {
+          var childtask_instance = JSON.parse(response);
+          if (childtask_instance['message'] == 'A') {
+            $(childTaskName).parent().parent().parent().attr('id', childtask_instance['childtaskid']);
+          }
+          if (childtask_instance['message'] == 'E') {
+
+          }
+        }
+      });
+    }
+    // Thêm hoặc sửa task item của task child
+    else if (childTaskId, childTaskItemId, childTaskItemName) {
+      if (!childTaskItemId) childTaskItemId = 'null';
+      $.ajax({
+        type: 'POST',
+        url: projectDetailPostUrl,
         data: {
           childTaskId: childTaskId,
-          childTaskName: childTaskName,
-          action: 'EDIT_CHILD_TASK',
-        },
-        success: function (response) {
-          if (response.message == 'success') {
-          }
-        }
-      });
-    }
-    // sửa tên task con của task phụ
-    else if (childTaskItemId, childTaskItemName) {
-      $.ajax({
-        type: 'POST',
-        url: '/projectdetail/' + id + '/',
-        data: {
           childTaskItemId: childTaskItemId,
-          childTaskItemName: childTaskItemName,
-          action: 'EDIT_CHILD_TASK_ITEM',
+          childTaskItemName: childTaskItemName.value,
+          action: 'ADD_EDIT_CHILD_TASK_ITEM',
         },
         success: function (response) {
-          if (response.message == 'success') {
-
+          var childtaskitem_instance = JSON.parse(response);
+          if (childtaskitem_instance['message'] == 'A') {
+            $(childTaskItemName).parent().attr('id', childtaskitem_instance['childTaskItemId']);
+          }
+          if (childtaskitem_instance['message'] == 'E') {
           }
         }
       });
@@ -674,10 +598,9 @@ $(document).ready(function () {
     console.log($(this).is(':indeterminate'));
   });
   function completeChildTaskItem(taskID, isComplete) {
-    var id = $('.task-header .row #pjid').val();
     $.ajax({
       type: 'POST',
-      url: '/projectdetail/' + id + '/',
+      url: projectDetailPostUrl,
       data: {
         taskID: taskID,
         isComplete: isComplete,

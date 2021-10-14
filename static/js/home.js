@@ -74,19 +74,25 @@ $(document).ready(function () {
     });
   });
   $(document).on('click', '#year-list > li', function () {
-    var year = $(this).attr('data-filtertarget');
+    let year = $(this).attr('data-filtertarget');
     $("#ListTeacherProject").slick('slickUnfilter');
-    $('.year').each(function (index, element) {
-      if (year == $(this).text()) {
-        $("#ListTeacherProject").slick('slickFilter', function () {
-          return $(this).find('.year').text() == year;
-        })
+    if (year !='ALL') {
+      $.each($('.slick-track').children(), function (indexInArray, valueOfElement) {
+        if (year == $(this).find('.year').text()) {
+          $("#ListTeacherProject").slick('slickFilter', function () {
+            return $(this).find('.year').text() == year;
+          });
+          return false;
+        }
+      });
+      $(this).toggleClass('choosed').siblings().removeClass('choosed');
+    } else {
+      if (!$(this).hasClass('choosed')) {
+        $(this).addClass('choosed').siblings().removeClass('choosed');
       }
-      if (year == 'all') {
-        $("#ListTeacherProject").slick('slickUnfilter')
-      }
-    });
-    $(this).toggleClass('choosed').siblings().removeClass('choosed');
+    }
+    
+    
   });
   /* #endregion */
   /* #region  Manager View */

@@ -112,7 +112,7 @@ $(document).ready(function () {
           data = JSON.parse(response);
           if (data.length) {
             $.each(data, function (indexInArray, valueOfElement) {
-              $('.child-wrap').append('<div id=' + valueOfElement["pk"] + ' class="child-task mb-3"> <div class="mb-2 d-flex"> <div class="d-flex align-items-center flex-grow-1"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom" name="taskchildname" value="' + valueOfElement["fields"]["taskName"] + '"/> </div><div id="delChildTasK" class="btn btn-danger mx-3">Xoá công việc phụ</div></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
+              $('.child-wrap').append('<div id=' + valueOfElement["pk"] + ' class="child-task mb-4 box-l p-3" background-color: #F9FAFE;> <div class="mb-2 d-flex"> <div class="d-flex align-items-center flex-grow-1"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom fs-4" name="taskchildname" value="' + valueOfElement["fields"]["taskName"] + '"/> </div><a id="delChildTasK" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
               $.ajax({
                 type: "GET",
                 data: {
@@ -127,7 +127,7 @@ $(document).ready(function () {
                     $.each(data, function (indexInArray, valueOfChildElement) {
                       if (valueOfChildElement["fields"]["parentTask"] == valueOfElement["pk"]) {
                         done = valueOfChildElement["fields"]["complete"];
-                        a = $('.child-wrap .child-task[id=' + valueOfElement["pk"] + '] .child-item').append('<li id="' + valueOfChildElement["pk"] + '"class="box-s input-group mb-3 d-flex align-items-center "> <div class="d-flex align-items-center p-2"> <input class="form-check-input mt-0" type="checkbox" ' + (done ? "checked" : "") + ' > </div><div id="taskchilditemname" class="fs-5 flex-grow-1 ps-2">' + valueOfChildElement["fields"]["taskName"] + '</div> <div id="delChildTasKItem" class="btn d-flex align-items-center"><i class="p-1 fas fa-times"></i></div></li>');
+                        a = $('.child-wrap .child-task[id=' + valueOfElement["pk"] + '] .child-item').append('<li id="' + valueOfChildElement["pk"] + '"class="box input-group mb-3 d-flex align-items-center scale-hover p-1"> <div class="d-flex align-items-center p-2"> <input class="form-check-input mt-0" type="checkbox" ' + (done ? "checked" : "") + ' > </div><div id="taskchilditemname" class="fs-5 flex-grow-1 ps-2">' + valueOfChildElement["fields"]["taskName"] + '</div> <div id="delChildTasKItem" class="btn d-flex align-items-center"><i class="p-1 fas fa-times"></i></div></li>');
                         if (valueOfChildElement["fields"]["tempComplete"]) {
                           $('.child-wrap .child-task[id=' + valueOfElement["pk"] + '] .child-item').find('li[id=' + valueOfChildElement["pk"] + '] input[type=checkbox]').prop("indeterminate", true);
                           // item = $('.child-wrap .child-task[id=' + valueOfElement["pk"] + '] .child-item').find('li[id=' + valueOfChildElement["pk"] + '] input[type=checkbox]').parent().parent()
@@ -337,7 +337,7 @@ $(document).ready(function () {
 
   // thêm task child trong modal task chính
   $(document).on('click', '#addChildTask', function () {
-    var new_child_task = $('.child-wrap').append('<div class="child-task mb-3"> <div class="mb-2 d-flex"> <div class="flex-grow-1 d-flex align-items-center"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom " name="taskchildname"/> </div><div id="delChildTasK" class="btn btn-danger mx-3">Xoá công việc phụ</div></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
+    var new_child_task = $('.child-wrap').append('<div class="child-task mb-4 box-l p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex"> <div class="flex-grow-1 d-flex align-items-center"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom fs-4" name="taskchildname"/> </div><a id="delChildTasK" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
     var mainTaskId = $('#TaskModal .modal-dialog .modal-content').attr('id');
     $(new_child_task).children().last().find('#taskchildname').focus();
     $(new_child_task).children().last().find('#taskchildname').focusout(function (e) {
@@ -350,7 +350,7 @@ $(document).ready(function () {
 
   // thêm task item vào task child trong modal task chính
   $(document).on('click', "#addChildTaskItem", function () {
-    var new_child_task_item = $(this).parent().find('.child-item').append('<li class="box-s input-group mb-3 "> <div class="d-flex align-items-center p-2"> <input class="form-check-input mt-0" type="checkbox"> </div><input id="taskchilditemname" type="text" class="form-control input-custom" > <div id="delChildTasKItem" class="btn"><i class="p-1 fas fa-times"></i></div></li>');
+    var new_child_task_item = $(this).parent().find('.child-item').append('<li class="box input-group mb-3 d-flex align-items-center scale-hover p-1"> <div class="d-flex align-items-center p-2"> <input class="form-check-input mt-0" type="checkbox"> </div><input id="taskchilditemname" type="text" class="form-control input-custom" > <div id="delChildTasKItem" class="btn d-flex align-items-center"><i class="p-1 fas fa-times"></i></div></li>');
     $(new_child_task_item).children().last().find('input[type=text]').focus();
 
     $(new_child_task_item).children().last().find('input[type=text]').focusout(function (e) {
@@ -626,8 +626,9 @@ $(document).ready(function () {
     });
   }
 
-  $(document).on('change', '#TaskModal .child-item input[type=checkbox]', function () {
-    console.log($(this).is(':indeterminate'));
+  $(document).on('click', '#TaskModal .child-item input[type=checkbox]', function () {
+
+    return false;
   });
   function completeChildTaskItem(taskID, isComplete) {
     $.ajax({

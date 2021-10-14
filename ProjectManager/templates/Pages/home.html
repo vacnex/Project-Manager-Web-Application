@@ -46,7 +46,7 @@ Home
                                                 {{u.get_full_name}}
                                               </h5>
                                               <div class="student-infor">
-                                                <p class="desc">Khoá: {{u.Class_id}}</p>
+                                                <p class="desc">Lớp: {{u.Class_id}}</p>
                                               </div>
                                             </div>
                                           </div>
@@ -107,18 +107,14 @@ Home
                 <a href="/projectdetail/{{ p.id }}/" class="text-decoration-none">
                     <p><small class="text-muted">Khoa Công Nghệ thông Tin</small></p>
                     <p class="title fs-5 text-center">
-                        {% if not p.Project_Name %}
-                        Tên đề tài chưa cập nhật
-                        {% else %}
-                        {{p.Project_Name}}
-                        {%endif%}
+                        {{p.Project_Name|default_if_none:"Tên đồ án chưa cập nhật" }}
                     </p>
                     {% for u in p.Users.all%}
                     {% if not u.is_Teacher %}
                     <p class="card-text"><small class="text-muted">Sinh viên: <strong>{{u.get_full_name}}</strong></small></p>
                     {%endif%}
                     {%endfor%}
-                    <span class="text-muted"><small>Khoá: {{p.schoolYear}}</small></span>
+                    <small>Khoá: <span class="text-muted year">{{p.schoolYear}}</span></small>
                 </a>
             </div>
             {%endfor%}

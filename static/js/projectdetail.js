@@ -112,7 +112,7 @@ $(document).ready(function () {
           data = JSON.parse(response);
           if (data.length) {
             $.each(data, function (indexInArray, valueOfElement) {
-              $('.child-wrap').append('<div id=' + valueOfElement["pk"] + ' class="child-task mb-3"> <div class="mb-2 d-flex"> <div class="d-flex align-items-center flex-grow-1"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom" name="taskchildname" value="' + valueOfElement["fields"]["taskName"] + '"/> </div><div id="del-child-task" class="btn btn-danger mx-3">Xoá công việc phụ</div></div><ul class="ps-0 child-item"> </ul> <div id="add-child-task-item" class="btn btn-primary">thêm mục</div></div>');
+              $('.child-wrap').append('<div id=' + valueOfElement["pk"] + ' class="child-task mb-3"> <div class="mb-2 d-flex"> <div class="d-flex align-items-center flex-grow-1"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom" name="taskchildname" value="' + valueOfElement["fields"]["taskName"] + '"/> </div><div id="delChildTasK" class="btn btn-danger mx-3">Xoá công việc phụ</div></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
               $.ajax({
                 type: "GET",
                 data: {
@@ -336,8 +336,8 @@ $(document).ready(function () {
   });
 
   // thêm task child trong modal task chính
-  $(document).on('click', '#add-child-task', function () {
-    var new_child_task = $('.child-wrap').append('<div class="child-task mb-3"> <div class="mb-2 d-flex"> <div class="flex-grow-1 d-flex align-items-center"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom " name="taskchildname"/> </div><div id="del-child-task" class="btn btn-danger mx-3">Xoá công việc phụ</div></div><ul class="ps-0 child-item"> </ul> <div id="add-child-task-item" class="btn btn-primary">thêm mục</div></div>');
+  $(document).on('click', '#addChildTask', function () {
+    var new_child_task = $('.child-wrap').append('<div class="child-task mb-3"> <div class="mb-2 d-flex"> <div class="flex-grow-1 d-flex align-items-center"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom " name="taskchildname"/> </div><div id="delChildTasK" class="btn btn-danger mx-3">Xoá công việc phụ</div></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
     var mainTaskId = $('#TaskModal .modal-dialog .modal-content').attr('id');
     $(new_child_task).children().last().find('#taskchildname').focus();
     $(new_child_task).children().last().find('#taskchildname').focusout(function (e) {
@@ -349,8 +349,8 @@ $(document).ready(function () {
   });
 
   // thêm task item vào task child trong modal task chính
-  $(document).on('click', "#add-child-task-item", function () {
-    var new_child_task_item = $(this).parent().find('.child-item').append('<li class="box-s input-group mb-3 "> <div class="d-flex align-items-center p-2"> <input class="form-check-input mt-0" type="checkbox"> </div><input id="taskchilditemname" type="text" class="form-control input-custom" > <div id="del-child-task-item" class="btn"><i class="p-1 fas fa-times"></i></div></li>');
+  $(document).on('click', "#addChildTaskItem", function () {
+    var new_child_task_item = $(this).parent().find('.child-item').append('<li class="box-s input-group mb-3 "> <div class="d-flex align-items-center p-2"> <input class="form-check-input mt-0" type="checkbox"> </div><input id="taskchilditemname" type="text" class="form-control input-custom" > <div id="delChildTasKItem" class="btn"><i class="p-1 fas fa-times"></i></div></li>');
     $(new_child_task_item).children().last().find('input[type=text]').focus();
 
     $(new_child_task_item).children().last().find('input[type=text]').focusout(function (e) {
@@ -594,6 +594,38 @@ $(document).ready(function () {
       });
     }
   }
+
+  $(document).on('click', '#delChildTasK', function () {
+    let childTaskId = $(this).parents('.child-task').attr('id');
+    let childTask = $(this).parents('.child-task');
+    $(childTask).addClass('removed-item').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
+      $(childTask).remove();
+      deleteTaskChildAndItem(childTaskId);
+    });
+  });
+  $(document).on('click', '#delChildTasKItem', function () {
+    let childTaskItemId = $(this).parent().attr('id');
+    let childTaskItem = $(this).parent();
+    $(childTaskItem).addClass('removed-item').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
+      $(childTaskItem).remove();
+      deleteTaskChildAndItem(childTaskItemId)
+    });
+  });
+  function deleteTaskChildAndItem(taskID){
+    $.ajax({
+      type: "POST",
+      url: projectDetailPostUrl,
+      data: {
+        taskID: taskID,
+        action: 'DELETE_TASK_CHILD_AND_ITEM'
+      },
+      success: function (response) {
+        let deleteTaskChildAndItemContext = JSON.parse(response);
+        console.log(deleteTaskChildAndItemContext['message'])
+      }
+    });
+  }
+
   $(document).on('change', '#TaskModal .child-item input[type=checkbox]', function () {
     console.log($(this).is(':indeterminate'));
   });

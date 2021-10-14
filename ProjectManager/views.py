@@ -60,6 +60,8 @@ def index(request):
 # endregion
 
 # region home
+
+
 @method_decorator(login_required(login_url='/'), name='get')
 class HomeIndex(View):
     def get(self, request):
@@ -86,10 +88,9 @@ class HomeIndex(View):
                     Users=request.user))
                 print("HomeView", Student_task)
         context = {'Users_list_Manager': Users_list_Manager,
-                  'Projects_list_of_Teacher': Projects_list_of_Teacher, 'Student_task': Student_task}
+                   'Projects_list_of_Teacher': Projects_list_of_Teacher, 'Student_task': Student_task}
         return TemplateResponse(request, 'Pages/home.html', context)
 # endregion
-
 
 
 # region ProjectDetail
@@ -256,6 +257,15 @@ class ProjectDetail(View):
                 # task.taskName = childTaskItemName
                 # task.save()
                 return JsonResponse({"message": 'success'}, status=200, safe=False)
+            # endregion
+            # region Xoá task child và task item 
+            elif request.POST['action'] == 'DELETE_TASK_CHILD_AND_ITEM':
+                task = Task.objects.get(id=request.POST['taskID'])
+                task.delete()
+                deleteTaskChildAndItemContext = {
+                    "message": 'Xoá thành công'
+                }
+                return JsonResponse(json.dumps(deleteTaskChildAndItemContext), status=200, safe=False)
             # endregion
 # endregion
 

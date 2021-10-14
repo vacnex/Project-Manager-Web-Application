@@ -112,7 +112,7 @@ $(document).ready(function () {
           data = JSON.parse(response);
           if (data.length) {
             $.each(data, function (indexInArray, valueOfElement) {
-              $('.child-wrap').append('<div id=' + valueOfElement["pk"] + ' class="child-task mb-4 box-l p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex"> <div class="d-flex align-items-center flex-grow-1"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom fs-4" name="taskchildname" value="' + valueOfElement["fields"]["taskName"] + '"/> </div><a id="delChildTasK" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
+              $('.child-wrap').append('<div id=' + valueOfElement["pk"] + ' class="child-task mb-4 box-l p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex align-items-center"> <div class="d-flex align-items-center flex-grow-1"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom fs-4" style="background: transparent;" name="taskchildname" value="' + valueOfElement["fields"]["taskName"] + '"/> </div><a id="delChildTasK" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
               $.ajax({
                 type: "GET",
                 data: {
@@ -337,7 +337,7 @@ $(document).ready(function () {
 
   // thêm task child trong modal task chính
   $(document).on('click', '#addChildTask', function () {
-    var new_child_task = $('.child-wrap').append('<div class="child-task mb-4 box-l p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex"> <div class="flex-grow-1 d-flex align-items-center"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom fs-4" name="taskchildname"/> </div><a id="delChildTasK" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
+    var new_child_task = $('.child-wrap').append('<div class="child-task mb-4 box-l p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex align-items-center"> <div class="flex-grow-1 d-flex align-items-center"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom fs-4" style="background: transparent;" name="taskchildname"/> </div><a id="delChildTasK" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
     var mainTaskId = $('#TaskModal .modal-dialog .modal-content').attr('id');
     $(new_child_task).children().last().find('#taskchildname').focus();
     $(new_child_task).children().last().find('#taskchildname').focusout(function (e) {

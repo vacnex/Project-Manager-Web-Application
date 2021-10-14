@@ -126,14 +126,7 @@ $(document).ready(function () {
                     console.log(data);
                     $.each(data, function (indexInArray, valueOfChildElement) {
                       if (valueOfChildElement["fields"]["parentTask"] == valueOfElement["pk"]) {
-                        done = valueOfChildElement["fields"]["complete"];
-                        a = $('.child-wrap .child-task[id=' + valueOfElement["pk"] + '] .child-item').append('<li id="' + valueOfChildElement["pk"] + '"class="box input-group mb-3 d-flex align-items-center scale-hover p-1"> <div class="d-flex align-items-center p-2"> <input class="form-check-input mt-0" type="checkbox" ' + (done ? "checked" : "") + ' > </div><div id="taskchilditemname" class="fs-5 flex-grow-1 ps-2">' + valueOfChildElement["fields"]["taskName"] + '</div> <div id="delChildTasKItem" class="btn d-flex align-items-center"><i class="p-1 fas fa-times"></i></div></li>');
-                        if (valueOfChildElement["fields"]["tempComplete"]) {
-                          $('.child-wrap .child-task[id=' + valueOfElement["pk"] + '] .child-item').find('li[id=' + valueOfChildElement["pk"] + '] input[type=checkbox]').prop("indeterminate", true);
-                          // item = $('.child-wrap .child-task[id=' + valueOfElement["pk"] + '] .child-item').find('li[id=' + valueOfChildElement["pk"] + '] input[type=checkbox]').parent().parent()
-                          // console.log($(':nth-child(2)', item).after('<div id="failedChildTasKItem" class="m-1 p-2 rounded shadow btn btn-warning">Chưa đạt </div>'));
-                          // 
-                        }
+                        a = $('.child-wrap .child-task[id=' + valueOfElement["pk"] + '] .child-item').append('<li id="' + valueOfChildElement["pk"] + '"class="box input-group mb-3 d-flex align-items-center scale-hover p-1"><div id="taskchilditemname" class="fs-5 flex-grow-1 ps-2">' + valueOfChildElement["fields"]["taskName"] + '</div> <div id="delChildTasKItem" class="btn d-flex align-items-center"><i class="p-1 fas fa-times"></i></div></li>');
                       };
                     });
                   } else {
@@ -350,7 +343,7 @@ $(document).ready(function () {
 
   // thêm task item vào task child trong modal task chính
   $(document).on('click', "#addChildTaskItem", function () {
-    var new_child_task_item = $(this).parent().find('.child-item').append('<li class="box input-group mb-3 d-flex align-items-center scale-hover p-1"> <div class="d-flex align-items-center p-2"> <input class="form-check-input mt-0" type="checkbox"> </div><input id="taskchilditemname" type="text" class="form-control input-custom" > <div id="delChildTasKItem" class="btn d-flex align-items-center"><i class="p-1 fas fa-times"></i></div></li>');
+    var new_child_task_item = $(this).parent().find('.child-item').append('<li class="box input-group mb-3 d-flex align-items-center scale-hover p-1"> </div><input id="taskchilditemname" type="text" class="form-control input-custom" > <div id="delChildTasKItem" class="btn d-flex align-items-center"><i class="p-1 fas fa-times"></i></div></li>');
     $(new_child_task_item).children().last().find('input[type=text]').focus();
 
     $(new_child_task_item).children().last().find('input[type=text]').focusout(function (e) {
@@ -627,22 +620,5 @@ $(document).ready(function () {
   }
 
   $(document).on('click', '#TaskModal .child-item input[type=checkbox]', function () {
-
-    return false;
   });
-  function completeChildTaskItem(taskID, isComplete) {
-    $.ajax({
-      type: 'POST',
-      url: projectDetailPostUrl,
-      data: {
-        taskID: taskID,
-        isComplete: isComplete,
-        action: 'COMPLETE_CHILD_TASK_ITEM',
-      },
-      success: function (response) {
-        if (response.message == 'success') {
-        }
-      }
-    });
-  }
 });

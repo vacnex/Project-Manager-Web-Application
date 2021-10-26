@@ -53,7 +53,7 @@ html, body {
 }
 
 .choosed {
-	background-color: #f4f7fe;
+	background-color: #f4f7fe!important;
 }
 .choosed a {
 	color: #0277bd !important;

@@ -90,6 +90,20 @@ class HomeIndex(View):
         context = {'Users_list_Manager': Users_list_Manager,
                    'Projects_list_of_Teacher': Projects_list_of_Teacher, 'Student_task': Student_task}
         return TemplateResponse(request, 'Pages/home.html', context)
+    def post(self, request):
+      if request.POST['action'] == 'GET_CHILD_TASK':
+        tasks = Task.objects.filter(parentTask=request.POST['parentTaskId'])
+        return JsonResponse(serializers.serialize('json', tasks), status=200, safe=False)
+      elif request.POST['action'] == 'GET_CHILD_TASK_ITEM':
+        tasks = Task.objects.filter(parentTask=request.POST['childTaskId'])
+        return JsonResponse(serializers.serialize('json', tasks), status=200, safe=False)
+      elif request.POST['action'] == 'COMPLETE_TASK':
+        task = Task.objects.get(id=request.POST['taskID'])
+        taskState = json.loads(request.POST['taskState'])
+        task.tempComplete = taskState
+        task.save()
+        return JsonResponse({"message": 'success'}, status=200, safe=False)
+
 # endregion
 
 

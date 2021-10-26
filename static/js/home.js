@@ -1,4 +1,20 @@
 $(document).ready(function () {
+  $.ajaxSetup({
+    headers: { 'X-CSRFToken': getCookie('csrftoken') },
+  });
+  function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+      c_start = document.cookie.indexOf(c_name + '=');
+      if (c_start != -1) {
+        c_start = c_start + c_name.length + 1;
+        c_end = document.cookie.indexOf(';', c_start);
+        if (c_end == -1) c_end = document.cookie.length;
+        return unescape(document.cookie.substring(c_start, c_end));
+      }
+      console.log();
+    }
+    return '';
+  }
   /* #region  Teacker View */
   var breakpoint = {
     sm: 576,
@@ -76,7 +92,7 @@ $(document).ready(function () {
   $(document).on('click', '#year-list > li', function () {
     let year = $(this).attr('data-filtertarget');
     $("#ListTeacherProject").slick('slickUnfilter');
-    if (year !='ALL') {
+    if (year != 'ALL') {
       $.each($('.slick-track').children(), function (indexInArray, valueOfElement) {
         if (year == $(this).find('.year').text()) {
           $("#ListTeacherProject").slick('slickFilter', function () {
@@ -91,8 +107,8 @@ $(document).ready(function () {
         $(this).addClass('choosed').siblings().removeClass('choosed');
       }
     }
-    
-    
+
+
   });
   /* #endregion */
   /* #region  Manager View */
@@ -108,32 +124,102 @@ $(document).ready(function () {
   });
   /* #endregion */
   /* #region  Student View */
-  // var timer =  setInterval(function () {
-  //   $.ajax({
-  //     type: "GET",
-  //     url: '/api/updatetask/',
-  //     success: function (response) {
-  //       if (response == "Teacher") {
-  //         clearInterval(timer);
-  //       } else if (response == "Reviewer") {
-  //         clearInterval(timer);
-  //       } else if (response == "Manager") {
-  //         clearInterval(timer);
-  //       } else {
-  //         console.log(response);
-  //         data = JSON.parse(response)[0];
-  //         if (data) {
-  //           a = $('.box-scroll li').last().attr('id');
-  //           if (parseInt(a) != data['pk']) {
-  //             $('.box-scroll').append('<li id=' + data['pk'] + ' class="box box-item position-relative scale-hover mt-4 mx-xxl-5 mx-xl-0 mx-sm-3 mx-4"> <a id="btn-tdel" class="btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim"> <i class="fas fa-times"></i> </a> <div class="row p-xxl-2 p-3" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@edittask"> <div class="col-sm-2 d-flex"> <div id="tprio" class="box box-label w-100 h-100 p-2"> ' + data['fields']['priority'] + ' </div> </div> <div class="col-sm-10 d-flex align-items-center"> <div class="line mx-xxl-3 mx-xl-2 mx-lg-2 mx-md-2"></div> <div class="task-Content flex-fill ps-xxl-1 ps-3 mt-sm-0 mt-3"> <h3 id="tname">' + data['fields']['taskName'] + '</h3> <p id="tdesc">' + data['fields']['taskDesc'] + '</p> <div class="row assignment-info"> <div class="col-md-6"> <div class="todoDate">' + data['fields']['deadline'] + '</div> </div> <div id="daysleft" class="col-md-6"> NaN </div> </div> </div> </div> </div> </li>');
-  //           }
-  //         }
-  //       }
+  
+  $(document).on('click', '#StudentTaskList .box-item', function () {
+    item = this
+    if ($(this).hasClass('choosed')) {
+      $(this).toggleClass('choosed').siblings().removeClass('choosed');
+      $('#EmptyList').removeClass('d-none');
+      $('#StudentChildTaskList').addClass('d-none');
+    } else {
+      $(this).toggleClass('choosed').siblings().removeClass('choosed');
+      $("#EmptyList").addClass('d-none');
+      $('#StudentChildTaskList').removeClass('d-none');
+    }
+    $.ajax({
+      type: "POST",
+      url: "/home/",
+      data: {
+        parentTaskId: $(this).attr('id'),
+        action: "GET_CHILD_TASK"
+      },
+      success: function (response) {
+        tasksInstance = JSON.parse(response);
+        console.log(tasksInstance);
+        if ($('#StudentChildTaskList').children().length) {
+          $('#StudentChildTaskList').empty();
+        }
+        $.each(tasksInstance, function (indexInArray, valueOfElement) {
+          $('#StudentChildTaskList').append('<li id=' + valueOfElement.pk + ' class="box box-item mb-3" style="cursor: unset;"> <h2 class="accordion-header"><button id="BtnViewChildTaskItem" class="accordion-button collapsed ' + (valueOfElement.fields['tempComplete'] ? 'task-done' : 'task-processing') + '" type="button" style="border-radius: 10px;" data-bs-toggle="collapse" data-bs-target="#ViewChildTask' + indexInArray + 'Content" aria-expanded="false" aria-controls="">' + valueOfElement.fields['taskName'] + '</button> </h2> <div id="ViewChildTask' + indexInArray +'Content" class="accordion-collapse collapse" aria-labelledby=""> <ul class="accordion-body"></ul> </div></div> </li>');
+        });
+      }
+    });
+  });
+  $(document).on('show.bs.collapse	', '.collapse', function () {
+    wraper = $(this).children('.accordion-body')
+    console.log(wraper);
+    $(wraper).html('');
+    $.ajax({
+      type: "POST",
+      url: "/home/",
+      data: {
+        childTaskId: $(this).parent().attr('id'),
+        action: "GET_CHILD_TASK_ITEM"
+      },
+      success: function (response) {
+        childTaskInstance = JSON.parse(response);
+        console.log(childTaskInstance);
+        $.each(childTaskInstance, function (indexInArray, valueOfElement) {
 
-  //     },
-  //     error: function (data) {
-  //     }
-  //   });
-  // }, 5000);
+          $(wraper).append('<li id="' + valueOfElement.pk + '" class="box input-group mb-3 d-flex align-items-center scale-hover p-3 ' + (valueOfElement.fields['tempComplete'] ? 'task-done' : '') + '"><input class="form-check-input" type="checkbox" value="" id="chk' + valueOfElement.pk + '" ' + (valueOfElement.fields['tempComplete']?'checked':'') + '><label for="chk' + valueOfElement.pk + '" id="taskchilditemname" class="fs-5 flex-grow-1 ps-2">' + valueOfElement.fields['taskName'] + '</label> </li>');
+        });
+        
+      }
+    });
+  });
+  $(document).on('click', '.accordion-body li input[type=checkbox]', function () {
+    let li = $(this).parent();
+    let parentLi = li.parent().parent().parent();
+    let taskDone = 0;
+    let taskItemNumber = li.parent().children().length
+    let taskState = $(this).is(':checked')
+    li.toggleClass('animate__animated animate__flipInX');
+    li.toggleClass('task-done');
+    setTimeout(function () {
+      li.removeClass("animate__animated animate__flipInX");
+    }, 500);
+    $.each(li.parent().children(), function (indexInArray, valueOfElement) {
+      let item = $(this)
+      if ($(item).hasClass('task-done')) {
+        taskDone++;
+      }
+    });
+    CompleteTask(li.attr('id'), taskState)
+    if (taskDone == taskItemNumber) {
+      $('#BtnViewChildTaskItem', parentLi).addClass('task-done');
+      $('#BtnViewChildTaskItem', parentLi).removeClass('task-processing');
+      CompleteTask(parentLi.attr('id'), true)
+      
+    } else {
+      $('#BtnViewChildTaskItem', parentLi).removeClass('task-done');
+      $('#BtnViewChildTaskItem', parentLi).addClass('task-processing');
+      CompleteTask(parentLi.attr('id'), false)
+    }
+    
+  });
+  function CompleteTask(taskID, taskState) {
+  $.ajax({
+    type: "POST",
+    url: "/home/",
+    data: {
+      taskID: taskID,
+      taskState: taskState,
+      action: "COMPLETE_TASK"
+    },
+    success: function (response) {
+      
+    }
+  });
+}
   /* #endregion */
 });

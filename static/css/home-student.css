@@ -1,0 +1,23 @@
+.task-done{
+  background-color: #8df0b7!important;
+  color: white!important;
+}
+.task-done-selected{
+  background-color: #52DA89;
+}
+.task-processing{
+  background-color: #E9E7FB!important;
+}
+.process-bar-green{
+  background-color: #1AE06F!important;
+}
+.process-bar-red{
+  background-color:#FF5D5D!important;
+}
+.process-bar-yellow{
+  background-color: #F98A4A!important;
+}
+.accordion-button:not(.collapsed){
+  border-bottom-right-radius: 0!important;
+  border-bottom-left-radius: 0!important;
+}

@@ -14,7 +14,17 @@
 {% block scripts %}
 {{ block.super }}
 <script src="{% static 'js/library/slick.min.js' %}"></script>
-<script src="{% static 'js/Home/home.js' %}"></script>
+{% endblock %}
+{% block SpecsScripts%}
+{% if not user.is_superuser and not user.is_Teacher and not user.is_Manager and not user.is_Reviewer%}
+<script src="{% static 'js/Home/home-student.js' %}"></script>
+{% elif not user.is_superuser and user.is_Teacher and not user.is_Manager and not user.is_Reviewer %}
+<script src="{% static 'js/Home/home-teacher.js' %}"></script>
+{% elif not user.is_superuser and not user.is_Teacher and user.is_Manager and not user.is_Reviewer %}
+<script src="{% static 'js/Home/home-manager.js' %}"></script>
+{% elif not user.is_superuser and not user.is_Teacher and not user.is_Manager and user.is_Reviewer %}
+<script src="{% static 'js/Home/home-reviewer.js' %}"></script>
+{% endif %}
 {% endblock %}
 {% block title %}
 Home

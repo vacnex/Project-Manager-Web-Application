@@ -86,7 +86,6 @@ class HomeIndex(View):
             if len(cur_Project) > 0:
                 Student_task = Task.objects.filter(Project=Project.objects.get(
                     Users=request.user))
-                print("HomeView", Student_task)
         context = {'Users_list_Manager': Users_list_Manager,
                    'Projects_list_of_Teacher': Projects_list_of_Teacher, 'Student_task': Student_task}
         return TemplateResponse(request, 'Pages/home.html', context)

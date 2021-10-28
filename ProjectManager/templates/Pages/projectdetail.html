@@ -3,12 +3,12 @@
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/ProjectDetail/projectdetail.css' %}" type="text/css">
-<link rel="stylesheet" href="css/Library/daterangepicker.css" type="text/css" />
+<link rel="stylesheet" href="{% static 'css/Library/daterangepicker.css' %}" type="text/css" />
 {% endblock %}
 {% block scripts %}
 {{ block.super }}
-<script type="text/javascript" src="js/library/moment.min.js"></script>
-<script type="text/javascript" src="js/library/daterangepicker.min.js"></script>
+<script src="{% static 'js/library/moment.min.js' %}"></script>
+<script src="{% static 'js/library/daterangepicker.min.js' %}"></script>
 <script src="{% static 'js/ProjectDetail/projectdetail.js' %}"></script>
 {% endblock %}
 {% block title %}

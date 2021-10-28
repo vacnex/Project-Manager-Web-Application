@@ -2,14 +2,14 @@
 {% load static %}
 {% block css %}
 {{ block.super }}
-<link rel="stylesheet" href="{% static 'css/projectdetail.css' %}" type="text/css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" type="text/css" />
+<link rel="stylesheet" href="{% static 'css/ProjectDetail/projectdetail.css' %}" type="text/css">
+<link rel="stylesheet" href="css/Library/daterangepicker.css" type="text/css" />
 {% endblock %}
 {% block scripts %}
 {{ block.super }}
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script src="{% static 'js/projectdetail.js' %}"></script>
+<script type="text/javascript" src="js/library/moment.min.js"></script>
+<script type="text/javascript" src="js/library/daterangepicker.min.js"></script>
+<script src="{% static 'js/ProjectDetail/projectdetail.js' %}"></script>
 {% endblock %}
 {% block title %}
 Cập Nhật Công Việc

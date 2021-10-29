@@ -69,7 +69,7 @@ class HomeIndex(View):
         cur_Project = Project.objects.filter(Users=current_user)
         student_project_data, Projects_list_of_Teacher = [], []
         Users_list_Manager = []
-        Student_task = None
+        Student_task, StudentProject = None,None
         # User = get_user_model()
         if request.user.is_superuser:
             return HttpResponseRedirect(reverse('admin:index'))
@@ -82,12 +82,11 @@ class HomeIndex(View):
             Projects_list_of_Teacher = cur_Project
         else:
             StudentProject = Project.objects.get(Users=request.user)
-
             if len(cur_Project) > 0:
                 Student_task = Task.objects.filter(Project=Project.objects.get(
                     Users=request.user))
         context = {'Users_list_Manager': Users_list_Manager,
-                   'Projects_list_of_Teacher': Projects_list_of_Teacher, 'Student_task': Student_task}
+                   'Projects_list_of_Teacher': Projects_list_of_Teacher, 'Student_task': Student_task, 'StudentProject': StudentProject}
         return TemplateResponse(request, 'Pages/home.html', context)
     def post(self, request):
       if request.POST['action'] == 'GET_CHILD_TASK':

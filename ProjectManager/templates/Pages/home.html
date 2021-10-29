@@ -157,9 +157,15 @@ Home
     <div class="col-4">
       <div class="box m-3 p-4">
         <div class="box p-3">
-          <h5>tên đồ án</h5>
-          <p>chủ đề : asdasda</p>
-          <p>Giáo viên: abcasdasd</p>
+          <h5>{{StudentProject.Project_Name | default_if_none:"Tên đồ án chưa cập nhật"}}</h5>
+          <p>chủ đề : {{StudentProject.Type | default_if_none:"Chưa cập nhật"}}</p>
+          <p>Giáo viên: 
+          {% for u in StudentProject.Users.all %}
+            {% if u.is_Teacher %}
+              {{u.get_full_name}}
+            {% endif %}
+          {% endfor %}
+            </p>
         </div>
         <div class="p-3">
           <p><span>3</span>/<span>6</span> công việc đã hoàn thành</p>

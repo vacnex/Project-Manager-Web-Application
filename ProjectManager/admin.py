@@ -14,10 +14,10 @@ class MyUserAdmin(UserAdmin):
     form = MyUserChangeForm
     fieldsets = UserAdmin.fieldsets + (
         (None, {'fields': ('gender',
-                           'address', 'phone_number', 'Class', 'is_Manager', 'is_Teacher', 'is_Reviewer')}),
+                           'address', 'phone_number', 'Class', 'year', 'is_Manager', 'is_Teacher', 'is_Reviewer')}),
     )
     list_display = ('username', 'email',
-                    'is_staff', 'Class', 'is_Manager', 'is_Teacher', 'is_Reviewer')
+                    'is_staff', 'Class', 'year', 'is_Manager', 'is_Teacher', 'is_Reviewer')
 
 
 class MySchoolYearAdmin (admin.ModelAdmin):

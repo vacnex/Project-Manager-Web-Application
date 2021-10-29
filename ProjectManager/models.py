@@ -18,6 +18,8 @@ class User(AbstractUser):
         validators=[phone_regex], max_length=10, blank=True)
     Class = models.ForeignKey(
         'SchoolClass', on_delete=models.CASCADE, default=None, blank=True, null=True)
+    year = models.ForeignKey(
+        'SchoolYear', on_delete=models.CASCADE, default=None, blank=True, null=True)
 
     def __str__(self):
         return self.get_full_name()

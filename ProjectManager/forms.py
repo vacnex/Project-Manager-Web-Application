@@ -42,5 +42,5 @@ class LoginForm(AuthenticationForm):
 class AssignmentForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['Project_Name','Users', ]
+        fields = ['Project_Name', 'Users', 'schoolYear']
 

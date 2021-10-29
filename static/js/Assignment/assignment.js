@@ -17,42 +17,74 @@ $(document).ready(function () {
 			},
 			'.assignment_list .box-item'
 		);
-	}
-
-	$(document).on('keyup', '#myInput', function () {
+  } else {
+    $('#id_Years').selectpicker('mobile');
+    $('#id_Student').selectpicker('mobile');
+    $('#id_Teacher').selectpicker('mobile');
+    $('#editAssignmentItemBox #selNewTeach').selectpicker('mobile');
+    $('#editAssignmentItemBox #selNewStudent').selectpicker('mobile');
+  }
+  
+  $(document).on('keyup', '#AssignmentSearch', function () {
 		var value = $(this).val().toLowerCase();
 		$('.list-wraper li').filter(function () {
 			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
 		});
-	});
+  });
+  $('#id_Student').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+    $.ajax({
+      type: "POST",
+      url: '/assignment/',
+      data: {
+        Student: $(this).val(),
+        action: 'GET_STUDENT_YEAR',
+      },
+      success: function (response) {
+        let yearInstance = JSON.parse(response);
+        console.log();
+        if (yearInstance['year']) {
+          $('#id_Years').prop('disabled', true);
+          $('#id_Years').selectpicker('refresh');
+          $('#id_Years').selectpicker('val', yearInstance['year']);
+        } else {
+          $('#id_Years').selectpicker('val', null);
+          $('#id_Years').prop('disabled', false);
+          $('#id_Years').selectpicker('refresh');
+        }
+      }
+    });
+  });
+
 	$('#assignmentForm').submit(function (e) {
-		e.preventDefault();
+    e.preventDefault();
+    // console.log($('#id_Teacher').val(), $('#id_Student').val(), $('#id_Years').val());
 		$.ajax({
 			type: 'POST',
 			url: '/assignment/',
 			data: {
 				Teacher: $('#id_Teacher').val(),
-				Student: $('#id_Student').val(),
-				action: 'add',
+        Student: $('#id_Student').val(),
+        Year: $('#id_Years').val(),
+				action: 'ASSIGNMENT_CREATE',
 			},
 			success: function (response) {
 				$('#assignmentForm').trigger('reset');
-				var asm_instance = JSON.parse(response);
-				var ass =
+				let asmInstance = JSON.parse(response);
+				let li =
 					'<li class="box box-item scale-hover position-relative m-xxl-4 m-xl-3 m-lg-3 m-md-4 m-sm-4 m-3 mb-xl-4 mb-lg-4 mb-4" onclick=""><a id="btn-asdel" class="btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim"><i class="fas fa-times"></i></a><div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3"><div class="col-sm-2 mb-4 mb-md-0"><div id="pid" class="box-label w-100 h-100 p-md-0 p-1">' +
-					asm_instance['id'] +
-          '</div></div><div class="col-sm-10"> <div class="asm-Content ms-xxl-5 ms-md-2"> <h3 class="pname">Tên đề tài chưa cập nhật</h3> <div class="row assignment-info"> <div class="col-xl-6"> <span style="color: blue"> GVHD: </span> <span id="' +
-          asm_instance['tid'] + '" class="me-2 tname">' + asm_instance['tname'] + '</span> </div> <div class="col-xl-6"> <span style="color: blue"> Sinh Viên:</span> <span id="' +
-          asm_instance['sid'] +'" class="me-2 sname">' +
-					asm_instance['sname'] +
+          asmInstance['id'] +
+          '</div></div><div class="col-sm-10"> <div class="asm-Content ms-xxl-5 ms-md-2"> <h3 class="pname">Tên đề tài chưa cập nhật</h3><p>Khoá: ' + asmInstance['year']+'</p> <div class="row assignment-info"> <div class="col-xl-6"> <span style="color: blue"> GVHD: </span> <span id="' +
+          asmInstance['tid'] + '" class="me-2 tname">' + asmInstance['tname'] + '</span> </div> <div class="col-xl-6"> <span style="color: blue"> Sinh Viên:</span> <span id="' +
+          asmInstance['sid'] +'" class="me-2 sname">' +
+          asmInstance['sname'] +
 					'</span> </div> </div> </div> </div></div></li>';
-				ass = $(ass).addClass('new-item');
-				$('.assignment_list .box-scroll').append(ass);
+        li = $(li).addClass('new-item');
+        $('.assignment_list .box-scroll').append(li);
 				$('.assignment_list .box-scroll').scrollTop(
 					$('.assignment_list .box-scroll')[0].scrollHeight
 				);
 				if (!isTouchDevice()) {
-					ass = $(ass).find('#btn-asdel').addClass('d-none');
+          li = $(li).find('#btn-asdel').addClass('d-none');
 				}
 			},
 			error: function (response) {

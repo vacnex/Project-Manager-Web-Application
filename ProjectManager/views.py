@@ -6,7 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
 from django.views import View
-from ProjectManager.models import Project, User, Task
+from ProjectManager.models import Project, User, Task, SchoolYear
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.http import JsonResponse
@@ -296,6 +296,7 @@ class TeacherAssignment(View):
             raise PermissionDenied
         else:
             teacher, student, pjid = [], [], []
+            years = SchoolYear.objects.all()
             projects = Project.objects.all()
             for user in User.objects.all():
                 if user.is_Teacher:
@@ -304,20 +305,21 @@ class TeacherAssignment(View):
                     student.append(user)
 
             context = {'teacher': teacher,
-                       'student': student, 'projects': projects}
+                       'student': student, 'projects': projects, 'years': years}
             return render(request, 'Pages/assignment.html', context)
     # endregion
 
     def post(self, request):
         if request.is_ajax:
-            if request.POST['action'] == 'add':
-                print('running add assignment')
+            if request.POST['action'] == 'ASSIGNMENT_CREATE':
                 student = User.objects.filter(
                     id=request.POST.get('Student', None))
                 teacher = User.objects.filter(
                     id=request.POST.get('Teacher', None))
+                year = SchoolYear.objects.get(Year_ID=request.POST.get('Year', None))
                 data = {
                     'Users': teacher | student,
+                    'schoolYear': year
                 }
                 assignment_form = AssignmentForm(data)
                 if assignment_form.is_valid():
@@ -334,6 +336,7 @@ class TeacherAssignment(View):
                             sname = user.get_full_name()
                     newassignment = {
                         "id": newrecord.id,
+                        "year": cur_Project.schoolYear.Year_ID,
                         "tid": tid,
                         "sid": sid,
                         "tname": tname,
@@ -343,6 +346,13 @@ class TeacherAssignment(View):
                 else:
                     print(assignment_form.errors)
                     return JsonResponse({"error": assignment_form.errors}, status=400)
+            elif request.POST['action'] == 'GET_STUDENT_YEAR':
+              student = User.objects.get(id=request.POST['Student'])
+              year = student.year.Year_ID if student.year else None
+              context = {
+                  'year': year,
+              }
+              return JsonResponse(json.dumps(context), status=200, safe=False)
             elif request.POST['action'] == 'del':
                 pk = request.POST['pk']
                 assignment = Project.objects.get(id=int(pk))

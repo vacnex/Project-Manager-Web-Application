@@ -40,11 +40,7 @@ Phân Giáo Viên
 							<div class="col-sm-10">
 								<div class="asm-Content ms-xxl-5 ms-md-2">
 									<h3 class="pname">
-										{% if not p.Project_Name %}
-										Tên đề tài chưa cập nhật
-										{% else %}
-										{{p.Project_Name}}
-										{% endif %}
+                    {{p.Project_Name|default_if_none:"Tên đồ án chưa cập nhật" }}
 									</h3>
 									<div class="row assignment-info">
 										<div class="col-xl-6">

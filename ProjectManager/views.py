@@ -12,6 +12,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.core.exceptions import PermissionDenied
 import json
+from django.core.exceptions import ObjectDoesNotExist
 from django.template.response import TemplateResponse
 from django.core import serializers
 
@@ -81,7 +82,10 @@ class HomeIndex(View):
         elif request.user.is_Teacher:
             Projects_list_of_Teacher = cur_Project
         else:
+          try:
             StudentProject = Project.objects.get(Users=request.user)
+          except ObjectDoesNotExist:
+            StudentProject = None
             if len(cur_Project) > 0:
                 Student_task = Task.objects.filter(Project=Project.objects.get(
                     Users=request.user))

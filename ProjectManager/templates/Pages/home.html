@@ -147,10 +147,9 @@ Home
   <!-- #endregion -->
   <!-- #region Sinh viên -->
   {% else %}
-  {% if request_pj%}
-  <div class="Request">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ProjectRegister">Đăng kí đề
-      tài</button>
+  {% if not StudentProject%}
+  <div class="box mx-2">
+    bạn chưa được phân giáo viên
   </div>
   {% else %}
   <div class="mx-2 row">

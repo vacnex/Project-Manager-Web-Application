@@ -2,7 +2,6 @@ $(document).ready(function () {
   function dayleft(endDate) {
     endday = (endDate.trim().split('n')[1]).trim();
     endDate2 = endday.split('/');
-    console.log(endDate2[1], endDate2[0], endDate2[2]);
     dateleft = Math.ceil(
       (new Date(endDate2[1] + '/' + endDate2[0] + '/' + endDate2[2]) -
         new Date()) /
@@ -34,20 +33,41 @@ $(document).ready(function () {
     $('#TaskModal .deadline .input-group').addClass('d-none');
     $('#TaskModal .deadline input[type="date"]').removeClass('d-none');
   }
+  duDatepicker('#deadline', {
+    i18n: new duDatepicker.i18n.Locale('tháng 1_tháng 2_tháng 3_tháng 4_tháng 5_tháng 6_tháng 7_tháng 8_tháng 9_tháng 10_tháng 11_tháng 12'.split('_'), 'Thg 01_Thg 02_Thg 03_Thg 04_Thg 05_Thg 06_Thg 07_Thg 08_Thg 09_Thg 10_Thg 11_Thg 12'.split('_'), 'chủ nhật_thứ hai_thứ ba_thứ tư_thứ năm_thứ sáu_thứ bảy'.split('_'), 'CN_T2_T3_T4_T5_T6_T7'.split('_'), 'CN_T2_T3_T4_T5_T6_T7'.split('_'), 1, {
+      btnOk: 'ok',
+      btnCancel: 'huỷ',
+      btnClear: 'xoá'
+    }), format: 'dd/mm/yyyy', range: true, rangeDelim: ' đến ', clearBtn: true, cancelBtn: true});
+  // $('input[name="dates"]').daterangepicker({
+  //   locale: {
+  //     format: 'DD/MM/YYYY',
+  //     separator: ' đến ',
+  //     customRangeLabel: 'Tuỳ chọn',
+  //     daysOfWeek: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+  //     monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+  //     firstDay: 1,
+  //   },
+  //   drops: "up",
+  //   linkedCalendars: false,
+  //   autoApply: false,
+  // });
 
-  $('input[name="dates"]').daterangepicker({
-    locale: {
-      format: 'DD/MM/YYYY',
-      separator: ' đến ',
-      customRangeLabel: 'Tuỳ chọn',
-      daysOfWeek: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
-      monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-      firstDay: 1,
-    },
-    drops: "up",
-    linkedCalendars: false,
-    autoApply: true,
-  });
+  // {
+  //   months: null,
+  //     shortMonths: null,
+  //       days: null,
+  //         shortDays: null,
+  //           shorterDays: null,
+  //             firstDay: 1,
+  //               dict: {
+      // btnOk: '',
+      //   btnCancel: '',
+      //     btnClear: '';
+  //   }
+  // }
+
+
 
   var projectID = $('.task-header .row').attr('id');
   var projectDetailPostUrl = '/projectdetail/' + projectID + '/'
@@ -65,16 +85,28 @@ $(document).ready(function () {
       deadline = $(btn).find('#tdeadline').text().trim();
       $('#TaskModal #taskname').val(taskname);
       $('#TaskModal #taskdesc').val(taskdesc);
-      $.each($('#TaskModal .prio-sel .btn-group input'), function (indexInArray, valueOfElement) {
-        if ($(this).val() == taskprio) {
-          $(this).attr('checked', true);
-        }
-      });
-      if (deadline) {
-        $('#TaskModal .deadline #deadline').data('daterangepicker').setStartDate((deadline.trim().split('đ')[0]).trim());
-        $('#TaskModal .deadline #deadline').data('daterangepicker').setEndDate((deadline.trim().split('n')[1]).trim());
+      
+      if (taskprio) {
+        $.each($('#TaskModal .prio-sel .btn-group input'), function (indexInArray, valueOfElement) {
+          if ($(this).val() == taskprio) {
+            $(this).prop('checked', true);
+          }
+        });
       } else {
-        $('#TaskModal .deadline #deadline').val('');
+        $.each($('#TaskModal .prio-sel .btn-group input'), function (indexInArray, valueOfElement) {
+          if ($(this).prop('checked')) {
+            console.log($(this).prop('checked',false));
+          }
+        });
+      }
+      if (deadline) {
+        // $('#TaskModal .deadline #deadline').data('daterangepicker').setStartDate((deadline.trim().split('đ')[0]).trim());
+        // $('#TaskModal .deadline #deadline').data('daterangepicker').setEndDate((deadline.trim().split('n')[1]).trim());
+        duDatepicker('#deadline', 'setValue',
+          (deadline.trim().split('đ')[0]).trim() + ' đến ' + (deadline.trim().split('n')[1]).trim());
+      } else {
+        // $('#TaskModal .deadline #deadline').val('');
+        duDatepicker('#deadline', 'setValue','');
       }
 
       $('.child-wrap').empty();
@@ -100,14 +132,11 @@ $(document).ready(function () {
                 success: function (response) {
                   data = JSON.parse(response);
                   if (data.length) {
-                    console.log(data);
                     $.each(data, function (indexInArray, valueOfChildElement) {
                       if (valueOfChildElement["fields"]["parentTask"] == valueOfElement["pk"]) {
                         a = $('.child-wrap .child-task[id=' + valueOfElement["pk"] + '] .child-item').append('<li id="' + valueOfChildElement["pk"] + '"class="box input-group mb-3 d-flex align-items-center scale-hover p-1"><div id="taskchilditemname" class="fs-5 flex-grow-1 ps-2">' + valueOfChildElement["fields"]["taskName"] + '</div> <div id="delChildTasKItem" class="btn d-flex align-items-center"><i class="p-1 fas fa-times"></i></div></li>');
                       };
                     });
-                  } else {
-                    console.log('empty');
                   }
                 }
               });
@@ -118,6 +147,22 @@ $(document).ready(function () {
     }
   });
 
+  $('#deadline').on('datechanged', function (e) {
+    console.log($(this).val());
+  });
+
+  // $('#deadline').focusout(function (e) {
+  //   if ($(this).val()) {
+  //     let mainTaskId = $(this).parent().parent().parent().parent().parent().attr('id');
+  //     editTask(mainTaskId, null, null, null, $(this).val());
+  //   } else {
+  //     $(this).val('');
+  //   }
+  // });
+  // $('#deadline').on('cancel.daterangepicker', function () {
+  //   $(this).prop('value', '');
+  //   console.log($(this).val());
+  // });
   /* #region  chkbox */
   // $('.todoScroll').on('click', '.chkb', function () {
   //     $(this).toggleClass('done');
@@ -399,11 +444,12 @@ $(document).ready(function () {
   });
 
   // chọn thời hạn task chính
-  $(document).on('change', '#TaskModal .deadline #deadline', function () {
-    mainTaskId = $(this).parent().parent().parent().parent().parent().attr('id');
-    mainTaskDeadline = $(this).val();
-    editTask(mainTaskId, null, null, null, mainTaskDeadline);
-  });
+  // $(document).on('change', '#TaskModal .deadline #deadline', function () {
+  //   mainTaskId = $(this).parent().parent().parent().parent().parent().attr('id');
+  //   mainTaskDeadline = $(this).val();
+  //   console.log(mainTaskDeadline);
+  //   // editTask(mainTaskId, null, null, null, mainTaskDeadline);
+  // });
 
 
   function editTask() {

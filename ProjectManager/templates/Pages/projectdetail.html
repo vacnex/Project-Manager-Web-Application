@@ -4,11 +4,13 @@
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/ProjectDetail/projectdetail.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'css/Library/daterangepicker.css' %}" type="text/css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dmuy/datepicker@2.0.1/dist/duDatepicker.css" type="text/css" />
 {% endblock %}
 {% block scripts %}
 {{ block.super }}
 <script src="{% static 'js/library/moment.min.js' %}"></script>
 <script src="{% static 'js/library/daterangepicker.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@dmuy/datepicker@2.0.1/dist/duDatepicker.js"></script>
 <script src="{% static 'js/ProjectDetail/projectdetail.js' %}"></script>
 {% endblock %}
 {% block title %}
@@ -191,9 +193,13 @@ Cập Nhật Công Việc
                           </div>
                         </div>
                         <div class="deadline mb-4">
-                          <div class="input-group">
+                          <!-- <div class="input-group">
                             <span class="input-group-text">Thời hạn</span>
                             <input id="deadline" name="dates" type="text" class="form-control" aria-describedby="date-sel" required readonly>
+                          </div> -->
+                          <div class="input-group">
+                            <span class="input-group-text">Thời hạn</span>
+                            <input id="deadline" type="text" class="form-control" aria-describedby="date-sel" required readonly>
                           </div>
                           <div class="mb-input-group">
                             <input class="d-none" type="date" name="test" id="">

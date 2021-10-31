@@ -39,34 +39,6 @@ $(document).ready(function () {
       btnCancel: 'huỷ',
       btnClear: 'xoá'
     }), format: 'dd/mm/yyyy', range: true, rangeDelim: ' đến ', clearBtn: true, cancelBtn: true});
-  // $('input[name="dates"]').daterangepicker({
-  //   locale: {
-  //     format: 'DD/MM/YYYY',
-  //     separator: ' đến ',
-  //     customRangeLabel: 'Tuỳ chọn',
-  //     daysOfWeek: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
-  //     monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-  //     firstDay: 1,
-  //   },
-  //   drops: "up",
-  //   linkedCalendars: false,
-  //   autoApply: false,
-  // });
-
-  // {
-  //   months: null,
-  //     shortMonths: null,
-  //       days: null,
-  //         shortDays: null,
-  //           shorterDays: null,
-  //             firstDay: 1,
-  //               dict: {
-      // btnOk: '',
-      //   btnCancel: '',
-      //     btnClear: '';
-  //   }
-  // }
-
 
 
   var projectID = $('.task-header .row').attr('id');
@@ -100,12 +72,9 @@ $(document).ready(function () {
         });
       }
       if (deadline) {
-        // $('#TaskModal .deadline #deadline').data('daterangepicker').setStartDate((deadline.trim().split('đ')[0]).trim());
-        // $('#TaskModal .deadline #deadline').data('daterangepicker').setEndDate((deadline.trim().split('n')[1]).trim());
         duDatepicker('#deadline', 'setValue',
           (deadline.trim().split('đ')[0]).trim() + ' đến ' + (deadline.trim().split('n')[1]).trim());
       } else {
-        // $('#TaskModal .deadline #deadline').val('');
         duDatepicker('#deadline', 'setValue','');
       }
 
@@ -148,21 +117,10 @@ $(document).ready(function () {
   });
 
   $('#deadline').on('datechanged', function (e) {
-    console.log($(this).val());
+    mainTaskId = $(this).parents('.modal-content').attr('id');
+    editTask(mainTaskId, null, null, null, $(this).val());
   });
 
-  // $('#deadline').focusout(function (e) {
-  //   if ($(this).val()) {
-  //     let mainTaskId = $(this).parent().parent().parent().parent().parent().attr('id');
-  //     editTask(mainTaskId, null, null, null, $(this).val());
-  //   } else {
-  //     $(this).val('');
-  //   }
-  // });
-  // $('#deadline').on('cancel.daterangepicker', function () {
-  //   $(this).prop('value', '');
-  //   console.log($(this).val());
-  // });
   /* #region  chkbox */
   // $('.todoScroll').on('click', '.chkb', function () {
   //     $(this).toggleClass('done');
@@ -542,7 +500,7 @@ $(document).ready(function () {
       });
     }
     // sửa deadline task chính
-    else if (mainTaskId, mainTaskDeadline) {
+    else if (mainTaskId, mainTaskDeadline || !mainTaskDeadline) {
       $.ajax({
         type: 'POST',
         url: projectDetailPostUrl,
@@ -553,9 +511,13 @@ $(document).ready(function () {
         },
         success: function (response) {
           if (response.message == 'success') {
-            $('.box-scroll').find('li[id = ' + mainTaskId + '] #tdeadline').text(mainTaskDeadline);
-            $('.box-scroll').find('li[id = ' + mainTaskId + '] #daysleft').text(dayleft(mainTaskDeadline));
-
+            if (mainTaskDeadline) {
+              $('.box-scroll').find('li[id = ' + mainTaskId + '] #tdeadline').text(mainTaskDeadline);
+              $('.box-scroll').find('li[id = ' + mainTaskId + '] #daysleft').text(dayleft(mainTaskDeadline));
+            } else {
+              $('.box-scroll').find('li[id = ' + mainTaskId + '] #tdeadline').text('');
+              $('.box-scroll').find('li[id = ' + mainTaskId + '] #daysleft').text('');
+            }
             if ($('.box-scroll').find('li[id = ' + mainTaskId + '] #tdesc').text()) {
               var oldTName = $('.box-scroll').find('li[id=' + mainTaskId + '] #tname').text();
               $('.box-scroll').find('li[id=' + mainTaskId + '] #tname').replaceWith('<h3 id="tname">' + oldTName + '</h3 >');

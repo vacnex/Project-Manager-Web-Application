@@ -3,14 +3,11 @@
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/ProjectDetail/projectdetail.css' %}" type="text/css">
-<link rel="stylesheet" href="{% static 'css/Library/daterangepicker.css' %}" type="text/css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dmuy/datepicker@2.0.1/dist/duDatepicker.css" type="text/css" />
+<link rel="stylesheet" href="{% static 'css/Library/duDatepicker.min.css' %}" type="text/css" />
 {% endblock %}
 {% block scripts %}
 {{ block.super }}
-<script src="{% static 'js/library/moment.min.js' %}"></script>
-<script src="{% static 'js/library/daterangepicker.min.js' %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/@dmuy/datepicker@2.0.1/dist/duDatepicker.js"></script>
+<script src="{% static 'js/library/duDatepicker.min.js' %}"></script>
 <script src="{% static 'js/ProjectDetail/projectdetail.js' %}"></script>
 {% endblock %}
 {% block title %}

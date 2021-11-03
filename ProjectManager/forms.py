@@ -29,14 +29,9 @@ class RegistionForm(UserCreationForm):
 
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(max_length=12, widget=forms.TextInput(
-        attrs={'class': 'form-control input-custom input-no-focus input-bottom-border', 'placeholder': 'Tài khoản', 'autofocus': '', 'autocapitalize':'none'}))
-    password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'class': 'form-control input-custom input-no-focus input-bottom-border', 'placeholder': 'Mật khẩu'}))
-    error_messages = {
-        'invalid_login': ("Hãy nhập đúng %(username)s và mật khẩu."),
-        'inactive': ("Tài khoản này không hoạt động."),
-    }
+    class Meta:
+        model = User
+        fields = ['username', 'password']
 
 
 class AssignmentForm(forms.ModelForm):

@@ -90,7 +90,7 @@ $(document).ready(function () {
           data = JSON.parse(response);
           if (data.length) {
             $.each(data, function (indexInArray, valueOfElement) {
-              $('.child-wrap').append('<div id=' + valueOfElement["pk"] + ' class="child-task mb-4 box-l p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex align-items-center"> <div class="d-flex align-items-center flex-grow-1"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom fs-4" style="background: transparent;" name="taskchildname" value="' + valueOfElement["fields"]["taskName"] + '"/> </div><a id="delChildTasK" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
+              $('.child-wrap').append('<div id=' + valueOfElement["pk"] + ' class="child-task mb-4 box-l p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex align-items-center"> <div class="d-flex align-items-center flex-fill flex-wrap"> <i class="fas fa-tasks me-2 flex-shrink-1"></i> <input id="taskchildname" class= "form-control w-auto input-custom fs-4 flex-shrink-1 flex-fill" style = "background-color: transparent;" name = "taskchildname" value = "' + valueOfElement["fields"]["taskName"] + '" aria-describedby="FeedBackOf' + valueOfElement["pk"]+'"/> <div id="FeedBackOf' + valueOfElement["pk"]+'" class=" w-100"></div></div > <a id="delChildTasK" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div ><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div >');
               $.ajax({
                 type: "GET",
                 data: {
@@ -114,11 +114,6 @@ $(document).ready(function () {
         }
       });
     }
-  });
-
-  $('#deadline').on('datechanged', function (e) {
-    mainTaskId = $(this).parents('.modal-content').attr('id');
-    editTask(mainTaskId, null, null, null, $(this).val());
   });
 
   /* #region  chkbox */
@@ -310,15 +305,8 @@ $(document).ready(function () {
 
   // thêm task child trong modal task chính
   $(document).on('click', '#addChildTask', function () {
-    var new_child_task = $('.child-wrap').append('<div class="child-task mb-4 box-l p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex align-items-center"> <div class="flex-grow-1 d-flex align-items-center"> <i class="fas fa-tasks me-2"></i> <input id="taskchildname" class="form-control input-custom fs-4" style="background: transparent;" name="taskchildname"/> </div><a id="delChildTasK" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
-    var mainTaskId = $('#TaskModal .modal-dialog .modal-content').attr('id');
+    var new_child_task = $('.child-wrap').append('<div class="child-task mb-4 box-l p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex align-items-center"> <div class="d-flex align-items-center flex-fill flex-wrap"> <i class="fas fa-tasks me-2 flex-shrink-1"></i> <input id="taskchildname" class="form-control w-auto input-custom fs-4 flex-shrink-1 flex-fill" style="background-color: transparent;" name="taskchildname" aria-describedby="NewChildTask"/><div id="NewChildTask" class="w-100"></div></div><a id="delChildTasK" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div><ul class="ps-0 child-item"> </ul> <div id="addChildTaskItem" class="btn btn-primary">thêm mục</div></div>');
     $(new_child_task).children().last().find('#taskchildname').focus();
-    $(new_child_task).children().last().find('#taskchildname').focusout(function (e) {
-      e.preventDefault();
-      if (!$(this).val()) {
-        $(this).parent().parent().parent().remove();
-      }
-    });
   });
 
   // thêm task item vào task child trong modal task chính
@@ -349,12 +337,49 @@ $(document).ready(function () {
   // Thêm hoặc sửa tên task child
   $(document).on('keyup', '#TaskModal #taskchildname', function () {
     mainTaskId = $('#TaskModal .modal-dialog .modal-content').attr('id');
-    childTaskId = $(this).parent().parent().parent().attr('id');
+    childTaskId = $(this).parent().parent().parent().attr('id') ? $(this).parent().parent().parent().attr('id') : 'null';
     childTaskName = $(this).val();
     console.log(mainTaskId, childTaskId, this);
-    editTask(mainTaskId, null, null, null, null, childTaskId, this);
-  });
+    
+    if ($(this).val()) {
+      if ($(this).parent().children('#NewChildTask')) {
+        $(this).removeClass('is-invalid');
+        let newEl = $('#NewChildTask').attr('id', $(this).attr('aria-describedby'));
+        newEl.removeClass('invalid-feedback').text('');
+      }
+      else {
+        $(this).removeClass('is-invalid');
+        $(this).parent().children('div[id^="FeedBackOf"]').removeClass('invalid-feedback').text('');
+      }
+      editTask(mainTaskId, null, null, null, null, childTaskId, this);
+    } else {
+      $(this).addClass('is-invalid');
+      console.log($(this).parent().children('#NewChildTask').length)
+      if ($(this).parent().children('#NewChildTask').length) {
+        let newEl = $('#NewChildTask').attr('id', $(this).attr('aria-describedby'));
+        $(this).parent().parent().removeClass('align-items-center');
+        newEl.addClass('invalid-feedback').text('Không được để trống!');
+      } else {
+        $(this).parent().parent().removeClass('align-items-center');
+        $(this).parent().children('div[id^="FeedBackOf"]').addClass('invalid-feedback').text('Không được để trống!');
+      } 
+    }
 
+  });
+  $(document).on("focusout", '#taskchildname', function (e) {
+    if (!this.value) {
+      //nếu là task mới được thêm thì xoá khi ko có value
+      if ($(this).attr('aria-describedby') == 'NewChildTask') {
+        $(this).parent().parent().parent().remove();
+      } //ngược lại là task đã có sẽ valid khi value trống
+      else {
+        invalidDiv = $(this).parent().children('div[id^="FeedBackOf"]').attr('id');
+        $(this).addClass('is-invalid');
+        $(this).attr('aria-describedby', invalidDiv);
+        $(this).parent().children('div[id^="FeedBackOf"]').addClass('invalid-feedback').text('Không được để trống!')
+      }
+    }
+  });
   /* #region  Xử lý task item */
   // nhấn vào tên task item để nhập tên task item 
   $(document).on('click', '#taskchilditemname', function () {
@@ -377,7 +402,7 @@ $(document).ready(function () {
 
   // lưu lại khi sửa tên task item của task child
   $(document).on('keyup', '#TaskModal #taskchilditemname', function () {
-    childTaskItemId = $(this).parent().attr('id');
+    childTaskItemId = $(this).parent().attr('id') ? $(this).parent().attr('id') : 'null';
     childTaskItemName = $(this).val();
     childTaskId = $(this).parent().parent().parent().attr('id');
     editTask(null, null, null, null, null, childTaskId, null, childTaskItemId, this);
@@ -402,12 +427,11 @@ $(document).ready(function () {
   });
 
   // chọn thời hạn task chính
-  // $(document).on('change', '#TaskModal .deadline #deadline', function () {
-  //   mainTaskId = $(this).parent().parent().parent().parent().parent().attr('id');
-  //   mainTaskDeadline = $(this).val();
-  //   console.log(mainTaskDeadline);
-  //   // editTask(mainTaskId, null, null, null, mainTaskDeadline);
-  // });
+  $('#deadline').on('datechanged', function (e) {
+    mainTaskId = $(this).parents('.modal-content').attr('id');
+    mainTaskDeadline = $(this).val() ? $(this).val() : 'null';
+    editTask(mainTaskId, null, null, null, mainTaskDeadline);
+  });
 
 
   function editTask() {
@@ -422,7 +446,7 @@ $(document).ready(function () {
     childTaskItemName = arguments[8];
 
     // sửa tên task chính
-    if (mainTaskId, mainTaskName) {
+    if (mainTaskId && mainTaskName) {
       var mainTaskNameText
       if (!mainTaskId) mainTaskId = 'null';
       if ($(mainTaskName).is('h1')) {
@@ -452,7 +476,7 @@ $(document).ready(function () {
       });
     }
     // sửa mô tả task chính
-    else if (mainTaskId, mainTaskDesc) {
+    else if (mainTaskId && mainTaskDesc) {
       $.ajax({
         type: 'POST',
         url: projectDetailPostUrl,
@@ -479,7 +503,7 @@ $(document).ready(function () {
       });
     }
     // sửa ưu tiên task chính
-    else if (mainTaskId, mainTaskPriority) {
+    else if (mainTaskId && mainTaskPriority) {
       $.ajax({
         type: 'POST',
         url: projectDetailPostUrl,
@@ -500,7 +524,7 @@ $(document).ready(function () {
       });
     }
     // sửa deadline task chính
-    else if (mainTaskId, mainTaskDeadline || !mainTaskDeadline) {
+    else if (mainTaskId && mainTaskDeadline) {
       $.ajax({
         type: 'POST',
         url: projectDetailPostUrl,
@@ -527,8 +551,7 @@ $(document).ready(function () {
       });
     }
     // Thêm hoặc sửa task child
-    else if (mainTaskId, childTaskId, childTaskName) {
-      if (!childTaskId) childTaskId = 'null';
+    else if (mainTaskId && childTaskId && childTaskName) {
       $.ajax({
         type: 'POST',
         url: projectDetailPostUrl,
@@ -542,16 +565,20 @@ $(document).ready(function () {
           var childtask_instance = JSON.parse(response);
           if (childtask_instance['message'] == 'A') {
             $(childTaskName).parent().parent().parent().attr('id', childtask_instance['childtaskid']);
+            $(childTaskName).attr('aria-describedby', 'FeedBackOf' + childtask_instance['childtaskid']);
+            $(childTaskName).parent().children('NewChildTask').attr('id', 'FeedBackOf' + childtask_instance['childtaskid']);
           }
           if (childtask_instance['message'] == 'E') {
 
           }
+        }, error: function (xhr, errmsg, err) {
+          console.log(xhr.status + ": " + err);
+
         }
       });
     }
     // Thêm hoặc sửa task item của task child
-    else if (childTaskId, childTaskItemId, childTaskItemName) {
-      if (!childTaskItemId) childTaskItemId = 'null';
+    else if (childTaskId && childTaskItemId && childTaskItemName) {
       $.ajax({
         type: 'POST',
         url: projectDetailPostUrl,

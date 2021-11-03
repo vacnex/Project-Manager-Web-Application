@@ -2,255 +2,272 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 viewport-fit=cover">
-    <meta name="theme-color" content="#d4e7fe">
-    {% load static %}
-    <link rel="shortcut icon" type="image/png" href="{% static 'imageAssets/favicon.ico' %}" />
-    <link rel="stylesheet" href="{% static 'css/Library/bootstrap.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/Core/component.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/Index/index.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/Library/animate.min.css' %}">
-    <title>HỆ THỐNG QUẢN LÝ ĐỒ ÁN TỐT NGHIỆP</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0 viewport-fit=cover">
+  <meta name="theme-color" content="#d4e7fe">
+  {% load static %}
+  <link rel="shortcut icon" type="image/png" href="{% static 'imageAssets/favicon.ico' %}" />
+  <link rel="stylesheet" href="{% static 'css/Library/bootstrap.min.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/Core/component.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/Index/index.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/Library/animate.min.css' %}">
+  <title>HỆ THỐNG QUẢN LÝ ĐỒ ÁN TỐT NGHIỆP</title>
 </head>
 
 <body>
-    <div class="fixed-img"></div>
-    <div class="container-fluid px-3 pt-2">
-        <div class="header-wraper p-3 box-l mt-4">
-            <div class="row">
-                <div class="col-lg-2">
-                    <ul class="hotline list-inline mb-0">
-                        <li>
-                            <a href="mailto:lachong@lhu.edu.vn">Email: lachong@lhu.edu.vn</a>
-                        </li>
-                        <li>
-                            <a href="mailto:cntt@lhu.edu.vn">cntt@lhu.edu.vn</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-8">
-                    <div class="logo">
-                        <div class="logo_img me-md-5 me-0 my-md-0 my-3">
-                            <img src="{% static 'imageAssets/logo_min.png' %}">
-                        </div>
-                        <div class="logo_text">
-                            <h2>TRƯỜNG ĐẠI HỌC LẠC HỒNG</h2>
-                            <h3>HỆ THỐNG QUẢN LÝ ĐỒ ÁN TỐT NGHIỆP</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 mt-md-4 mt-lg-0">
-                    <ul class="hotline_support list-inline mb-0">
-                        <li>
-                            <p>
-                                ĐIỆN THOẠI HỖ TRỢ
-                            </p>
-                        </li>
-                        <li>
-                            <p>
-                                +84 251 3951 344
-                            </p>
-                        </li>
-                        <li>
-                            <p>
-                                +84 251 3952 778
-                            </p>
-                        </li>
-                        <li>
-                            <p>
-                                Fax: 0251.3952534
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+  <div class="fixed-img"></div>
+  <div class="container-fluid px-3 pt-2">
+    <div class="header-wraper p-3 box-l mt-4">
+      <div class="row">
+        <div class="col-lg-2">
+          <ul class="hotline list-inline mb-0">
+            <li>
+              <a href="mailto:lachong@lhu.edu.vn">Email: lachong@lhu.edu.vn</a>
+            </li>
+            <li>
+              <a href="mailto:cntt@lhu.edu.vn">cntt@lhu.edu.vn</a>
+            </li>
+          </ul>
         </div>
-        <div class="content-wraper pt-5 px-3">
-            <div class="row">
-                <div class="col-lg-7 order-lg-first order-last mt-lg-0 mt-md-5 mt-5">
-                    <ul class="row nav nav-pills mb-3 controlls-list" id="pills-tab" role="tablist">
-                        <li class="col-lg-0 col-6 nav-item" role="presentation">
-                            <a class="nav-link btn-custom title btn-sm" id="pills-thongbao-tab" data-bs-toggle="pill" data-bs-target="#pills-thongbao"role="tab" aria-controls="pills-thongbao" aria-selected="false">Thông Báo</a>
-                        </li>
-                        <li class="col-lg-0 col-6 nav-item " role="presentation">
-                            <a class="nav-link title btn-sm" id="pills-tienich-tab" data-bs-toggle="pill" data-bs-target="#pills-tienich" role="tab" aria-controls="pills-tienich" aria-selected="true">Tiện Ích</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade w-100  mb-4" id="pills-tienich" role="tabpanel" aria-labelledby="pills-tienich-tab">
-                            <div class="search-wraper">
-                                <div class="mb-2 input-group box search-box my-3 my-md-0 mb-md-3 ">
-                                    <label class="search-label">tìm kiếm</label>
-                                    <input id="searchbox" type="text" class="input-search" placeholder="Tên đề tài, giáo viên, sinh viên">
-                                </div>
-                            </div>
-                            <div class="result-wrapper p-2 p-md-0">
-                                <ul class="box-scroll p-xl-5 p-lg-4 p-md-3 p-sm-2 p-3 pt-4">
-                                    <li class="box box-item scale-hover mb-4" onclick="">
-                                        <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
-                                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 mb-xl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
-                                                <div class="box box-label w-100 h-100">
-                                                    2021
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 ">
-                                                <div class="row">   
-                                                    <div class="col-12 text-center mb-2">
-                                                        <a class="title fs-3">
-                                                            Tên đề tài
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-12 mb-2">
-                                                        <div class="">
-                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed massa sed velit euismod pellentesque.
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6 text-center">
-                                                        <span style="color: blue">Giáo Viên Hướng dẫn: </span>
-                                                        <span class="me-2"> Nguyễn Văn A </span>
-                                                    </div>
-                                                    <div class="col-6 text-center">
-                                                        <span style="color: blue"> Sinh Viên Thực Hiện: </span>
-                                                        <span class="me-2"></span> Nguyễn Văn A </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade box-l bg-color w-100 show active mb-4" id="pills-thongbao" role="tabpanel" aria-labelledby="pills-thongbao-tab">
-                            <div class="box-scroll p-xl-5 p-lg-4 p-md-3 p-sm-2 p-3 pt-4">
-                                <div class="box box-item scale-hover mb-4" onclick="">
-                                    <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
-                                        <div class="col-sm-2 mb-4 mb-md-0">
-                                            <div class="box box-label w-100 h-100 p-md-0 p-1">
-                                                <div class="date-m pb-1">12/9</div>
-                                                <div class="date-y pt-1">2021</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-10">
-                                            <div class="text-center">
-                                                <a class="title fs-3">
-                                                    Thông báo #1
-                                                </a>
-                                                <div class="mt-4">
-                                                    <p class="desc">Nội dung thông báo.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="box box-item scale-hover mb-4" onclick="">
-                                    <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
-                                        <div class="col-sm-2 mb-4 mb-md-0">
-                                            <div class="box box-label w-100 h-100 p-md-0 p-1">
-                                                <div class="date-m pb-1">12/9</div>
-                                                <div class="date-y pt-1">2021</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-10">
-                                            <div class="text-center">
-                                                <a class="title fs-3">
-                                                    Thông báo #1
-                                                </a>
-                                                <div class="mt-4">
-                                                    <p class="desc">Nội dung thông báo.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="box box-item scale-hover mb-4" onclick="">
-                                    <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
-                                        <div class="col-sm-2 mb-4 mb-md-0">
-                                            <div class="box box-label w-100 h-100 p-md-0 p-1">
-                                                <div class="date-m pb-1">12/9</div>
-                                                <div class="date-y pt-1">2021</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-10">
-                                            <div class="text-center">
-                                                <a class="title fs-3">
-                                                    Thông báo #1
-                                                </a>
-                                                <div class="mt-4">
-                                                    <p class="desc">Nội dung thông báo.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="box box-item scale-hover mb-4" onclick="">
-                                    <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
-                                        <div class="col-sm-2 mb-4 mb-md-0">
-                                            <div class="box box-label w-100 h-100 p-md-0 p-1">
-                                                <div class="date-m pb-1">12/9</div>
-                                                <div class="date-y pt-1">2021</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-10">
-                                            <div class="text-center">
-                                                <a class="title fs-3">
-                                                    Thông báo #1
-                                                </a>
-                                                <div class="mt-4">
-                                                    <p class="desc">Nội dung thông báo.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    {% if logged %}
-                    <div class="logged-wraper">
-                        <div class="box-l ms-lg-5 ms-md-0 p-1 p-sm-2 p-md-3 p-lg-4 p-xl-5">
-                            <p class="title fs-1 mt-3 mt-sm-2 mt-md-3 mt-lg-3 mt-xl-3">Chào {{request.user.get_full_name}}!</p>
-                            <div class="text-center p-3 p-sm-3 p-md-3 p-lg-2 p-xl-3">
-                                <p>Bạn đã đăng nhập, bạn có thể sử dụng thanh tìm kiếm bên trái hoặc đến trang Dashboard để quản lý. </p>
-                                <a class="nav-link mb-3" href="{% url 'logout' %}" >Đăng Xuất</a>
-                                <a href="/home" class="btn-custom scale-hover w-100 btn-lg mt-3 mt-sm-3 mt-md-4 mt-lg-4 mt-xl-5">Đến trang Dashboard</a>
-                            </div>
-                        </div>
-                    </div>
-                    {%else%}
-                    <div class="login-wraper">
-                        <div class="box-l ms-lg-5 ms-md-0 p-1 p-sm-2 p-md-3 p-lg-4 p-xl-5">
-                            <p class="title fs-1 mt-3 mt-sm-2 mt-md-3 mt-lg-3 mt-xl-3">ĐĂNG NHẬP</p>
-                            <div class="row p-3 p-sm-3 p-md-3 p-lg-2 p-xl-3">
-                                <form action="." method="POST">
-                                    {% csrf_token %}
-                                    <div class="form-floating mb-3">
-                                        {{ form.username }}
-                                        <label for="form.username">Tài Khoản</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        {{ form.password }}
-                                        <label for="form.password">Mật Khẩu</label>
-                                    </div>
-                                    <input type="hidden" name="next" value="{{ request.GET.next }}" />
-                                    <a class="" style="cursor: pointer;">Quên mật khẩu?</a>
-                                    <button id="submitLogin" type="submit" class="btn-custom scale-hover w-100 btn-lg mt-3 mt-sm-3 mt-md-4 mt-lg-4 mt-xl-5">Đăng nhập</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    {%endif%}
-                </div>
+        <div class="col-lg-8">
+          <div class="logo">
+            <div class="logo_img me-md-5 me-0 my-md-0 my-3">
+              <img src="{% static 'imageAssets/logo_min.png' %}">
             </div>
+            <div class="logo_text">
+              <h2>TRƯỜNG ĐẠI HỌC LẠC HỒNG</h2>
+              <h3>HỆ THỐNG QUẢN LÝ ĐỒ ÁN TỐT NGHIỆP</h3>
+            </div>
+          </div>
         </div>
+        <div class="col-lg-2 mt-md-4 mt-lg-0">
+          <ul class="hotline_support list-inline mb-0">
+            <li>
+              <p>
+                ĐIỆN THOẠI HỖ TRỢ
+              </p>
+            </li>
+            <li>
+              <p>
+                +84 251 3951 344
+              </p>
+            </li>
+            <li>
+              <p>
+                +84 251 3952 778
+              </p>
+            </li>
+            <li>
+              <p>
+                Fax: 0251.3952534
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <script src="{% static 'js/library/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/library/jquery-3.6.0.min.js' %}"></script>
-    <script src="{% static 'js/Index/index.js' %}"></script>
+    <div class="content-wraper pt-5 px-3">
+      <div class="row">
+        <div class="col-lg-7 order-lg-first order-last mt-lg-0 mt-md-5 mt-5">
+          <ul class="row nav nav-pills mb-3 controlls-list" id="pills-tab" role="tablist">
+            <li class="col-lg-0 col-6 nav-item" role="presentation">
+              <a class="nav-link btn-custom title btn-sm" id="pills-thongbao-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-thongbao" role="tab" aria-controls="pills-thongbao" aria-selected="false">Thông
+                Báo</a>
+            </li>
+            <li class="col-lg-0 col-6 nav-item " role="presentation">
+              <a class="nav-link title btn-sm" id="pills-tienich-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-tienich" role="tab" aria-controls="pills-tienich" aria-selected="true">Tiện
+                Ích</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade w-100  mb-4" id="pills-tienich" role="tabpanel"
+              aria-labelledby="pills-tienich-tab">
+              <div class="search-wraper">
+                <div class="mb-2 input-group box search-box my-3 my-md-0 mb-md-3 ">
+                  <label class="search-label">tìm kiếm</label>
+                  <input id="searchbox" type="text" class="input-search" placeholder="Tên đề tài, giáo viên, sinh viên">
+                </div>
+              </div>
+              <div class="result-wrapper p-2 p-md-0">
+                <ul class="box-scroll p-xl-5 p-lg-4 p-md-3 p-sm-2 p-3 pt-4">
+                  <li class="box box-item scale-hover mb-4" onclick="">
+                    <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
+                      <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 mb-xl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
+                        <div class="box box-label w-100 h-100">
+                          2021
+                        </div>
+                      </div>
+                      <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 ">
+                        <div class="row">
+                          <div class="col-12 text-center mb-2">
+                            <a class="title fs-3">
+                              Tên đề tài
+                            </a>
+                          </div>
+                          <div class="col-12 mb-2">
+                            <div class="">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed massa sed velit
+                              euismod pellentesque.
+                            </div>
+                          </div>
+                          <div class="col-6 text-center">
+                            <span style="color: blue">Giáo Viên Hướng dẫn: </span>
+                            <span class="me-2"> Nguyễn Văn A </span>
+                          </div>
+                          <div class="col-6 text-center">
+                            <span style="color: blue"> Sinh Viên Thực Hiện: </span>
+                            <span class="me-2"></span> Nguyễn Văn A </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="tab-pane fade box-l bg-color w-100 show active mb-4" id="pills-thongbao" role="tabpanel"
+              aria-labelledby="pills-thongbao-tab">
+              <div class="box-scroll p-xl-5 p-lg-4 p-md-3 p-sm-2 p-3 pt-4">
+                <div class="box box-item scale-hover mb-4" onclick="">
+                  <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
+                    <div class="col-sm-2 mb-4 mb-md-0">
+                      <div class="box box-label w-100 h-100 p-md-0 p-1">
+                        <div class="date-m pb-1">12/9</div>
+                        <div class="date-y pt-1">2021</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-10">
+                      <div class="text-center">
+                        <a class="title fs-3">
+                          Thông báo #1
+                        </a>
+                        <div class="mt-4">
+                          <p class="desc">Nội dung thông báo.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="box box-item scale-hover mb-4" onclick="">
+                  <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
+                    <div class="col-sm-2 mb-4 mb-md-0">
+                      <div class="box box-label w-100 h-100 p-md-0 p-1">
+                        <div class="date-m pb-1">12/9</div>
+                        <div class="date-y pt-1">2021</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-10">
+                      <div class="text-center">
+                        <a class="title fs-3">
+                          Thông báo #1
+                        </a>
+                        <div class="mt-4">
+                          <p class="desc">Nội dung thông báo.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="box box-item scale-hover mb-4" onclick="">
+                  <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
+                    <div class="col-sm-2 mb-4 mb-md-0">
+                      <div class="box box-label w-100 h-100 p-md-0 p-1">
+                        <div class="date-m pb-1">12/9</div>
+                        <div class="date-y pt-1">2021</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-10">
+                      <div class="text-center">
+                        <a class="title fs-3">
+                          Thông báo #1
+                        </a>
+                        <div class="mt-4">
+                          <p class="desc">Nội dung thông báo.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="box box-item scale-hover mb-4" onclick="">
+                  <div class="row p-xl-3 p-lg-3 p-md-3 p-sm-3 p-3">
+                    <div class="col-sm-2 mb-4 mb-md-0">
+                      <div class="box box-label w-100 h-100 p-md-0 p-1">
+                        <div class="date-m pb-1">12/9</div>
+                        <div class="date-y pt-1">2021</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-10">
+                      <div class="text-center">
+                        <a class="title fs-3">
+                          Thông báo #1
+                        </a>
+                        <div class="mt-4">
+                          <p class="desc">Nội dung thông báo.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="LoginContainer" class="col-lg-5">
+          {% if logged %}
+          <div class="logged-wraper">
+            <div class="box-l ms-lg-5 ms-md-0 p-1 p-sm-2 p-md-3 p-lg-4 p-xl-5">
+              <p class="title fs-1 mt-3 mt-sm-2 mt-md-3 mt-lg-3 mt-xl-3">Chào {{request.user.get_full_name}}!</p>
+              <div class="text-center p-3 p-sm-3 p-md-3 p-lg-2 p-xl-3">
+                <p>Bạn đã đăng nhập, bạn có thể sử dụng thanh tìm kiếm bên trái hoặc đến trang Dashboard để quản lý.
+                </p>
+                <a class="nav-link mb-3" href="{% url 'logout' %}">Đăng Xuất</a>
+                <a href="/home" class="btn-custom scale-hover w-100 btn-lg mt-3 mt-sm-3 mt-md-4 mt-lg-4 mt-xl-5">Đến
+                  trang Dashboard</a>
+              </div>
+            </div>
+          </div>
+          {%else%}
+          <div class="login-wraper">
+            <div class="box-l ms-lg-5 ms-md-0 p-1 p-sm-2 p-md-3 p-lg-4 p-xl-5">
+              <p class="title fs-1 mt-3 mt-sm-2 mt-md-3 mt-lg-3 mt-xl-3">ĐĂNG NHẬP</p>
+              <div class="row p-3 p-sm-3 p-md-3 p-lg-2 p-xl-3">
+                <form id="LoginForm">
+                  {% csrf_token %}
+                  <div class="form-floating mb-3">
+                    <input type="text" id="username" class="form-control input-custom input-no-focus input-bottom-border"
+                      placeholder="Tài Khoản" name="username"  autofocus autocapitalize="none" />
+                    <label for="username">Tài Khoản</label>
+                    <div id="UsernameFeedback" class=""></div>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="password" id="password" name="password"
+                      class="form-control input-custom input-no-focus input-bottom-border" placeholder="Mật Khẩu"
+                       />
+                    <label for="password">Mật Khẩu</label>
+                    <div id="PasswordFeedback" class=""></div>
+                  </div>
+                  <input type="hidden" name="next" value="{{ request.GET.next }}" />
+                  <a class="" style="cursor: pointer;">Quên mật khẩu?</a>
+                  <button id="submitLogin" class="btn-custom scale-hover w-100 btn-lg mt-3 mt-sm-3 mt-md-4 mt-lg-4 mt-xl-5">Đăng
+                    nhập</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{% static 'js/library/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/library/jquery-3.6.0.min.js' %}"></script>
+  <script src="{% static 'js/library/notiflix-aio-3.1.0.min.js' %}"></script>
+  <script src="{% static 'js/Index/index.js' %}"></script>
+
 </body>
 
 </html>

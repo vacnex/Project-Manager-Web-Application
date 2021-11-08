@@ -19,26 +19,27 @@
 		rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 	/* box-shadow: rgb(0 0 0 / 5%) 0 0.5px 0, rgb(0 0 0 / 3%) 0 0 0 1px, rgb(0 0 0 / 5%) 0 2px 4px; */
 }
-.chkb {
+.checkbox-custom {
 	display: flex;
 	cursor: pointer;
 	width: 21px;
 	min-width: 21px;
 	height: 21px;
-	margin: 15px;
 	border-radius: 22% / 26%;
 	background-color: rgb(255, 255, 255);
 	border: 2px solid rgb(215, 219, 230);
-	background-image: url(./imageAssets/bif.png);
+	background-image: url(/static/imageAssets/bif.png);
 	background-position: center;
 	background-repeat: no-repeat;
 	-webkit-appearance: none;
 	transition: 0.5s;
 	position: relative;
-	margin-left: 25px;
 }
-
-.chkb:focus {
+.checkbox-custom-checked{
+  background-color : rgb(26, 255, 0);
+  border: none;
+}
+.checkbox-custom:focus {
 	outline: none;
 }
 

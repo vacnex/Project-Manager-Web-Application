@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User, Project
+from .models import Task, User, Project
 from django.core.exceptions import ValidationError
 import re
 
@@ -39,3 +39,8 @@ class AssignmentForm(forms.ModelForm):
         model = Project
         fields = ['Project_Name', 'Users', 'schoolYear']
 
+
+class TaskFileUpload(forms.ModelForm):
+  class Meta:
+      model = Task
+      fields = ['file']

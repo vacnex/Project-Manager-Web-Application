@@ -62,6 +62,8 @@ class Project(models.Model):
     def Project_members(self):
         return "\n".join([u.username for u in self.Users.all()])
 
+def UploadTaskFileLocation(instance, filename):
+  return "media/task/%s/%s" % (instance.id, filename)
 
 class Task(models.Model):
     taskName = models.CharField(max_length=255)
@@ -75,6 +77,9 @@ class Task(models.Model):
     priority = models.CharField(max_length=255, null=True)
     complete = models.BooleanField(default=False)
     tempComplete = models.BooleanField(default=False)
+    file = models.FileField(null=True, blank=True,
+                            upload_to=UploadTaskFileLocation)
+    fileEnabled = models.BooleanField(default=False)
     def __str__(self):
         return self.taskName
     def daysleft(seft):

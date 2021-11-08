@@ -122,11 +122,9 @@ class HomeIndex(View):
     else:
       try:
         StudentProject = Project.objects.get(Users=request.user)
+        Student_task = Task.objects.filter(Project=StudentProject)
       except ObjectDoesNotExist:
         StudentProject = None
-        if len(cur_Project) > 0:
-          Student_task = Task.objects.filter(Project=Project.objects.get(
-              Users=request.user))
     context = {'Users_list_Manager': Users_list_Manager,
                'Projects_list_of_Teacher': Projects_list_of_Teacher, 'Student_task': Student_task, 'StudentProject': StudentProject}
     return TemplateResponse(request, 'Pages/home.html', context)
@@ -180,6 +178,8 @@ class ProjectDetail(View):
       # region Sửa tên project
       if request.POST['action'] == 'EDIT_PROJECT_NAME':
         newPName = request.POST['newPName']
+        if not newPName:
+          newPName = None
         t = Project.objects.get(id=pk)
         t.Project_Name = newPName
         t.save()
@@ -192,7 +192,7 @@ class ProjectDetail(View):
         p = Project.objects.get(id=pk)
         if request.POST['mainTaskId'] == 'null' and request.POST['mainTaskName']:
           task = Task(
-              taskName=request.POST['mainTaskName'], Project=p)
+              taskName=request.POST['mainTaskName'], Project=p, fieldEnabled=1)
           task.save()
           taskObj = {
               'mainTaskId': task.id,
@@ -223,7 +223,7 @@ class ProjectDetail(View):
       # region thêm hoặc sửa task child
       elif request.POST['action'] == 'ADD_EDIT_CHILD_TASK':
         p = Project.objects.get(id=pk)
-        if request.POST['mainTaskId'] and request.POST['childTaskId'] == 'null' and request.POST['childTaskName']:
+        if request.POST['mainTaskId'] and request.POST['childTaskId'] == 'null' and request.POST['childTaskName'] != None:
           childtask = Task(
               taskName=request.POST['childTaskName'], Project=p)
           childtask.save()
@@ -324,6 +324,36 @@ class ProjectDetail(View):
             "message": 'Xoá thành công'
         }
         return JsonResponse(json.dumps(deleteTaskChildAndItemContext), status=200, safe=False)
+      # endregion
+      # region Thêm mô tả task child
+      elif request.POST['action'] == 'ADD_CHILD_TASK_DESC':
+        task = Task.objects.get(id=request.POST['ChildTaskID'])
+        task.taskDesc = request.POST['ChildTaskDecs']
+        task.save()
+        AddTaskChildDescContext = {
+            "message": 'Thêm thành công'
+        }
+        return JsonResponse(json.dumps(AddTaskChildDescContext), status=200, safe=False)
+      # endregion
+      # region Xoá mô tả task child
+      elif request.POST['action'] == 'DEL_CHILD_TASK_DESC':
+        task = Task.objects.get(id=request.POST['ChildTaskID'])
+        task.taskDesc = None
+        task.save()
+        DelTaskChildDescContext = {
+            "message": 'Xoá thành công'
+        }
+        return JsonResponse(json.dumps(DelTaskChildDescContext), status=200, safe=False)
+      # endregion
+      # region Cho phép upload file
+      elif request.POST['action'] == 'SET_ALLOW_ATTACHED':
+        task = Task.objects.get(id=request.POST['taskID'])
+        task.fileEnabled = json.loads(request.POST['isChecked'])
+        task.save()
+        DelTaskChildDescContext = {
+            "message": 'Đã cho phép upload'
+        }
+        return JsonResponse(json.dumps(DelTaskChildDescContext), status=200, safe=False)
       # endregion
 # endregion
 

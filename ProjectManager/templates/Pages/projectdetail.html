@@ -7,7 +7,7 @@
 {% endblock %}
 {% block scripts %}
 {{ block.super }}
-<script src="{% static 'js/library/duDatepicker.min.js' %}"></script>
+<script type="module" src="{% static 'js/library/duDatepicker.min.js' %}"></script>
 <script src="{% static 'js/ProjectDetail/projectdetail.js' %}"></script>
 {% endblock %}
 {% block title %}
@@ -20,12 +20,12 @@ Cập Nhật Công Việc
     <div id={{pk}} class="row">
       {% if not mainTasks %}
       <div class="col-12">
-        <input id="pname" class="form-control input-custom input-no-focus fs-3 title" name="pname"
+        <input id="pname" class="form-control input-custom input-no-focus fs-3 title text-uppercase" name="pname"
           value='{{Project_Name|default_if_none:"Tên đồ án chưa cập nhật"}}' />
       </div>
       {% else %}
       <div class="col-lg-10">
-        <input id="pname" class="form-control input-custom input-no-focus fs-3 title" name="pname"
+        <input id="pname" class="form-control input-custom input-no-focus fs-3 title text-uppercase" name="pname"
           value='{{Project_Name|default_if_none:"Tên đồ án chưa cập nhật"}}' />
       </div>
       <div class="col-lg-2 mt-lg-0 mt-md-3 mt-sm-2 mt-1 d-flex align-items-center justify-content-center">
@@ -53,6 +53,7 @@ Cập Nhật Công Việc
         <ul class="box-scroll list-unstyled py-0 mb-0 p-xxl-0 p-md-4 p-3">
           {% for task in mainTasks reversed %}
           <li id={{task.id}} class="box box-item position-relative scale-hover mt-4 mx-xxl-5 mx-xl-0 mx-sm-3 mx-4">
+            <div class="fileEnabled d-none">{{task.fileEnabled}}</div>
             <!-- <a id='btn-tedit'
                                     class="btn btn-info btn-circle btn-circle-icon position-absolute top-0 translate-middle btn-anim" style="left:97%"> 
                                     <i class="fas fa-pen"></i>
@@ -133,7 +134,7 @@ Cập Nhật Công Việc
   <div class="modal fade" id="TaskModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="AddTaskLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg modal-fullscreen-lg-down ">
-      <div class="modal-content box-l bg-color">
+      <div class="modal-content box bg-color">
         <div class="d-flex p-3 align-items-center">
           <i class="fas fa-edit"></i>
           <input style="background: transparent;" id="taskname" class="form-control input-custom input-no-focus fs-3"
@@ -141,8 +142,8 @@ Cập Nhật Công Việc
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body row">
-          <div id="TaskControl" class="col-9">
-            <div class="desc mb-4 box-l p-3" style="background-color: #F9FAFE;">
+          <div id="TaskControl" class="col-9 box-scroll">
+            <div class="desc mb-4 box p-3" style="background-color: #F9FAFE;">
               <div class="mb-1 fs-4">
                 <i class="fas fa-info me-2"></i>
                 Mô tả
@@ -175,7 +176,7 @@ Cập Nhật Công Việc
                             <div id="add-child-task-item" class="btn btn-primary">thêm mục</div>
                           </div> -->
             </div>
-            <div class="prio box-l p-3 mb-4" style="background-color: #F9FAFE;">
+            <div class="prio box p-3 mb-4" style="background-color: #F9FAFE;">
               <div class="mb-2 fs-4">
                 <i class="fas fa-level-up-alt me-2"></i>
                 Mức độ ưu tiên
@@ -208,8 +209,15 @@ Cập Nhật Công Việc
               </div>
             </div>
           </div>
-          <div class="col-3">
-            <div id="addChildTask" class="btn btn-primary">Thêm task phụ</div>
+          <div class="col-3 d-flex flex-column">
+            <div id="addChildTask" class="btn btn-custom mb-3">Thêm công việc</div>
+            <div class="box-s d-flex align-items-center p-2 mb-3">
+              <input id="IsAttachedTask" type="checkbox" name="IsAttachedTask" class="checkbox-custom me-2">
+              <label for="IsAttachedTask">
+                Yêu cầu nộp file
+              </label>
+            </div>
+            
           </div>
         </div>
       </div>

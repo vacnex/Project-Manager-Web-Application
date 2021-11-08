@@ -157,7 +157,7 @@ Home
       <div class="box m-3 p-4">
         <div class="box p-3">
           <h5>{{StudentProject.Project_Name | default_if_none:"Tên đồ án chưa cập nhật"}}</h5>
-          <p>chủ đề : {{StudentProject.Type | default_if_none:"Chưa cập nhật"}}</p>
+          <p>Chủ đề : {{StudentProject.Type | default_if_none:"Chưa cập nhật"}}</p>
           <p>Giáo viên: 
           {% for u in StudentProject.Users.all %}
             {% if u.is_Teacher %}
@@ -183,8 +183,8 @@ Home
                 <div class="task-Content flex-fill ps-xxl-1 ps-3 mt-sm-0 mt-3">
                   <h3 id="tname">{{st.taskName}}
                   </h3>
-                  <p id="tdesc">{{st.taskDesc}}</p>
-                  <p id="tdesc">{{st.deadline}}</p>
+                  <p id="tdesc">{{st.taskDesc|default_if_none:''}}</p>
+                  <p id="tdesc">{{st.deadline|default_if_none:''}}</p>
                 </div>
               </div>
             </div>

@@ -71,18 +71,15 @@
     <div class="content-wraper pt-5 px-3">
       <div class="row">
         <div class="col-lg-7 order-lg-first order-last mt-lg-0 mt-md-5 mt-5">
-          <ul class="row nav nav-pills mb-3 controlls-list" id="pills-tab" role="tablist">
-            <li class="col-lg-0 col-6 nav-item" role="presentation">
-              <a class="nav-link btn-custom title btn-sm" id="pills-thongbao-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-thongbao" role="tab" aria-controls="pills-thongbao" aria-selected="false">Thông
-                Báo</a>
-            </li>
-            <li class="col-lg-0 col-6 nav-item " role="presentation">
-              <a class="nav-link title btn-sm" id="pills-tienich-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-tienich" role="tab" aria-controls="pills-tienich" aria-selected="true">Tiện
-                Ích</a>
-            </li>
-          </ul>
+          <div class="row shadow tab-switch-wrapper nav nav-pills mb-3 ms-0 controlls-list" role="tablist">
+            <div class="tab-switch sel-tab-0 text-center">
+              <div class="tab-item active" tab-direction="sel-tab-0" id="pills-thongbao-tab" name="tab" role="tab" data-bs-toggle="pill"
+                data-bs-target="#pills-thongbao" aria-selected="true">Thông Báo</div>
+              <div class="tab-item" tab-direction="sel-tab-1" id="pills-tienich-tab" name="tab" role="tab" data-bs-toggle="pill"
+                data-bs-target="#pills-tienich" aria-selected="false">Tiện
+                Ích</div>
+            </div>
+          </div>
           <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade w-100  mb-4" id="pills-tienich" role="tabpanel"
               aria-labelledby="pills-tienich-tab">
@@ -267,7 +264,7 @@
   <script src="{% static 'js/library/jquery-3.6.0.min.js' %}"></script>
   <script src="{% static 'js/library/notiflix-aio-3.1.0.min.js' %}"></script>
   <script src="{% static 'js/Index/index.js' %}"></script>
-
+  <script src="{% static 'js/library/component.js' %}"></script>
 </body>
 
 </html>

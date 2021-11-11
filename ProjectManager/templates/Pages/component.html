@@ -180,8 +180,35 @@
                 </div>
             </div>
         </div>
+        <div class="row mb-5">
+          <div class="col">
+            <h4>sliding tab</h4>
+          </div>
+          <div class="col">
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-content-tab1" role="tabpanel" >Content tab 1</div>
+              <div class="tab-pane fade" id="pills-content-tab2" role="tabpanel" >Content tab 2</div>
+              <div class="tab-pane fade" id="pills-content-tab3" role="tabpanel">Content tab 3</div>
+              <div class="tab-pane fade" id="pills-content-tab4" role="tabpanel">Content tab 4</div>
+              <div class="tab-pane fade" id="pills-content-tab5" role="tabpanel">Content tab 5</div>
+            </div>
+            <div class="tab-switch-wrapper nav nav-pills mb-3" role="tablist">
+              <div class="tab-switch sel-tab-0 text-center">
+                <div class="tab-item active" tab-direction="sel-tab-0" id="tab-1" name="tab" role="tab" data-bs-toggle="pill" data-bs-target="#pills-content-tab1" aria-selected="true">Tab 1</div>
+                <div class="tab-item" tab-direction="sel-tab-1" id="tab-2" name="tab" role="tab" data-bs-toggle="pill" data-bs-target="#pills-content-tab2" aria-selected="false">Tab 2</div>
+                <div class="tab-item" tab-direction="sel-tab-2" id="tab-3" name="tab" role="tab" data-bs-toggle="pill"
+                  data-bs-target="#pills-content-tab3" aria-selected="false">Tab 3</div>
+                <div class="tab-item" tab-direction="sel-tab-3" id="tab-4" name="tab" role="tab" data-bs-toggle="pill"
+                  data-bs-target="#pills-content-tab4" aria-selected="false">Tab4</div>
+                <div class="tab-item" tab-direction="sel-tab-4" id="tab-5" name="tab" role="tab" data-bs-toggle="pill"
+                  data-bs-target="#pills-content-tab5" aria-selected="false">Tab5</div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
     <script src="{% static 'js/library/jquery-3.6.0.min.js' %}"></script>
     <script src="{% static 'js/library/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/library/component.js' %}"></script>
 </body>
 </html>

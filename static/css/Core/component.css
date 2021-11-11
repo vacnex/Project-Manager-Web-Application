@@ -322,3 +322,73 @@
 .rounded {
     border-radius: .625rem!important;
 }
+.tab-switch-wrapper {
+  border-radius: 37px;
+  background-color: #f4f4f4;
+  padding: 8px;
+  width: 100%;
+}
+.tab-switch{
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+:root{
+  --dynamic:50%;
+  --dynamicsw1:0;
+  --dynamicsw2:0;
+  --dynamicsw3:0;
+  --dynamicsw4:0;
+  --dynamicsw5:0;
+}
+.tab-switch:after {
+  content: "";
+  position: absolute;
+  width: var(--dynamic);
+  top: 0;
+  width: var(--dynamictw);
+  transition: left cubic-bezier(.88, -.35, .565, 1.35) .4s;
+  border-radius: 27.5px;
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, .1);
+  background-color: #3d90ef;
+  height: 100%;
+  z-index: 0;
+}
+.tab-switch.sel-tab-0:after {
+  left:0;
+}
+.tab-switch.sel-tab-1:after {
+  left: var(--dynamicsw1);
+}
+.tab-switch.sel-tab-2:after {
+  left: var(--dynamicsw2);
+}
+.tab-switch.sel-tab-3:after {
+  left: var(--dynamicsw3);
+}
+.tab-switch.sel-tab-4:after {
+  left: var(--dynamicsw4);
+}
+.tab-switch.sel-tab-5:after {
+  left: var(--dynamicsw5);
+}
+/* .tab-switch.right:after {
+  left: 33%;
+} */
+
+.tab-switch .tab-item {
+  display: inline-block;
+  width: 100%;
+  padding: 12px 0;
+  z-index: 1;
+  position: relative;
+  cursor: pointer;
+  transition: color 200ms;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: normal;
+  user-select: none;
+}
+.tab-switch .tab-item.active {
+  color: #ffffff;
+}

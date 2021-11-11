@@ -14,6 +14,7 @@
 {% block scripts %}
 {{ block.super }}
 <script src="{% static 'js/library/slick.min.js' %}"></script>
+<script src="{% static 'js/library/component.js' %}"></script>
 {% endblock %}
 {% block SpecsScripts%}
 {% if not user.is_superuser and not user.is_Teacher and not user.is_Manager and not user.is_Reviewer%}
@@ -37,16 +38,14 @@ Home
   <div class="row g-0">
     <div class="col-lg-6">
       <div class="box-l bg-color mx-xxl-5 mx-xl-4 mx-lg-4 mx-md-3 mx-2 p-3 p-sm-3 p-md-3 p-lg-4 p-xl-3 p-xxl-5">
-        <ul class="row nav nav-pills mb-3 controlls-list" id="pills-tab" role="tablist">
-          <li class="col-lg-0 col-6 nav-item" role="presentation">
-            <a class="nav-link btn-custom title btn-sm" id="pills-gv-tab" data-bs-toggle="pill"
-              data-bs-target="#pills-gv" role="tab" aria-controls="pills-gv" aria-selected="true">Giáo Viên</a>
-          </li>
-          <li class="col-lg-0 col-6 nav-item " role="presentation">
-            <a class="nav-link title btn-sm" id="pills-sv-tab" data-bs-toggle="pill" data-bs-target="#pills-sv"
-              role="tab" aria-controls="pills-sv" aria-selected="false">Sinh Viên</a>
-          </li>
-        </ul>
+        <div class="row shadow tab-switch-wrapper nav nav-pills mb-3 ms-0 controlls-list" role="tablist">
+          <div class="tab-switch sel-tab-0 text-center">
+            <div class="tab-item active" tab-direction="sel-tab-0" id="pills-gv-tab" name="tab" role="tab"
+              data-bs-toggle="pill" data-bs-target="#pills-gv" aria-selected="true">Giáo viên</div>
+            <div class="tab-item" tab-direction="sel-tab-1" id="pills-sv-tab" name="tab" role="tab" data-bs-toggle="pill"
+              data-bs-target="#pills-sv" aria-selected="false">Sinh viên</div>
+          </div>
+        </div>
         <div class="tab-content" id="pills-tabContent">
           <div class="tab-pane fade w-100  mb-4" id="pills-sv" role="tabpanel" aria-labelledby="pills-sv-tab">
             <div class="box-scroll p-xl-4 p-lg-4 p-md-3 p-sm-3 p-3 pt-4">

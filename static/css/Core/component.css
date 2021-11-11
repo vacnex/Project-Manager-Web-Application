@@ -349,8 +349,8 @@
   width: var(--dynamictw);
   transition: left cubic-bezier(.88, -.35, .565, 1.35) .4s;
   border-radius: 27.5px;
-  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, .1);
-  background-color: #3d90ef;
+  box-shadow: 0px 4px 16px #2f58e250, 0px 8px 24px #2f58e250, 0px 16px 56px #2f58e250;
+  background-color: #2F58E2;
   height: 100%;
   z-index: 0;
 }

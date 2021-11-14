@@ -63,7 +63,7 @@ Home
                         {{u.get_full_name}}
                       </h5>
                       <div class="student-infor">
-                        <p class="desc">Lớp: {{u.Class_id}}</p>
+                        <p class="desc">Lớp: {{u.Class_id|default_if_none:'Chưa cập nhật'}}</p>
                       </div>
                     </div>
                   </div>

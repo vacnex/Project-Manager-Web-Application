@@ -12,6 +12,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.core.exceptions import PermissionDenied
 import json
+from itertools import chain
 from django.core.exceptions import ObjectDoesNotExist
 from django.template.response import TemplateResponse
 from django.core import serializers
@@ -141,7 +142,7 @@ class HomeIndex(View):
       taskState = json.loads(request.POST['taskState'])
       task.tempComplete = taskState
       task.save()
-      return JsonResponse({"message": 'success'}, status=200, safe=False)
+      return JsonResponse(json.dumps({"message": 'Update task state successfully'}), status=200, safe=False)
 
 # endregion
 

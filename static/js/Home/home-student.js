@@ -72,7 +72,7 @@ const GetChildTaskData = (parentTaskId) => {
     let li;
     let tasksInstance = JSON.parse(response);
     if ($('#StudentChildTaskList').children().length) {
-      $('#StudentChildTaskList').empty();
+      $('#StudentChildTaskList').children().not($('.notiflix-block-wrap')).empty();
     }
     $.each(tasksInstance, (indexInArray, valueOfElement) => {
       li = $('<li id=' + valueOfElement.pk + ' class="box box-item mb-3 d-none" style="cursor: unset;"> <h2 class="accordion-header"><button id="BtnViewChildTaskItem" class="accordion-button collapsed ' + (valueOfElement.fields['tempComplete'] ? 'task-done' : 'task-processing') + '" type="button" style="border-radius: 10px;" data-bs-toggle="collapse" data-bs-target="#ViewChildTask' + indexInArray + 'Content" aria-expanded="false" aria-controls="">' + valueOfElement.fields['taskName'] + '</button> </h2> <div id="ViewChildTask' + indexInArray + 'Content" class="accordion-collapse collapse" aria-labelledby=""> <ul class="accordion-body"></ul> </div></div> </li>');
@@ -86,14 +86,17 @@ const GetChildTaskData = (parentTaskId) => {
         }
       }).done(response => {
         let childTaskInstance = JSON.parse(response);
-        console.log(childTaskInstance);
         $.each(childTaskInstance, (indexInArray, valueOfElement) => {
           li.find('.accordion-body').append('<li id="' + valueOfElement.pk + '" class="box input-group mb-3 d-flex align-items-center scale-hover p-3 ' + (valueOfElement.fields['tempComplete'] ? 'task-done' : '') + '"><input class="form-check-input" type="checkbox" value="" id="chk' + valueOfElement.pk + '" ' + (valueOfElement.fields['tempComplete'] ? 'checked' : '') + '><label for="chk' + valueOfElement.pk + '" id="taskchilditemname" class="fs-5 flex-grow-1 ps-2">' + valueOfElement.fields['taskName'] + '</label> </li>');
         });
+      }).fail((jqXHR, textStatus, errorThrown) => {
+        Notiflix.Notify.failure(textStatus + ': ' + errorThrown);
       });
     });
     Notiflix.Block.remove('#StudentChildTaskList');
     $('#StudentChildTaskList').children().addClass('animate__animated animate__fadeInDown').removeClass('d-none');
+  }).fail((jqXHR, textStatus, errorThrown) => {
+    Notiflix.Notify.failure(textStatus + ': ' + errorThrown);
   });
 
   setTimeout(() => {

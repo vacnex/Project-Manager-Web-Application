@@ -200,90 +200,10 @@ Home
           <p class="title mt-3 fs-2">Chọn task để xem thông tin</p>
         </div>
         <ul id="StudentChildTaskList" class="box-scroll p-3 d-none h-100">
-          <!-- <li id="999" class="box box-item mb-3" style="cursor: unset;">
-            <h2 class="accordion-header"><button id="BtnViewChildTaskItem" class="accordion-button task-processing" type="button" style="border-radius: 10px;"
-                data-bs-toggle="collapse" data-bs-target="#ViewChildTask0Content" aria-expanded="true" aria-controls="">Task test</button> </h2>
-            <div id="ViewChildTask0Content" class="accordion-collapse collapse show" aria-labelledby="" style="">
-              <ul class="accordion-body">
-                <li id="71" class="box input-group mb-3 d-flex align-items-center p-3"><input class="form-check-input"
-                    type="checkbox" value="" id="chk71">
-                  <label for="chk71" id="taskchilditemname" class="fs-5 flex-grow-1 ps-2">child of child of task test 1</label>
-                </li>
-                <li id="75" class="box input-group mb-3 d-flex align-items-center p-3"><input class="form-check-input"
-                    type="checkbox" value="" id="chk75">
-                  <label for="chk75" id="taskchilditemname" class="fs-5 flex-grow-1 ps-2">child of child of task test 1</label>
-                </li>
-              </ul>
-            </div>
-          </li> -->
-          <!-- <div class="box box-item scale-hover mb-3" style="cursor: unset;">
-            <h2 class="accordion-header" id="heading1">
-              <button id="BtnViewChildTaskItem" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-                Accordion Item #1
-              </button>
-            </h2>
-            <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1">
-              <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-                <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
-            </div>
-          </div>
-          <div class="box box-item scale-hover mb-3" style="cursor: unset;">
-            <h2 class="accordion-header" id="heading1">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2"
-                aria-expanded="false" aria-controls="collapse2">
-                Accordion Item #1
-              </button>
-            </h2>
-            <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2">
-              <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-                <code>.accordion-flush</code> class. This is the first item's accordion body.
-              </div>
-            </div>
-          </div> -->
         </ul>
       </div>
     </div>
   </div>
-  <!-- <div class="student-task-wrapper">
-      <div class="row pb-5">
-        <div class="col-12">
-          <ul class="box-scroll list-unstyled py-0 mb-0 p-xxl-0 p-md-4 p-3">
-            {% for st in Student_task %}
-              <li id={{ st.id }} class="box box-item position-relative scale-hover mt-4 mx-xxl-5 mx-xl-0 mx-sm-3 mx-4">
-                <a id='btn-tdel'
-                  class="btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim">
-                  <i class="fas fa-times"></i>
-                </a>
-                <div class="row p-xxl-2 p-3" data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@edittask">
-                  <div class="col-sm-2 d-flex">
-                    <div id="tprio" class="box box-label w-100 h-100 p-2">
-                      {{st.priority}}
-                    </div>
-                  </div>
-                  <div class="col-sm-10 d-flex align-items-center">
-                    <div class="line mx-xxl-3 mx-xl-2 mx-lg-2 mx-md-2"></div>
-                    <div class="task-Content flex-fill ps-xxl-1 ps-3 mt-sm-0 mt-3">
-                      <h3 id="tname">{{st.taskName}}
-                      </h3>
-                      <p id="tdesc">{{st.taskDesc}}</p>
-                      <div class="row assignment-info">
-                        <div class="col-md-6">
-                          <div class="todoDate">{{st.deadline}}</div>
-                        </div>
-                        <div id="daysleft" class="col-md-6">
-                          NaN
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    </div> -->
   {% endif %}
   {% endif %}
   <!-- #endregion -->

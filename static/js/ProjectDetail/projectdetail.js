@@ -1,4 +1,3 @@
-/*global isTouchDevice, duDatepicker*/
 $(document).ready(function () {
   const dayleft = endDate => {
     let endday = (endDate.trim().split('n')[1]).trim();

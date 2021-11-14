@@ -74,11 +74,11 @@ $(document).ready(function () {
   });
   $(document).on('click', '#year-list > li', function () {
     let year = $(this).attr('data-filtertarget');
-    $("#ListTeacherProject").slick('slickUnfilter');
+    $('#ListTeacherProject').slick('slickUnfilter');
     if (year != 'ALL') {
       $.each($('.slick-track').children(), function (indexInArray, valueOfElement) {
         if (year == $(this).find('.year').text()) {
-          $("#ListTeacherProject").slick('slickFilter', function () {
+          $('#ListTeacherProject').slick('slickFilter', function () {
             return $(this).find('.year').text() == year;
           });
           return false;

@@ -26,6 +26,10 @@ module.exports = {
       'error',
       'always'
     ],
-
   },
+  'globals': {
+    'duDatepicker': true,
+    'Notiflix': true,
+    'isTouchDevice':true,
+  }
 };

@@ -20,4 +20,7 @@ $(() => {
       return (className.match(/\bsel-tab-\S+/g) || []).join(' ');
     }).addClass(direction);
   });
+  $(document).on('click', 'input.checkbox-custom', e => {
+    $(e.currentTarget).toggleClass('checkbox-custom-checked');
+  });
 });

@@ -392,3 +392,26 @@
 .tab-switch .tab-item.active {
   color: #ffffff;
 }
+.checkbox-custom {
+	display: flex;
+	cursor: pointer;
+	width: 21px;
+	min-width: 21px;
+	height: 21px;
+	border-radius: 22% / 26%;
+	background-color: rgb(255, 255, 255);
+	border: 2px solid rgb(215, 219, 230);
+	background-image: url(/static/imageAssets/bif.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	-webkit-appearance: none;
+	transition: 0.5s;
+	position: relative;
+}
+.checkbox-custom-checked{
+  background-color : rgb(26, 255, 0);
+  border: none;
+}
+.checkbox-custom:focus {
+	outline: none;
+}

@@ -193,7 +193,7 @@ class ProjectDetail(View):
         p = Project.objects.get(id=pk)
         if request.POST['mainTaskId'] == 'null' and request.POST['mainTaskName']:
           task = Task(
-              taskName=request.POST['mainTaskName'], Project=p, fieldEnabled=1)
+              taskName=request.POST['mainTaskName'], Project=p, fileEnabled=1)
           task.save()
           taskObj = {
               'mainTaskId': task.id,

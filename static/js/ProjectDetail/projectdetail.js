@@ -278,12 +278,12 @@ $(document).ready(function () {
     }
     if ($('.task_list .box-scroll').children().length) {
       $('.box-scroll').prepend(newMainTaskHTML(false, false));
-      $('#tname').focus().focusout(() => {
-        if (!$(this).val()) {
-          $(this).parents('li.box-item').remove();
+      $('#tname').focus().focusout(e => {
+        if (!$(e.currentTarget).val()) {
+          $(e.currentTarget).parents('li.box-item').remove();
         } else {
-          editTask('null', this);
-          $(this).parents('li.box-item').replaceWith(newMainTaskHTML(true, true, $(this).val()));
+          editTask('null', e.currentTarget);
+          $(e.currentTarget).parents('li.box-item').replaceWith(newMainTaskHTML(true, true, $(e.currentTarget).val()));
         } 
       });
     } else {

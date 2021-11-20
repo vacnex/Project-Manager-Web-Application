@@ -73,10 +73,10 @@
         <div class="col-lg-7 order-lg-first order-last mt-lg-0 mt-md-5 mt-5">
           <div class="row shadow tab-switch-wrapper nav nav-pills mb-3 ms-0 controlls-list" role="tablist">
             <div class="tab-switch sel-tab-0 text-center">
-              <div class="tab-item active" tab-direction="sel-tab-0" id="pills-thongbao-tab" name="tab" role="tab" data-bs-toggle="pill"
-                data-bs-target="#pills-thongbao" aria-selected="true">Thông Báo</div>
-              <div class="tab-item" tab-direction="sel-tab-1" id="pills-tainguyen-tab" name="tab" role="tab" data-bs-toggle="pill"
-                data-bs-target="#pills-tainguyen" aria-selected="false">Tài Nguyên</div>
+              <div class="tab-item active" tab-direction="sel-tab-0" id="pills-thongbao-tab" name="tab" role="tab"
+                data-bs-toggle="pill" data-bs-target="#pills-thongbao" aria-selected="true">Thông Báo</div>
+              <div class="tab-item" tab-direction="sel-tab-1" id="pills-tainguyen-tab" name="tab" role="tab"
+                data-bs-toggle="pill" data-bs-target="#pills-tainguyen" aria-selected="false">Tài Nguyên</div>
             </div>
           </div>
           <div class="tab-content" id="pills-tabContent">
@@ -97,7 +97,8 @@
                           Thông báo bắt đầu kỳ tốt nghiệp
                         </a>
                         <div class="mt-4">
-                          <p class="desc">Sinh viên thực hiện liên lạc với giáo viên hướng dẫn trao đổi thông tin thực tập.</p>
+                          <p class="desc">Sinh viên thực hiện liên lạc với giáo viên hướng dẫn trao đổi thông tin thực
+                            tập.</p>
                         </div>
                       </div>
                     </div>
@@ -117,7 +118,8 @@
                           Thông báo về việc cập nhật minh chứng tháng 7
                         </a>
                         <div class="mt-4">
-                          <p class="desc">Sinh viên cập nhật minh chứng tháng 7 của buổi làm việc với giáo viên hướng dẫn.</p>
+                          <p class="desc">Sinh viên cập nhật minh chứng tháng 7 của buổi làm việc với giáo viên hướng
+                            dẫn.</p>
                         </div>
                       </div>
                     </div>
@@ -157,7 +159,8 @@
                           Thông báo về việc cập nhật minh chứng tháng 8
                         </a>
                         <div class="mt-4">
-                          <p class="desc">Sinh viên cập nhật minh chứng tháng 8 của buổi làm việc với giáo viên hướng dẫn.</p>
+                          <p class="desc">Sinh viên cập nhật minh chứng tháng 8 của buổi làm việc với giáo viên hướng
+                            dẫn.</p>
                         </div>
                       </div>
                     </div>
@@ -234,21 +237,22 @@
                 <form id="LoginForm">
                   {% csrf_token %}
                   <div class="form-floating mb-3">
-                    <input type="text" id="username" class="form-control input-custom input-no-focus input-bottom-border"
-                      placeholder="Tài Khoản" name="username"  autofocus autocapitalize="none" />
+                    <input type="text" id="username"
+                      class="form-control input-custom input-no-focus input-bottom-border" placeholder="Tài Khoản"
+                      name="username" autofocus autocapitalize="none" />
                     <label for="username">Tài Khoản</label>
                     <div id="UsernameFeedback" class=""></div>
                   </div>
                   <div class="form-floating mb-3">
                     <input type="password" id="password" name="password"
-                      class="form-control input-custom input-no-focus input-bottom-border" placeholder="Mật Khẩu"
-                       />
+                      class="form-control input-custom input-no-focus input-bottom-border" placeholder="Mật Khẩu" />
                     <label for="password">Mật Khẩu</label>
                     <div id="PasswordFeedback" class=""></div>
                   </div>
                   <input type="hidden" name="next" value="{{ request.GET.next }}" />
                   <a class="" style="cursor: pointer;">Quên mật khẩu?</a>
-                  <button id="submitLogin" class="btn-custom scale-hover w-100 btn-lg mt-3 mt-sm-3 mt-md-4 mt-lg-4 mt-xl-5">Đăng
+                  <button id="submitLogin"
+                    class="btn-custom scale-hover w-100 btn-lg mt-3 mt-sm-3 mt-md-4 mt-lg-4 mt-xl-5">Đăng
                     nhập</button>
                 </form>
               </div>

@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import MySQLdb
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +26,7 @@ SECRET_KEY = '*!2di%et%9bo$!dqfu^@!on8xaj93eha-^1cobpr%1ch73)pj)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -91,11 +91,22 @@ DATABASES = {
     #         'sql_mode': 'traditional',
     #     },
     # }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'projectmanagerdb',
+    #     'USER': 'root',
+    #     'PASSWORD': '1234',
+    #     'HOST': 'localhost',
+    #     'PORT': '3306',
+    #     'OPTIONS': {
+    #         'sql_mode': 'traditional',
+    #     },
+    # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'projectmanagerdb',
         'USER': 'root',
-        'PASSWORD': '1234',
+        'PASSWORD': '0123huyhuy',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
@@ -149,4 +160,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 AUTH_USER_MODEL = 'ProjectManager.User'

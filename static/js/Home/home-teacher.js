@@ -9,7 +9,6 @@ $(document).ready(function () {
     xxxl: 1900,
     xxxxl: 2500,
   };
-
   $('#ListTeacherProject').slick({
     mobileFirst: true,
     slidesToShow: 1,

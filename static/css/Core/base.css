@@ -13,38 +13,31 @@ html, body {
 #page-container {
   position: relative;
   min-height: 100%;
-	-webkit-transition: padding-left 0.5s ease, padding-right 0.5s ease;
-	-o-transition: padding-left 0.5s ease, padding-right 0.5s ease;
-	transition: padding-left 0.5s ease, padding-right 0.5s ease;
+  transition: all 0.5s ease;
+
 }
 
 #footer-wrapper {
-	-webkit-transition: padding-left 0.5s ease, padding-right 0.5s ease;
-	-o-transition: padding-left 0.5s ease, padding-right 0.5s ease;
-	transition: padding-left 0.5s ease, padding-right 0.5s ease;
+	transition: marign-left 0.5s ease, margin-right 0.5s ease;
 }
 .l-with-sidebar {
-	padding-left: 350px;
-	-webkit-transition: padding-left 0.5s ease, padding-right 0.5s ease;
-	-o-transition: padding-left 0.5s ease, padding-right 0.5s ease;
-	transition: padding-left 0.5s ease, padding-right 0.5s ease;
+	margin-left: 350px;
+	transition: marign-left 0.5s ease, margin-right 0.5s ease;
 }
 @media (min-width: 320px) and (max-width: 767.98px) {
 	.l-with-sidebar {
-		padding-left: 0;
-		-webkit-transition: padding-left 0.5s ease, padding-right 0.5s ease;
-		-o-transition: padding-left 0.5s ease, padding-right 0.5s ease;
-		transition: padding-left 0.5s ease, padding-right 0.5s ease;
+		margin-left: 0;
+		transition: marign-left 0.5s ease, margin-right 0.5s ease;
 	}
 }
 @media (min-width: 768px) and (max-width: 1199.98px) {
 	.l-with-sidebar {
-		padding-left: 0;
+		margin-left: 0;
 	}
 }
 @media (min-width: 320px) and (max-width: 767.98px) {
-	#collapseNavbar {
-		padding-right: 0 !important;
+	#show-rwd {
+		margin-right: 0 !important;
 	}
 	.dropdown-menu {
 		width: 100%;
@@ -107,10 +100,6 @@ html, body {
 }
 .top-menu-text i {
 	margin-right: 0.5rem;
-	-moz-transform: scaleX(-1);
-	-o-transform: scaleX(-1);
-	-webkit-transform: scaleX(-1);
-	-ms-transform: scaleX(-1);
 	transform: scaleX(-1);
 	filter: FlipH;
 	-ms-filter: 'FlipH';
@@ -133,9 +122,7 @@ html, body {
 	left: 0;
 	right: auto;
 	background-color: #f8f8f8;
-	-webkit-transition: all 350ms ease;
-	-o-transition: all 350ms ease;
-	transition: all 350ms ease;
+	transition: all 0.5s ease;
 }
 
 @media (min-width: 320px) and (max-width: 767.98px) {
@@ -174,23 +161,10 @@ html, body {
 }
 .nav-list {
 	background-color: #fff;
-	-webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%), 0 1px 2px rgb(0 0 0 / 5%),
-		0 0 2px rgb(0 0 0 / 5%), 0 3px 4px rgb(0 0 0 / 5%);
-	box-shadow: 0 1px 1px rgb(0 0 0 / 5%), 0 1px 2px rgb(0 0 0 / 5%),
-		0 0 2px rgb(0 0 0 / 5%), 0 3px 4px rgb(0 0 0 / 5%);
-	border-radius: 5px;
-	-webkit-transition: all 150ms cubic-bezier(0.55, 0.09, 0.68, 0.53);
-	-o-transition: all 150ms cubic-bezier(0.55, 0.09, 0.68, 0.53);
 	transition: all 150ms cubic-bezier(0.55, 0.09, 0.68, 0.53);
 }
 .nav-list:hover {
-	-webkit-transform: scale(1.03);
-	-moz-transform: scale(1.03);
-	-ms-transform: scale(1.03);
-	-o-transform: scale(1.03);
 	transform: scale(1.03);
-	-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 2px 3px rgb(0 0 0 / 5%),
-		0 0 4px rgb(0 0 0 / 5%), 0 4px 5px rgb(0 0 0 / 5%);
 	box-shadow: 0 1px 2px rgb(0 0 0 / 5%), 0 2px 3px rgb(0 0 0 / 5%),
 		0 0 4px rgb(0 0 0 / 5%), 0 4px 5px rgb(0 0 0 / 5%);
 }
@@ -200,8 +174,6 @@ html, body {
 
 .Course-Process {
 	padding: 1rem;
-	-webkit-box-shadow: rgb(0 0 0 / 5%) 0 0.5px 0, rgb(0 0 0 / 3%) 0 0 0 1px,
-		rgb(0 0 0 / 5%) 0 2px 4px;
 	box-shadow: rgb(0 0 0 / 5%) 0 0.5px 0, rgb(0 0 0 / 3%) 0 0 0 1px,
 		rgb(0 0 0 / 5%) 0 2px 4px;
 	border-radius: 5px;
@@ -268,8 +240,6 @@ html, body {
 	width: 41px;
 	height: 41px;
 	cursor: pointer;
-	-webkit-transition: all 350ms ease;
-	-o-transition: all 350ms ease;
 	transition: all 350ms ease;
 }
 .sidebar-btn {
@@ -277,10 +247,7 @@ html, body {
 	color: #000;
 	background: #fff;
 	border: 1px solid #e4e8f0;
-	-webkit-box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.05);
 	box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.05);
-	-webkit-transition: all 350ms ease;
-	-o-transition: all 350ms ease;
 	transition: all 350ms ease;
 }
 .sidebar-btn:hover {
@@ -295,7 +262,6 @@ html, body {
 .mobile-topbar-btn i {
 	background-color: #fff;
 	border: 1px solid #e4e8f0;
-	-webkit-box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.05);
 	box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.05);
 	border-radius: 45px;
 	padding: 9px 0;
@@ -318,29 +284,16 @@ html, body {
 	}
 }
 .sidebar-btn-close {
-	display: none;
+	display: none!important;
 }
 @media (min-width: 320px) and (max-width: 1199.98px) {
 	.sidebar-btn-close {
-		display: block;
-		width: 41px;
-		height: 41px;
-		left: 0;
-		opacity: 0;
-		-webkit-transition: all 350ms ease;
-		-o-transition: all 350ms ease;
-		transition: all 350ms ease;
+		transition: all 0.5s ease;
 	}
 	.show-rwd .sidebar-btn-close {
 		opacity: 1;
-		background-color: #0277bd;
-		border: 0;
-		border-radius: 45px;
-		color: #fff;
-		padding: 8px 13px;
-		position: fixed;
-		left: 255px;
 		z-index: 9999;
+    display: unset!important;
 		cursor: pointer;
 	}
 	.show-rwd .sidebar-btn-close i {
@@ -352,14 +305,5 @@ html, body {
 		left: calc(100% - 61px);
 	}
 }
-
-/* .list-nav-item li a:hover{
-	color: #0277bd;
-} */
-/* .list-nav-item li:not(.nav-list):hover,
-.btn-toggle-nav li:hover {
-	background-color: #f4f7fe;
-	color: #0277bd;
-} */
 /* #endregion */
 /* ---------------------------------------------------------- */

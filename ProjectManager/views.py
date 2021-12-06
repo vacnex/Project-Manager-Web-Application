@@ -160,12 +160,12 @@ class ProjectDetail(View):
     mainTasks = Task.objects.filter(Project=cur_Project, parentTask=None)
     if request.is_ajax:
       if request.method == 'GET' and 'action' in request.GET:
-        if request.GET['action'] == 'GET_CHILD_TASK_DATA':
+        if request.GET['action'] == 'GET_SUB_TASK_DATA':
           parenttaskid = request.GET['parenttaskid']
           childTasks = Task.objects.filter(parentTask=parenttaskid)
           childTasks = serializers.serialize('json', childTasks)
           return JsonResponse(childTasks, status=200, safe=False)
-        if request.GET['action'] == 'GET_CHILD_TASK_ITEM_DATA':
+        if request.GET['action'] == 'GET_SUB_TASK_ITEM_DATA':
           childTasksItem = Task.objects.filter(
               parentTask=request.GET['parenttaskitemid'])
           childTasks = serializers.serialize('json', childTasksItem)
@@ -185,11 +185,13 @@ class ProjectDetail(View):
         t.Project_Name = newPName
         t.save()
         if t.Project_Name == newPName:
-          print('doi ten thanh cong')
-          return JsonResponse({"message": 'success'})
+          RenameObj = {
+              'message': 'Đã đổi tên đồ án'
+          }
+          return JsonResponse(json.dumps(RenameObj), status=200, safe=False)
       # endregion
       # region thêm hoặc sửa tên task chính
-      elif request.POST['action'] == 'ADD_EDIT_MAIN_TASK_NAME':
+      elif request.POST['action'] == 'ADD_OR_EDIT_MAIN_TASK_NAME':
         p = Project.objects.get(id=pk)
         if request.POST['mainTaskId'] == 'null' and request.POST['mainTaskName']:
           task = Task(
@@ -197,7 +199,8 @@ class ProjectDetail(View):
           task.save()
           taskObj = {
               'mainTaskId': task.id,
-              'message': 'A'
+              'Created': True,
+              'message': 'Đã cập nhật tên task chính'
           }
           return JsonResponse(json.dumps(taskObj), status=200, safe=False)
         if request.POST['mainTaskId'] and request.POST['mainTaskName']:
@@ -205,78 +208,69 @@ class ProjectDetail(View):
           task.taskName = request.POST['mainTaskName']
           task.save()
           taskObj = {
-              'message': 'E'
+              'Created': False,
+              'message': 'Đã chỉnh sửa tên task chính'
           }
           return JsonResponse(json.dumps(taskObj), status=200, safe=False)
       # endregion
-      # region xoá task chính
-      elif request.POST['action'] == 'DELETE_MAIN_TASK':
-        currentTaskID = request.POST['currentTaskID']
+      # region thêm hoặc sửa subtask
+      elif request.POST['action'] == 'ADD_OR_EDIT_SUB_TASK':
         p = Project.objects.get(id=pk)
-        task = Task.objects.get(id=int(currentTaskID))
-        task.delete()
-        deltakresponse = {
-            'pname': p.Project_Name,
-            "message": 'success'
-        }
-        return JsonResponse(json.dumps(deltakresponse), status=200, safe=False)
-      # endregion
-      # region thêm hoặc sửa task child
-      elif request.POST['action'] == 'ADD_EDIT_CHILD_TASK':
-        p = Project.objects.get(id=pk)
-        if request.POST['mainTaskId'] and request.POST['childTaskId'] == 'null' and request.POST['childTaskName'] != None:
-          childtask = Task(
-              taskName=request.POST['childTaskName'], Project=p)
-          childtask.save()
+        if request.POST['mainTaskId'] and request.POST['subTaskId'] == 'null' and request.POST['subTaskName'] != None:
+          subTask = Task(
+              taskName=request.POST['subTaskName'], Project=p)
+          subTask.save()
           parentTask = Task.objects.get(
               id=request.POST['mainTaskId'])
-          childtask.parentTask = parentTask
-          childtask.save()
-          childTaskobj = {
-              'childtaskid': childtask.id,
-              'message': 'A'
+          subTask.parentTask = parentTask
+          subTask.save()
+          subTaskObject = {
+              'subTaskId': subTask.id,
+              'Created': True,
+              'message': 'Đã thêm công việc phụ'
           }
-          return JsonResponse(json.dumps(childTaskobj), status=200, safe=False)
-        if request.POST['mainTaskId'] and request.POST['childTaskId'] and request.POST['childTaskName']:
+          return JsonResponse(json.dumps(subTaskObject), status=200, safe=False)
+        if request.POST['mainTaskId'] and request.POST['subTaskId'] and request.POST['subTaskName']:
             # request.POST['childTaskName'] == '' or
-          childTaskId = request.POST['childTaskId']
-          task = Task.objects.get(id=childTaskId)
+          subTaskId = request.POST['subTaskId']
+          subTask = Task.objects.get(id=subTaskId)
           # if request.POST['childTaskName'] == '':
           #   task.delete()
           # else:
-          task.taskName = request.POST['childTaskName']
-          task.save()
-          childTaskobj = {
-              'message': 'E'
+          subTask.taskName = request.POST['subTaskName']
+          subTask.save()
+          subTaskObject = {
+              'Created': False,
+              'message': 'Đã chỉnh sửa công việc phụ'
           }
-          return JsonResponse(json.dumps(childTaskobj), status=200, safe=False)
+          return JsonResponse(json.dumps(subTaskObject), status=200, safe=False)
       # endregion
       # region thêm hoặc sửa task child item
-      elif request.POST['action'] == 'ADD_EDIT_CHILD_TASK_ITEM':
+      elif request.POST['action'] == 'ADD_OR_EDIT_SUB_TASK_ITEM':
         p = Project.objects.get(id=pk)
-        if request.POST['childTaskId'] and request.POST['childTaskItemId'] == 'null' and request.POST['childTaskItemName']:
-          childTaskItem = Task(
-              taskName=request.POST['childTaskItemName'], Project=p)
-          childTaskItem.save()
+        if request.POST['subTaskId'] and request.POST['subTaskItemId'] == 'null' and request.POST['subTaskItemName']:
+          subTaskItem = Task(
+              taskName=request.POST['subTaskItemName'], Project=p)
+          subTaskItem.save()
           parentTask = Task.objects.get(
-              id=request.POST['childTaskId'])
-          childTaskItem.parentTask = parentTask
-          childTaskItem.save()
-          childTaskItemobj = {
-              'childTaskItemId': childTaskItem.id,
-              'message': 'A'
+              id=request.POST['subTaskId'])
+          subTaskItem.parentTask = parentTask
+          subTaskItem.save()
+          subTaskItemObj = {
+              'subTaskItemId': subTaskItem.id,
+              'message': 'Đã thêm '+request.POST['subTaskItemName']
           }
-          return JsonResponse(json.dumps(childTaskItemobj), status=200, safe=False)
-        if request.POST['childTaskId'] and request.POST['childTaskItemId'] and request.POST['childTaskItemName']:
-          childTaskItemId = request.POST['childTaskItemId']
-          childTaskItemName = request.POST['childTaskItemName']
-          task = Task.objects.get(id=childTaskItemId)
-          task.taskName = childTaskItemName
+          return JsonResponse(json.dumps(subTaskItemObj), status=200, safe=False)
+        if request.POST['subTaskId'] == 'null' and request.POST['subTaskItemId'] and request.POST['subTaskItemName']:
+          subTaskItemId = request.POST['subTaskItemId']
+          subTaskItemName = request.POST['subTaskItemName']
+          task = Task.objects.get(id=subTaskItemId)
+          task.taskName = subTaskItemName
           task.save()
-          childTaskItemobj = {
-              'message': 'E'
+          subTaskItemObj = {
+              'message': 'Đã lưu chỉnh sửa '+subTaskItemName
           }
-          return JsonResponse(json.dumps(childTaskItemobj), status=200, safe=False)
+          return JsonResponse(json.dumps(subTaskItemObj), status=200, safe=False)
       # endregion
       # region sửa mô tả task chính
       elif request.POST['action'] == 'EDIT_MAIN_TASK_DESC':
@@ -287,7 +281,10 @@ class ProjectDetail(View):
         task = Task.objects.get(id=mainTaskId)
         task.taskDesc = mainTaskDesc
         task.save()
-        return JsonResponse({"message": 'success'}, status=200, safe=False)
+        taskDescObj = {
+            'message': 'Đã lưu mô tả'
+        }
+        return JsonResponse(json.dumps(taskDescObj), status=200, safe=False)
    # endregion
       # region sửa ưu tiên task chính
       elif request.POST['action'] == 'EDIT_MAIN_TASK_PRIO':
@@ -296,7 +293,10 @@ class ProjectDetail(View):
         task = Task.objects.get(id=mainTaskId)
         task.priority = mainTaskPriority
         task.save()
-        return JsonResponse({"message": 'success'}, status=200, safe=False)
+        taskPrioObj = {
+            'message': 'Đã lưu thay đổi mức'
+        }
+        return JsonResponse(json.dumps(taskPrioObj), status=200, safe=False)
       # endregion
       # region sửa thời hạn task chính
       elif request.POST['action'] == 'EDIT_MAIN_TASK_DEADLINE':
@@ -355,6 +355,15 @@ class ProjectDetail(View):
             "message": 'Đã cho phép upload'
         }
         return JsonResponse(json.dumps(DelTaskChildDescContext), status=200, safe=False)
+      # endregion
+      # region Xoá task
+      elif request.POST['action'] == 'DELETE_TASK':
+        task = Task.objects.get(id=request.POST['taskId'])
+        task.delete()
+        DelTaskContext = {
+            "message": 'Đã xoá công việc'
+        }
+        return JsonResponse(json.dumps(DelTaskContext), status=200, safe=False)
       # endregion
 # endregion
 

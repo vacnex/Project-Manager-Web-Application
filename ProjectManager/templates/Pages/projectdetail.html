@@ -7,8 +7,9 @@
 {% endblock %}
 {% block scripts %}
 {{ block.super }}
-<script type="module" src="{% static 'js/library/duDatepicker.min.js' %}"></script>
-<script src="{% static 'js/ProjectDetail/projectdetail.js' %}"></script>
+<script src="{% static 'js/library/duDatepicker.min.js' %}"></script>
+<!-- <script src="{% static 'js/ProjectDetail/projectdetail.js' %}"></script> -->
+<script src="{% static 'js/ProjectDetail/projectdetail2.js' %}"></script>
 {% endblock %}
 {% block title %}
 Cập Nhật Công Việc
@@ -16,209 +17,220 @@ Cập Nhật Công Việc
 
 {% block content %}
 <div id="projecttask-content" class="pt-4">
-  <div class="box mx-xxl-5 mx-lg-4 mx-3 p-3 mb-4 task-header">
-    <div id={{pk}} class="row">
-      {% if not mainTasks %}
-      <div class="col-12">
-        <input id="pname" class="form-control input-custom input-no-focus fs-3 title text-uppercase" name="pname"
-          value='{{Project_Name|default_if_none:"Tên đồ án chưa cập nhật"}}' />
-      </div>
-      {% else %}
-      <div class="col-lg-10">
-        <input id="pname" class="form-control input-custom input-no-focus fs-3 title text-uppercase" name="pname"
-          value='{{Project_Name|default_if_none:"Tên đồ án chưa cập nhật"}}' />
-      </div>
-      <div class="col-lg-2 mt-lg-0 mt-md-3 mt-sm-2 mt-1 d-flex align-items-center justify-content-center">
-        <div id="AddNewMainTask" class="btn btn-custom">
-          <span>+</span>Thêm công việc
-        </div>
-      </div>
-      {% endif %}
-    </div>
-  </div>
-  <div class="task-wrapper">
-    <div class="row pb-5">
-      <div class="col mb-lg-0 mb-4 task_list">
-        {% if not mainTasks %}
-        <div class="d-flex justify-content-center">
-          <div class="box px-4 py-5 mx-xxl-5 mx-lg-4 mx-md-0 mx-3 text-center emptylist">
-            <h1 class="display-5 fw-bold">Danh sách công việc trống</h1>
-            <p class="lead mb-4">Hãy nhấn thêm công việc để tạo danh sách công việc.</p>
-            <div id="AddNewMainTask" class="btn btn-custom new-task">
-              <span>+</span>Thêm công việc
+  <div class="row px-2">
+    <div class="col-4">
+      <div class="box p-2 h-100 d-flex flex-column">
+        <div class="d-flex mb-3 align-items-center p-1">
+          <div class="flex-grow-1 fs-3">Todo -List</div>
+          <div class= "d-flex align-items-center justify-content-center {% if not mainTasks%}d-none{% endif %}">
+            <div id="NewTask" class="btn btn-custom">
+              <span>+ </span>Thêm công việc
             </div>
           </div>
         </div>
-        {% else %}
-        <ul class="box-scroll list-unstyled py-0 mb-0 p-xxl-0 p-md-4 p-3">
-          {% for task in mainTasks reversed %}
-          <li id={{task.id}} class="box box-item position-relative scale-hover mt-4 mx-xxl-5 mx-xl-0 mx-sm-3 mx-4">
-            <div class="fileEnabled d-none">{{task.fileEnabled}}</div>
-            <!-- <a id='btn-tedit'
-                                    class="btn btn-info btn-circle btn-circle-icon position-absolute top-0 translate-middle btn-anim" style="left:97%"> 
-                                    <i class="fas fa-pen"></i>
-                                  </a> -->
-            <a id='btn-tdel'
-              class="btn btn-danger btn-circle btn-circle-icon position-absolute top-0 start-100 translate-middle btn-anim">
-              <i class="fas fa-times"></i>
-            </a>
-            <div class="row p-xxl-2 p-3" data-bs-toggle="modal" data-bs-target="#TaskModal"
-              data-bs-whatever="@edittask">
-              {% if not task.priority%}
-              <div class="col-sm-2 d-flex d-none">
-                <div id="tprio" class="box box-label w-100 h-100 p-2">
+          <ul id="TaskLists" class="h-100 box-scroll p-3">
+            {% for task in mainTasks reversed %}
+            <li id={{task.id}} class="box box-item position-relative mx-2 p-2 mb-3 scale-hover">
+              <a id='DelTask' task-id={{task.id}}
+                class="btn-danger btn-circle position-absolute top-0 start-100 translate-middle btn-anim p-0 d-flex justify-content-center align-items-center text-decoration-none" style="width:28px;height:28px;">
+                <i class="fas fa-times"></i>
+              </a>
+              <div data-bs-toggle="modal" data-bs-target="#TaskModal" data-bs-whatever="@edittask" class="d-flex">
+                <div class="fileEnabled d-none">{{task.fileEnabled}}</div>
+                <div class="px-3 d-flex justify-content-center align-items-center">
+                  <div id="tprio"
+                    class="{% if task.priority == 'Cao' %}text-primary{% elif task.priority == 'Rất cao'%}text-danger{% elif task.priority == 'Vừa'%}text-success{% elif task.priority == 'Thấp'%}text-secondary{% endif %} {% if not task.priority%}d-none{% endif %} d-flex text-wrap align-items-center fs-5 text-center"
+                    style="font-weight: 700;line-height: 1;">
+                    {{task.priority}}</div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                  <div class="line {% if not task.priority%}d-none{% endif %}"></div>
+                </div>
+                <div
+                  class="d-flex flex-column p-2 flex-grow-1 {%if not task.taskDesc and not task.deadline%}align-items-center justify-content-center{%endif%}" style="min-width: 0;">
+                  <div class="date d-flex">
+                    <small id="daysleft" class="badge bg-info">{{task.daysleft|default_if_none:''}}</small>
+                    <small id="tdeadline" class="end-date text-muted ms-auto">{{task.deadline|default_if_none:''}}</small>
+                  </div>
+                  <h3 id="tname" class="text-truncate {%if not task.taskDesc and not task.deadline%}fs-3{%endif%}">
+                    {{task.taskName}}
+                  </h3>
+                  <div id="tdesc" class="text-truncate">
+                    {{task.taskDesc|default_if_none:''}}
+                  </div>
                 </div>
               </div>
-              {% else %}
-              <div class="col-sm-2 d-flex">
-                <div id="tprio" class="box box-label w-100 h-100 p-2">
-                  {{task.priority}}
+            </li>
+            {% endfor %}
+          </ul>
+      </div>
+    </div>
+    <div class="col-8">
+      <div id={{pk}} class="project-dashboard box p-2 d-flex flex-column h-100">
+        <input id="pname" class="form-control input-custom input-no-focus fs-3 title text-uppercase mb-3" name="pname"
+          value='{{Project_Name|default_if_none:"Tên đồ án chưa cập nhật"}}' />
+        <div class="row m-1 mb-2">
+          <div class="col-6">
+            <div class="box-s p-3 h-100">
+              <h5 class="text-uppercase title">thống kê</h5>
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-center justify-content-evenly">
+                    <h3>4</h3>
+                    <small>Task chính</small>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-evenly">
+                    <h3>15</h3>
+                    <small>Task phụ</small>
+                  </div>
                 </div>
-              </div>
-              {% endif %}
-              <div class="col-sm-10 d-flex align-items-center">
-                {% if not task.priority%}
-                <div class="line mx-xxl-3 mx-xl-2 mx-lg-2 mx-md-2 d-none"></div>
-                {% else %}
-                <div class="line mx-xxl-3 mx-xl-2 mx-lg-2 mx-md-2"></div>
-                {% endif %}
-                <div class="task-Content flex-fill ps-xxl-1 ps-3 mt-sm-0 mt-3">
-                  {% if task.taskDesc and not task.deadline%}
-                  <h1 id="tname">{{task.taskName}}</h1>
-                  <p id="tdesc">{{task.taskDesc}}</p>
-                  <div class="row assignment-info">
-                    <div class="col-md-6">
-                      <div id="tdeadline" class="todoDate"></div>
-                    </div>
-                    <div id="daysleft" class="col-md-6"></div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="box-s p-3 h-100">
+              <h5 class="text-uppercase title">tiến độ</h4>
+              <div class="row">
+                <div class="col-6">
+                  <div class="d-flex flex-column">
+                    <div class="text-center"><span class="fs-1 text-info">45%</span></div>
+                    <div class="text-center">Hoàn thành</div>
                   </div>
-                  {% elif not task.taskDesc and task.deadline%}
-                  <h1 id="tname">{{task.taskName}}</h1>
-                  <p id="tdesc" class="d-none"></p>
-                  <div class="row assignment-info">
-                    <div class="col-md-6">
-                      <div id="tdeadline" class="todoDate">{{task.deadline}}</div>
+                </div>
+                <div class="col-6">
+                  <div class="d-flex flex-column">
+                    <div class="d-flex align-items-center justify-content-evenly">
+                      <h3 class="text-success"><span>18</span></h3>
+                      <span>Task hoàn thành</span>
                     </div>
-                    <div id="daysleft" class="col-md-6">{{task.daysleft}}</div>
-                  </div>
-                  {% elif task.taskDesc and task.deadline%}
-                  <h3 id="tname">{{task.taskName}}</h3>
-                  <p id="tdesc">{{task.taskDesc}}</p>
-                  <div class="row assignment-info">
-                    <div class="col-md-6">
-                      <div id="tdeadline" class="todoDate">{{task.deadline}}</div>
+                    <div class="d-flex align-items-center justify-content-evenly">
+                      <h3 class="text-danger">
+                        <span>38</span>
+                      </h3>
+                      <span>Task tồn đọng</span>
                     </div>
-                    <div id="daysleft" class="col-md-6">{{task.daysleft}}</div>
                   </div>
-                  {% elif not task.taskDesc and not task.deadline%}
-                  <h1 id="tname">{{task.taskName}}</h1>
-                  <p id="tdesc" class="d-none"></p>
-                  <div class="row assignment-info">
-                    <div class="col-md-6">
-                      <div id="tdeadline" class="todoDate"></div>
-                    </div>
-                    <div id="daysleft" class="col-md-6"></div>
-                  </div>
-                  {% endif %}
                 </div>
               </div>
             </div>
-          </li>
-          {% endfor %}
-        </ul>
-        {%endif%}
+          </div>
+        </div>
+        <div class="row m-1 mt-2 flex-grow-1">
+          <div class="col-6">
+            <div class="box-s p-3 h-100 d-flex flex-column">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="text-uppercase title fs-5">Chủ đề</div>
+                <div class="btn-custom btn-circle"><i class="fas fa-plus"></i></div>
+              </div>
+              <input id="searchbox" type="text" class="input-search box-s px-1 mb-2" placeholder="Tên chủ đề,..">
+              <ul class="box-scroll h-100 p-3">
+                <li class="box box-item text-truncate p-2 mb-2 scale-hover border-top border-success border-5">
+                  <div class="row">
+                    <small class="col-6 text-muted">29/11/2021</small>
+                    <small class="col-6 text-muted text-end">Chức năng</small>
+                  </div>
+                  <h6 class="mt-3">Lỗi chức năng get danh sách</h6>
+                </li>
+                <li class="box box-item text-truncate p-2 mb-2 scale-hover border-top border-primary border-5">
+                  <div class="row">
+                    <small class="col-6 text-muted">28/11/2021</small>
+                    <small class="col-6 text-muted text-end">Giao diện</small>
+                  </div>
+                  <h6 class="mt-3">Đổi layout page</h6>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="box-s p-3 h-100 d-flex flex-column">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="text-uppercase title fs-5">Thông báo</div>
+                <div class="btn-custom btn-circle"><i class="fas fa-plus"></i></div>
+              </div>
+              <ul class="box-scroll h-100 p-3">
+                <li class="box box-item text-truncate p-2 mb-2 scale-hover">
+                  <div class="row">
+                    <small class="col-6 text-muted">19/11/2021</small>
+                    <small class="col-6 text-muted text-end">Viết báo cáo</small>
+                  </div>
+                  <h6 class="mt-3">Đến hạn nộp báo cáo</h6>
+                </li>
+                <li class="box box-item text-truncate p-2 mb-2 scale-hover ">
+                  <div class="row">
+                    <small class="col-6 text-muted">3/11/2021</small>
+                    <small class="col-6 text-muted text-end">Databse</small>
+                  </div>
+                  <h6 class="mt-3">Sửa lại các field name của table</h6>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</div>
+<div class="modal fade" id="TaskModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="AddTaskLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg modal-fullscreen-lg-down ">
+    <div class="modal-content box bg-color">
+      <div class="d-flex p-3 align-items-center">
+        <i class="fas fa-edit"></i>
+        <input style="background: transparent;" id="taskname" class="form-control input-custom input-no-focus fs-3"
+          name="tname" required />
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body row">
+        <div id="TaskControl" class="col-9 box-scroll">
+          <div class="desc mb-4 box p-3" style="background-color: #F9FAFE;">
+            <div class="mb-1 fs-4">
+              <i class="fas fa-info me-2"></i>
+              Mô tả
+            </div>
+            <div class="p-3">
+              <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="" id="taskdesc" style="height: 100px"></textarea>
+                <label class="" id="taskdesclabel" for="taskdesc"></label>
+              </div>
+            </div>
+          </div>
+          <div class="child-wrap mb-3">
+          </div>
+          <div class="prio box p-3 mb-4" style="background-color: #F9FAFE;">
+            <div class="mb-2 fs-4">
+              <i class="fas fa-level-up-alt me-2"></i>
+              Mức độ ưu tiên
+            </div>
+            <div class="d-flex prio-sel justify-content-center align-content-center">
+              <div class="btn-group" role="group">
+                <input type="radio" class="btn-check" name="prio" value="Rất cao" id="veryhighprio" autocomplete="off">
+                <label class="btn btn-outline-primary" name="prio" for="veryhighprio">Rất cao</label>
+                <input type="radio" class="btn-check" name="prio" value="Cao" id="highprio" autocomplete="off">
+                <label class="btn btn-outline-primary" name="prio" for="highprio">Cao</label>
+                <input type="radio" class="btn-check" name="prio" value="Vừa" id="medprio" autocomplete="off">
+                <label class="btn btn-outline-primary" name="prio" for="medprio">Vừa</label>
+                <input type="radio" class="btn-check" name="prio" value="Thấp" id="lowprio" autocomplete="off">
+                <label class="btn btn-outline-primary" name="prio" for="lowprio">Thấp</label>
+              </div>
+            </div>
+          </div>
+          <div class="deadline mb-4">
+            <div class="input-group">
+              <span class="input-group-text">Thời hạn</span>
+              <input id="deadline" type="text" class="form-control" aria-describedby="date-sel" required readonly>
+            </div>
+            <div class="mb-input-group">
+              <input class="d-none" type="date" name="test" id="">
+            </div>
+          </div>
+        </div>
+        <div class="col-3 d-flex flex-column">
+          <div id="NewSubTask" class="btn btn-custom mb-3">Thêm công việc</div>
+          <div class="box-s d-flex align-items-center p-2 mb-3">
+            <input id="IsAttachedTask" type="checkbox" name="IsAttachedTask" class="checkbox-custom me-2">
+            <label for="IsAttachedTask">
+              Yêu cầu nộp file
+            </label>
+          </div>
 
-  <div class="modal fade" id="TaskModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="AddTaskLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg modal-fullscreen-lg-down ">
-      <div class="modal-content box bg-color">
-        <div class="d-flex p-3 align-items-center">
-          <i class="fas fa-edit"></i>
-          <input style="background: transparent;" id="taskname" class="form-control input-custom input-no-focus fs-3"
-            name="tname" required />
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body row">
-          <div id="TaskControl" class="col-9 box-scroll">
-            <div class="desc mb-4 box p-3" style="background-color: #F9FAFE;">
-              <div class="mb-1 fs-4">
-                <i class="fas fa-info me-2"></i>
-                Mô tả
-              </div>
-              <div class="p-3">
-                <div class="form-floating mb-3">
-                  <textarea class="form-control" placeholder="" id="taskdesc" style="height: 100px"></textarea>
-                  <label class="" id="taskdesclabel" for="taskdesc"></label>
-                </div>
-              </div>
-            </div>
-            <div class="child-wrap mb-3">
-              <!-- <div class="child-task mb-3">
-                            <div class="mb-2 d-flex">
-                              <div class="d-flex align-items-center flex-grow-1">
-                                <i class="fas fa-tasks me-2"></i>
-                                <input id="taskchildname" class="form-control input-custom" name="taskchildname" oninput="editChildTask(this)"/>
-                              </div>
-                              <div id="del-child-task" class="btn btn-danger mx-3">Xoá công việc phụ</div>
-                            </div>
-                            <ul class="ps-0 child-item">
-                              <li class="box-s input-group mb-3 ">
-                                <div class="d-flex align-items-center p-2">
-                                  <input class="form-check-input mt-0" type="checkbox" value="">
-                                </div>
-                                <input type="text" class="form-control input-custom">
-                                <div id="del-child-task-item" class="btn"><i class="p-1 fas fa-times"></i></div>
-                              </li>
-                            </ul>
-                            <div id="add-child-task-item" class="btn btn-primary">thêm mục</div>
-                          </div> -->
-            </div>
-            <div class="prio box p-3 mb-4" style="background-color: #F9FAFE;">
-              <div class="mb-2 fs-4">
-                <i class="fas fa-level-up-alt me-2"></i>
-                Mức độ ưu tiên
-              </div>
-              <div class="d-flex prio-sel justify-content-center align-content-center">
-                <div class="btn-group" role="group">
-                  <input type="radio" class="btn-check" name="prio" value="Rất cao" id="veryhighprio"
-                    autocomplete="off">
-                  <label class="btn btn-outline-primary" name="prio" for="veryhighprio">Rất cao</label>
-                  <input type="radio" class="btn-check" name="prio" value="Cao" id="highprio" autocomplete="off">
-                  <label class="btn btn-outline-primary" name="prio" for="highprio">Cao</label>
-                  <input type="radio" class="btn-check" name="prio" value="Vừa" id="medprio" autocomplete="off">
-                  <label class="btn btn-outline-primary" name="prio" for="medprio">Vừa</label>
-                  <input type="radio" class="btn-check" name="prio" value="Thấp" id="lowprio" autocomplete="off">
-                  <label class="btn btn-outline-primary" name="prio" for="lowprio">Thấp</label>
-                </div>
-              </div>
-            </div>
-            <div class="deadline mb-4">
-              <!-- <div class="input-group">
-                            <span class="input-group-text">Thời hạn</span>
-                            <input id="deadline" name="dates" type="text" class="form-control" aria-describedby="date-sel" required readonly>
-                          </div> -->
-              <div class="input-group">
-                <span class="input-group-text">Thời hạn</span>
-                <input id="deadline" type="text" class="form-control" aria-describedby="date-sel" required readonly>
-              </div>
-              <div class="mb-input-group">
-                <input class="d-none" type="date" name="test" id="">
-              </div>
-            </div>
-          </div>
-          <div class="col-3 d-flex flex-column">
-            <div id="addChildTask" class="btn btn-custom mb-3">Thêm công việc</div>
-            <div class="box-s d-flex align-items-center p-2 mb-3">
-              <input id="IsAttachedTask" type="checkbox" name="IsAttachedTask" class="checkbox-custom me-2">
-              <label for="IsAttachedTask">
-                Yêu cầu nộp file
-              </label>
-            </div>
-            
-          </div>
         </div>
       </div>
     </div>

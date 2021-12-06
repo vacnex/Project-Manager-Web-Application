@@ -68,11 +68,12 @@
         <div class="content pb-xxl-3 pb-5">
           {% block content %}{% endblock %}
         </div>
-        <div id="nav-drawer">
-            <button type="button" class="sidebar-btn-close">
+        <div id="nav-drawer" class="p-5">
+            <div class="d-flex flex-column position-relative">
+              <button type="button"
+                class="sidebar-btn-close btn-custom btn-circle position-absolute top-0 start-100 translate-middle">
                 <i class="fas fa-times"></i>
-            </button>
-            <div class="d-flex flex-column p-3">
+              </button>
                 <div class="text-center">
                     <img src="{% static 'imageAssets/logo.png' %}" alt="LHES" class="img-fluid">
                 </div>

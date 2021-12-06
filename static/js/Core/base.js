@@ -44,9 +44,9 @@ $(document).ready(function () {
         }
     });
     sidebarToggle.on('click', function (e) {
-        e.preventDefault();
-        sidebar.toggleClass('closed show-rwd');
-        pageWrapper.toggleClass('l-with-sidebar');
+      e.preventDefault();
+      sidebar.toggleClass('closed show-rwd');
+      pageWrapper.toggleClass('l-with-sidebar');
     });
     
 

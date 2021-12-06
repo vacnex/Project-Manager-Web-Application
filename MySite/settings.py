@@ -76,21 +76,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'joorp162ef8lf0s6',
-    #     'USER': 'tly4lutrpknmsfzc',
-    #     'PASSWORD': 'nn6ywnr47g42mv5g',
-    #     'HOST': 'nnsgluut5mye50or.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    #     'PORT': '3306',
-    #     'OPTIONS': {
-    #         'sql_mode': 'traditional',
-    #     },
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'joorp162ef8lf0s6',
+        'USER': 'tly4lutrpknmsfzc',
+        'PASSWORD': 'nn6ywnr47g42mv5g',
+        'HOST': 'nnsgluut5mye50or.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        'PORT': '3306',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        },
+    }
     # 'default': {
     #     'ENGINE': 'django.db.backends.mysql',
     #     'NAME': 'projectmanagerdb',
@@ -102,17 +98,17 @@ DATABASES = {
     #         'sql_mode': 'traditional',
     #     },
     # }
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'projectmanagerdb',
-        'USER': 'root',
-        'PASSWORD': '0123huyhuy',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'OPTIONS': {
-            'sql_mode': 'traditional',
-        },
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'projectmanagerdb',
+    #     'USER': 'root',
+    #     'PASSWORD': '0123huyhuy',
+    #     'HOST': 'localhost',
+    #     'PORT': '3306',
+    #     'OPTIONS': {
+    #         'sql_mode': 'traditional',
+    #     },
+    # }
 }
 
 

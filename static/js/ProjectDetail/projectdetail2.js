@@ -122,11 +122,11 @@ $(() => {
           });
           Notiflix.Block.standard('.child-wrap');
           $.when(subTaskItems).done(response => {
-            $('.child-wrap').append('<div id=' + valueOfElement['pk'] + ' class="child-task mb-4 box p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex align-items-center"><div class="d-flex align-items-center flex-fill flex-wrap"> <i class="fas fa-tasks me-2 flex-shrink-1"></i> <input id="SubTaskName' + valueOfElement['pk'] + '" class= "form-control w-auto input-custom fs-4 flex-shrink-1 flex-fill" style = "background-color: transparent;" name = "SubTaskName" value = "' + valueOfElement['fields']['taskName'] + '" aria-describedby="FeedBackOf' + valueOfElement['pk'] + '"/> <div id="FeedBackOf' + valueOfElement['pk'] + '" class=" w-100 invalid-feedback"></div></div > <a id="DelSubTask" task-id="' + valueOfElement['pk'] + '"class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div ><ul class="ps-0 child-item"> </ul> <div id="SubTaskControls' + valueOfElement['pk'] + '" class="d-flex"><div id="AddSubTaskItem" class="btn btn-custom me-2">Thêm mục</div><div id="addChildTaskDesc" class="btn btn-custom">Thêm mô tả</div><div class="d-flex align-items-center p-2 ms-auto"> <input id="IsAttachedSubTask' + valueOfElement['pk'] + '" type="checkbox" name="IsAttachedSubTask' + valueOfElement['pk'] + '" class="checkbox-custom me-2 ' + (valueOfElement['fields']['fileEnabled'] ? 'checkbox-custom-checked' : '') + '" ' + (valueOfElement['fields']['fileEnabled'] ? 'checked' : '') + '> <label for="IsAttachedSubTask' + valueOfElement['pk'] + '"> Yêu cầu nộp file </label> </div></div></div >');
+            $('.child-wrap').append('<div id=' + valueOfElement['pk'] + ' class="child-task mb-4 box p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex align-items-center"><div class="d-flex align-items-center flex-fill flex-wrap"> <i class="fas fa-tasks me-2 flex-shrink-1"></i> <input id="SubTaskName' + valueOfElement['pk'] + '" class= "form-control w-auto input-custom fs-4 flex-shrink-1 flex-fill" style = "background-color: transparent;" name = "SubTaskName" value = "' + valueOfElement['fields']['taskName'] + '" aria-describedby="FeedBackOf' + valueOfElement['pk'] + '"/> <div id="FeedBackOf' + valueOfElement['pk'] + '" class=" w-100 invalid-feedback"></div></div > <a id="DelSubTask" task-id="' + valueOfElement['pk'] + '"class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div ><ul class="ps-0 child-item"> </ul> <div id="SubTaskControls' + valueOfElement['pk'] + '" class="d-flex"><div id="AddSubTaskItem" class="btn btn-custom me-2">Thêm mục</div><div id="AddSubTaskDesc" class="btn btn-custom">Thêm mô tả</div><div class="d-flex align-items-center p-2 ms-auto"> <input id="IsAttachedSubTask' + valueOfElement['pk'] + '" type="checkbox" name="IsAttachedSubTask' + valueOfElement['pk'] + '" class="checkbox-custom me-2 ' + (valueOfElement['fields']['fileEnabled'] ? 'checkbox-custom-checked' : '') + '" ' + (valueOfElement['fields']['fileEnabled'] ? 'checked' : '') + '> <label for="IsAttachedSubTask' + valueOfElement['pk'] + '"> Yêu cầu nộp file </label> </div></div></div >');
             if (valueOfElement['fields']['taskDesc'] != null) {
-              let firstElement = $('div', '.child-task[id=' + valueOfElement['pk'] + ']').first().after('<div id="ChildTaskDescWraper" class="form-floating mb-3"> <textarea class="form-control" placeholder="Mô tả" id="ChildTaskDescOf' + valueOfElement['pk'] + '" style="height: 100px"></textarea> <label class="" id="ChildTaskDescLabel" for="ChildTaskDesc">Mô tả</label> </div>');
+              let firstElement = $('div', '.child-task[id=' + valueOfElement['pk'] + ']').first().after('<div id="ChildTaskDescWraper" class="form-floating mb-3"> <textarea class="form-control" placeholder="Mô tả" id="SubTaskDescOf' + valueOfElement['pk'] + '" style="height: 100px"></textarea> <label class="" id="ChildTaskDescLabel" for="ChildTaskDesc">Mô tả</label> </div>');
               $(firstElement).parent().find('textarea').val(valueOfElement['fields']['taskDesc']);
-              $(firstElement).parent().find('#addChildTaskDesc').text('Xoá mô tả').attr('id', 'DelSubTaskDesc');
+              $(firstElement).parent().find('#AddSubTaskDesc').text('Xoá mô tả').attr('id', 'DelSubTaskDesc');
             }
             subTaskItems = JSON.parse(response);
             $.each(subTaskItems, function (indexInArray, valueOfChildElement) {
@@ -191,7 +191,7 @@ $(() => {
   /* #region Thêm hoặc sửa subtask  */
   $(document).on('click', '#NewSubTask', e => {
     let mainTaskId = $(e.currentTarget).parent().parent().parent().attr('id');
-    let newSubTask = $('.child-wrap').append('<div class="child-task mb-4 box p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex align-items-center"> <div class="d-flex align-items-center flex-fill flex-wrap"> <i class="fas fa-tasks me-2 flex-shrink-1"></i> <input id="SubTaskName" class="form-control w-auto input-custom fs-4 flex-shrink-1 flex-fill" style="background-color: transparent;" name="SubTaskName" aria-describedby="NewSubTaskName"/><div id="NewSubTaskName" class="w-100 invalid-feedback"></div></div><a id="DelSubTask" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div><ul class="ps-0 child-item"> </ul> <div id="SubTaskControls" class="d-flex "><div id="AddSubTaskItem" class="btn btn-custom me-2">Thêm mục</div><div id="addChildTaskDesc" class="btn btn-custom">Thêm mô tả</div><div class="d-flex align-items-center p-2 ms-auto"> <input id="IsAttachedSubTask" type="checkbox" name="IsAttachedSubTask" class="checkbox-custom me-2"> <label for="IsAttachedSubTask"> Yêu cầu nộp file </label> </div></div></div>');
+    let newSubTask = $('.child-wrap').append('<div class="child-task mb-4 box p-3" style="background-color: #F9FAFE;"> <div class="mb-2 d-flex align-items-center"> <div class="d-flex align-items-center flex-fill flex-wrap"> <i class="fas fa-tasks me-2 flex-shrink-1"></i> <input id="SubTaskName" class="form-control w-auto input-custom fs-4 flex-shrink-1 flex-fill" style="background-color: transparent;" name="SubTaskName" aria-describedby="NewSubTaskName"/><div id="NewSubTaskName" class="w-100 invalid-feedback"></div></div><a id="DelSubTask" class="btn btn-danger btn-circle"><i class="fas fa-times"></i></a></div><ul class="ps-0 child-item"> </ul> <div id="SubTaskControls" class="d-flex "><div id="AddSubTaskItem" class="btn btn-custom me-2">Thêm mục</div><div id="AddSubTaskDesc" class="btn btn-custom">Thêm mô tả</div><div class="d-flex align-items-center p-2 ms-auto"> <input id="IsAttachedSubTask" type="checkbox" name="IsAttachedSubTask" class="checkbox-custom me-2"> <label for="IsAttachedSubTask"> Yêu cầu nộp file </label> </div></div></div>');
     newSubTask.find('#SubTaskName').focus().focusout(e => {
       let thisSubTaskEl = $(e.currentTarget).parents('div.child-task');
       if (!$(e.currentTarget).val()) {
@@ -212,6 +212,7 @@ $(() => {
           thisSubTaskEl.find('#NewSubTaskName').attr('id', 'FeedBackOf' + response.subTaskId);
           thisSubTaskEl.find('#SubTaskControls').attr('id', 'SubTaskControls' + response.subTaskId);
           thisSubTaskEl.find('#DelSubTask').attr('task-id', response.subTaskId);
+          thisSubTaskEl.find('input')
         });
       }
     });
@@ -363,8 +364,8 @@ $(() => {
   };
   /* #endregion */
 
-  /* #region cập nhật priority */
-  $(document).on('change', '#TaskModal .prio input[type=radio]', e=> {
+  /* #region Cập nhật priority */
+  $(document).on('change', '#TaskModal .prio input[type=radio]', e => {
     let mainTaskId = $(e.currentTarget).parents('div.modal-content').attr('id');
     let mainTaskPriority = $(e.currentTarget).val();
     SendRequest('POST', {
@@ -374,14 +375,134 @@ $(() => {
     }).done(response => {
       response = JSON.parse(response);
       Notiflix.Notify.success(response.message, { showOnlyTheLastOne: true });
-    })
+    });
     $('#TaskLists').find('li[id=' + mainTaskId + '] #tprio').text(mainTaskPriority).removeClass('d-none text-danger text-primary text-success text-secondary').addClass(e => {
       if (mainTaskPriority.toLowerCase() == 'rất cao') return 'text-danger';
       else if (mainTaskPriority.toLowerCase() == 'cao') return 'text-primary';
       else if (mainTaskPriority.toLowerCase() == 'vừa') return 'text-success';
-      else if (mainTaskPriority.toLowerCase() == 'thấp') return 'text-secondary'
+      else if (mainTaskPriority.toLowerCase() == 'thấp') return 'text-secondary';
     });
     $('.line').removeClass('d-none');
   });
   /* #endregion */
+
+  /* #region Cập nhật deadline */
+  $('#deadline').on('datechanged', e => {
+    let mainTaskId = $(e.currentTarget).parents('.modal-content').attr('id');
+    let mainTaskDeadline = $(e.currentTarget).val() ? $(e.currentTarget).val() : 'null';
+    let li = $('li[id=' + mainTaskId + ']');
+    if ($(e.currentTarget).val()) {
+      SendRequest('POST', {
+        mainTaskId: mainTaskId,
+        mainTaskDeadline: mainTaskDeadline,
+        action: 'EDIT_MAIN_TASK_DEADLINE',
+      }).done(response => {
+        response = JSON.parse(response);
+        $('#daysleft', li).text(response.dayleft);
+        $('#tdeadline', li).text($(e.currentTarget).val());
+        $('.date', li).parent().removeClass('align-items-center justify-content-center');
+      });
+    }
+  });
+  /* #endregion */
+
+  /* #region  Cập nhật tên task */
+  $(document).on('keyup', '#taskname', e => {
+    let mainTaskId = $(e.currentTarget).parents('div.modal-content').attr('id');
+    let li = $('li[id=' + mainTaskId + ']');
+    SendRequest('POST', {
+      mainTaskId: mainTaskId,
+      mainTaskName: $(e.currentTarget).val(),
+      action: "ADD_OR_EDIT_MAIN_TASK_NAME"
+    }).done(response => {
+      response = JSON.parse(response);
+      Notiflix.Notify.success(response.message, { showOnlyTheLastOne: true });
+    });
+    $('#tname', li).text($(e.currentTarget).val());
+  });
+  /* #endregion */
+
+  /* #region Thêm và cập nhật mô tả subtask */
+  $(document).on('click', '#AddSubTaskDesc', e => {
+    let subTask = $(e.currentTarget).parents('div.child-task');
+    // console.log(subTaskId);
+    $('div', subTask).first().after('<div id="SubTaskDescWraper" class="form-floating mb-3 animate__animated animate__flipInX"> <textarea class="form-control" placeholder="Mô tả" id="SubTaskDescOf' + subTask.attr('id') + '" style="height: 100px"></textarea> <label class="" id="ChildTaskDescLabel" for="SubTaskDescOf' + subTask.attr('id') + '">Mô tả</label> </div>');
+    setTimeout(() => {
+      $('#SubTaskDescWraper').removeClass('animate__animated animate__flipInX');
+    }, 500);
+    $(e.currentTarget).text('Xoá mô tả').attr('id', 'DelSubTaskDesc');
+    $('#SubTaskDescOf' + $(subTask).attr('id')).focus();
+    SendRequest('POST', {
+      subTaskId: subTask.attr('id'),
+      subTaskDecs: $(e.currentTarget).val(),
+      action: 'ADD_SUB_TASK_DESC'
+    }).done(response => {
+      response = JSON.parse(response);
+    });
+  });
+  $(document).on('keyup', 'textarea[id^="SubTaskDescOf"]', e => {
+    let subTask = $(e.currentTarget).parents('div.child-task');
+    SendRequest('POST', {
+      subTaskId: subTask.attr('id'),
+      subTaskDecs: $(e.currentTarget).val(),
+      action: 'ADD_SUB_TASK_DESC'
+    }).done(response => {
+      response = JSON.parse(response);
+      Notiflix.Notify.success(response.message, { showOnlyTheLastOne: true });
+    });
+  });
+  /* #endregion */
+
+  /* #region Xoá mô tả Sub task  */
+  $(document).on('click', '#DelSubTaskDesc', function () {
+    let SubTaskID = $(e.currentTarget).parents('div.child-task').attr('id');
+    SendRequest('POST', {
+      subTaskID: SubTaskID,
+      action: 'DEL_SUB_TASK_DESC'
+    }).done(response => {
+      response = JSON.parse(response);
+      Notiflix.Notify.success(response.message, { showOnlyTheLastOne: true });
+    });
+  });
+  /* #endregion */
+
+  /* #region toggle đính kèm */
+  $(document).on('click', '[id^=IsAttachedTask]', e => {
+    subTaskId = $(e.currentTarget).parents('div.modal-content').attr('id');
+    $(e.currentTarget).toggleClass('checkbox-custom-checked');
+    SendRequest('POST', {
+      subTaskId: subTaskId,
+      isChecked: $(e.currentTarget).prop('checked'),
+      action: 'SET_ATTACHED'
+    }).done(response => {
+      response = JSON.parse(response);
+      Notiflix.Notify.success(response.message, { showOnlyTheLastOne: true });
+    })
+  });
+  $(document).on('click', '[id^=IsAttachedTask]', e => {
+    taskId = $(e.currentTarget).parents('div.modal-content').attr('id');
+    $(e.currentTarget).toggleClass('checkbox-custom-checked');
+    SendRequest('POST', {
+      taskId: taskId,
+      isChecked: $(e.currentTarget).prop('checked'),
+      action: 'SET_ATTACHED'
+    }).done(response => {
+      response = JSON.parse(response);
+      Notiflix.Notify.success(response.message, { showOnlyTheLastOne: true });
+    })
+  });
+  $(document).on('click', '[id^=IsAttachedSubTask]', e => {
+    taskId = $(e.currentTarget).parents('div.child-task').attr('id');
+    $(e.currentTarget).toggleClass('checkbox-custom-checked');
+    SendRequest('POST', {
+      taskId: taskId,
+      isChecked: $(e.currentTarget).prop('checked'),
+      action: 'SET_ATTACHED'
+    }).done(response => {
+      response = JSON.parse(response);
+      Notiflix.Notify.success(response.message, { showOnlyTheLastOne: true });
+    });
+  });
+  /* #endregion */
+
 });

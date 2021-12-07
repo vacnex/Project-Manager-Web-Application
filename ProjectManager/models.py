@@ -89,9 +89,12 @@ class Task(models.Model):
         initenddate = datetime.date(int(rawenddate[2]), int(
             rawenddate[1]), int(rawenddate[0]))
         diff = initenddate -  today
-        diff.days
-        return diff.days
-
+        if diff.days == 0:
+          return 'Hôm nay'
+        elif diff.days > 0:
+          return 'Còn ' + str(diff.days)+' ngày'
+        elif diff.days < 0:
+          return 'Trễ '+ str(abs(diff.days))+' ngày'
 
 class ProjectDiscus(models.Model):
     Users = models.ForeignKey('User', on_delete=models.CASCADE)

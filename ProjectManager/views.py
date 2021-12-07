@@ -305,7 +305,11 @@ class ProjectDetail(View):
         task = Task.objects.get(id=mainTaskId)
         task.deadline = mainTaskDeadline
         task.save()
-        return JsonResponse({"message": 'success'}, status=200, safe=False)
+        taskDeadlineObj = {
+          'dayleft': task.daysleft(),
+          'message': 'Đã thay đổi thời hạn'
+        }
+        return JsonResponse(json.dumps(taskDeadlineObj), status=200, safe=False)
       # endregion
       # region kiểm tra hoàn thành task child item
       elif request.POST['action'] == 'COMPLETE_CHILD_TASK_ITEM':
@@ -327,34 +331,34 @@ class ProjectDetail(View):
         return JsonResponse(json.dumps(deleteTaskChildAndItemContext), status=200, safe=False)
       # endregion
       # region Thêm mô tả task child
-      elif request.POST['action'] == 'ADD_CHILD_TASK_DESC':
-        task = Task.objects.get(id=request.POST['ChildTaskID'])
-        task.taskDesc = request.POST['ChildTaskDecs']
+      elif request.POST['action'] == 'ADD_SUB_TASK_DESC':
+        task = Task.objects.get(id=request.POST['subTaskId'])
+        task.taskDesc = request.POST['subTaskDecs']
         task.save()
-        AddTaskChildDescContext = {
-            "message": 'Thêm thành công'
+        AddSubTaskDescObj = {
+            "message": 'Đã cập nhật mô tả'
         }
-        return JsonResponse(json.dumps(AddTaskChildDescContext), status=200, safe=False)
+        return JsonResponse(json.dumps(AddSubTaskDescObj), status=200, safe=False)
       # endregion
       # region Xoá mô tả task child
-      elif request.POST['action'] == 'DEL_CHILD_TASK_DESC':
-        task = Task.objects.get(id=request.POST['ChildTaskID'])
+      elif request.POST['action'] == 'DEL_SUB_TASK_DESC':
+        task = Task.objects.get(id=request.POST['subTaskID'])
         task.taskDesc = None
         task.save()
-        DelTaskChildDescContext = {
-            "message": 'Xoá thành công'
+        DelSubTaskDescObj = {
+            "message": 'Đã xoá mô tả'
         }
-        return JsonResponse(json.dumps(DelTaskChildDescContext), status=200, safe=False)
+        return JsonResponse(json.dumps(DelSubTaskDescObj), status=200, safe=False)
       # endregion
       # region Cho phép upload file
-      elif request.POST['action'] == 'SET_ALLOW_ATTACHED':
-        task = Task.objects.get(id=request.POST['taskID'])
+      elif request.POST['action'] == 'SET_ATTACHED':
+        task = Task.objects.get(id=request.POST['taskId'])
         task.fileEnabled = json.loads(request.POST['isChecked'])
         task.save()
-        DelTaskChildDescContext = {
-            "message": 'Đã cho phép upload'
+        AttachedObj = {
+            "message": 'Đã cho phép đính kèm' if task.fileEnabled else 'Đã huỷ đính kèm'
         }
-        return JsonResponse(json.dumps(DelTaskChildDescContext), status=200, safe=False)
+        return JsonResponse(json.dumps(AttachedObj), status=200, safe=False)
       # endregion
       # region Xoá task
       elif request.POST['action'] == 'DELETE_TASK':
